@@ -1,0 +1,587 @@
+Note: a description of why each patch is needed is embedded
+*inside* the patch file at the top, so read the patch file
+for more info.
+
+0.27 1 Feb 2004 "ow ow ow should have worn hocky skates"
+
+     getandpatch.sh:
+     * really try to detect patches that fail to apply
+     * be more permissive about how patches are named
+     * can fetch gcc-3.3.3 prereleases
+
+     crosstool.sh:
+     * let caller override $BUILD if config.guess gets it wrong, e.g. when
+       building 32 bit stuff on X86_64
+     * always specify --with-sysroot to binutils.
+       Lets you build 32->64 bit cross toolchains with gcc-3.2.3 even
+       though it doesn't support --with-sysroot; all that matters is
+       that binutils-2.14 does.
+     * remove junk file ${PREFIX}/${TARGET}/test-if-write
+     * Since gcc-3.2.* was written in the binutils-2.13 era, and
+       doesn't work properly with newer binutils on mips due to the
+       obsoleting of the -mcpu flag, roll back to binutils-2.13
+       for gcc-3.2.* toolchains.
+     * Since gcc-3.3.* doesn't build right for alpha with H.J.Lu's 
+       binutils-2.14.90.* snapshots, roll back to gnu's binutils-2.14 for
+       gcc-3.3.* toolchains.  This fixes a regression caused by crosstool-0.24.
+       (Maybe we'll find out that a couple platforms require the fixes in 
+       H.J.Lu's snapshots.  That'd be worth knowing.)
+
+     sh4 fixes:
+     * added patches/gcc-3.3-20040119/pr11608.patch to fix PR11608
+
+     arm fixes:
+     * patches/glibc-2.3.2/arm-ioperm.patch caused build failures, and has been
+       replaced by the more correct patches/glibc-2.3.2/arm-ctl_bus_isa.patch.
+     * patches/gcc-3.3.2/gcc-3.3.2-arm-softfloat.patch, arm-softfloat.dat,
+       and demo-arm-softfloat.sh added for people who want to switch to the
+       soft float ABI for higher floating point performance
+       This is from Robert Schwebel's cvs version of the ptxdist patch repository,
+       so he hasn't really released it yet, but it does build.
+
+     gcc fixes:
+     * Moved pr11587.patch to bad/ subdirectory since it's said to be wrong
+     * Populated patches/gcc-3.3-20040119/ and patches/gcc-3.3-20040126/
+
+     new targets (not tested; let me know if they work):
+     * added powerpc-860.dat 
+     * added sh3.dat (thanks to Henk Brunsting for sh3.config)
+
+     crosstest.sh fixes:
+     * crosstest.sh no longer tries to filter out bogus fails caused by
+       http://gcc.gnu.org/PR12096 since the patch
+       crosstool-0.26/patches/expect-5.39/pr12096.patch fixes that bug.
+       You'll want to build expect from sources and apply that patch
+       before running crosstest.sh (until I add that to dejagnu.sh)
+
+     FIXME:
+     * patches/linux-2.4.21/maybe/ia64-offsets.h.patch would partially fix
+       build error caused by removal of generated file offsets.h from 
+       linux source tree as of 2.4.21, but doesn't solve more basic problems.
+       For now, if you need to build ia64 toolchains, either use 2.4.20 headers
+       or steal offsets.h from a working system.
+     * dejagnu.sh should build a local copy of expect (with
+       patches/expect-5.39/pr12096.patch applied), but doesn't
+
+0.26 18 Jan 2004 "been so gosh-darned long"
+     It's been too long since the last release, so I'm releasing this version 
+     without much regression testing just to get it out the door.
+     I did verify that gcc-3.3-20040112 builds on a number of architectures, 
+     though, and I did do one run of the gcc-3.3-20040105/glibc-2.3.2 
+     regression tests on sh4.
+     I hope to do more testing in time for the release of gcc-3.3.3.
+
+     x86_64 fixes:
+     * added x86_64.dat
+     * added USE_SYSROOT boolean flag.  If set, uses --with-sysroot when
+       configuring gcc.  This is only supported as of gcc-3.3.3, and seems to
+       be required when building an x86_64 compiler.  I set it in x86_64.dat,
+       but it might be reasonable to set it in gcc-3.3.3.dat when that's released.
+
+     glibc-2.3.2 fixes for arm:
+     * patches/glibc-2.3.2/nobits.patch, avoid @ since that's a comment on arm
+     * patches/glibc-linuxthreads-2.3.2/sysdep-cancel-arm-1.2-1.6.patch
+     * patches/glibc-2.3.2/{arm-ioperm,arm-mcount_internal}.patch from ptxdist
+
+     glibc-2.3.2 fix for x86_64 (aka gcc bug workaround for x86_64):
+     * patches/glibc-2.3.2/gcc-pr-9552-workaround.patch
+
+     glibc-2.1.3 fixes:
+     * use --enable-add-ons without args so old crypto addon used if present
+     * patches/glibc-2.1.3/glibc-manual-stdin.texi-1.127.patch
+     * getandpatch.sh now gets crypt addon if GLIBCCRYPT_FILENAME set
+     * Red Hat 6.2 patches from glibc-2.1.3-28.src.rpm (rh62-*.patch)
+
+     binutils-2.13.90.0.2 fixes:
+     * Red Hat 6.2 patches from binutils-2.13.90.0.2-2.src.rpm (rh62-*.patch)
+
+     binutils-2.14.90.0.3+ fixes:
+     * getandpatch.sh now runs patches/README if present, grr.
+
+     gcc-3.3.2 fix for sh: avoid __movstr_i4_even runtime error msg
+     * patches/gcc-3.3.2/sh-lib1funcs_sizeAndType.patch
+     * patches/gcc-3.3.2/sh-libgcc-hidden.patch  
+
+     gcc-3.3.2 test for sh: http://gcc.gnu.org/PR13260 (fix said to be in 3.4)
+     * patches/gcc-3.3.2/pr-13260-test.patch
+
+     gcc-3.3.3 support:
+     * added gcc-3.3-20040112-glibc-2.3.2.dat.  Have not pulled patches forward yet.
+
+     Removed glibc-2.3.2/shlibs-lds.patch; it was added by mistake in 0.25
+
+     crosstool.sh and getandpatch.sh now take SRC_DIR to let multiple
+     architectures share a single set of unpacked source tarballs.
+     (Still can't run multiple runs in parallel, though, unless getandpatch.sh
+     has already run once.)
+
+     crosstool.sh now checks to make sure awk runs, and that user
+     doesn't have CFLAGS or CXXFLAGS set.  These tripped up a couple users.
+
+     crosstool.sh no longer fails with 64 bit CPUs (which use /lib64)
+     and will use --with-sysroot if you set USE_SYSROOT to a nonempty string;
+     it seems that --with-sysroot is required for 32 -> 64 bit crosscompilers.
+
+     crosstool.sh now obeys new environment variable BINUTILS_EXTRA_CONFIG
+
+     crosstest.sh now checks to make sure expect is available, and checks
+     to make sure initjail.sh ran.
+
+     doc/remote-dejagnu-howto.html now recommends latest expect and tcl,
+     and links to gcc bug report describing patch expect might need
+
+     chrootlogin.c no longer crashes if run without arguments
+
+     In last release, gcc-3.3.2 support was added without pulling forward
+     all the applicable patches from gcc-3.3.1, because I didn't have time
+     to test.  I had time to test on sh4 this time, so I've pulled forward
+     the patches that seem to be needed.
+
+     getandpatch.sh now knows how to download and unpack linux-2.6.  In my one
+     try actually building a toolchain with linux-2.6 with x86_64, it demanded
+     a .config file, so I went back to linux-2.4 for now.
+
+     Added more demo-$CPU.sh scripts.  demo-*.sh now set exit code on error.
+
+     updated todo and contrib/
+
+0.25 14 Nov 2003
+     Added demo-mipsel.sh for those who just want a toolchain for the Linksys wrt54g,
+     and demo-ppc{405,750}.sh as additional examples of how to use the build script
+     Added glibc-2.2.3 support (since I wanted to match linksys wrt54g's firmware)
+     Added gcc-3.3.2 support.  Haven't decided which patches it needs yet.
+     Renamed gcc*-glibc*.dat files to gcc-*-glibc-*.dat to match ${TOOLCOMBO}
+     Added contrib/newlib (thanks Nic Moreau)
+     Added patches/gcc-3.3.1/pr11949-fix.patch
+     Updated to ptxdist-testing as of 20031113, patched a couple buglets
+     Fixed broken symlinks (thanks Marc K-B)
+     Removed extra file patches/glibc-2.2.5/mips-clone-local-label.diff (thanks Stuart Hughes)
+     Let LINUX_DIR point anywhere (thanks Yves Rutschle); but see also contrib/xtool-ro.patch
+     getandpatch.sh now aborts properly if tarballs are corrupt
+
+     Moved download of ptxdist to getandpatch.sh from ptx.sh to allow building
+     different toolchains in parallel (though the parallel ptxdist builds will
+     still download busybox at same time, so best download that first; FIXME)
+
+     Brought epoll.h in glibc-2.3.2 up to date with cvs by adding 
+     glibc-2.3.2/epoll-{epollet,stdint}.patch
+
+     Only very lightly tested.  
+
+0.24 15 Sept 2003
+     Rearranged patch repository so you can hyperlink to it without seeing all
+     the other dat files etc; *-patches moved to patches/*
+
+     Eight bug reports in Bugzilla against the Hitachi SH processor
+     had nice test cases that had not as far as I know made it into
+     the testsuite, so I wrote the following eight patches and apply 
+     them to both gcc-3.3.1 and gcc-3.4-20030903:
+	pr9365-1-test.patch  pr10392-1-test.patch pr10412-1-test.patch
+	pr10589-1-test.patch pr11162-1-test.patch pr11587-1-test.patch
+	pr11736-1-test.patch pr11864-1-test.patch
+     Each of those creates a testcase prNNNNN-1.c.
+
+     One of them had a fix in the report but not in cvs, so I added
+	pr11587.patch
+     to both gcc-3.3.1 and gcc-3.4-20030903.
+
+     I verified that the new tests pr9365-1.c pr10392-1.c pr10589-1.c
+     pr11587-1.c pr11736-1.c pr11864-1.c report FAIL on sh4 in my test
+     runs with gcc-3.3.1, as expected.  They are not marked XFAIL because 
+     they are regressions from older compilers.  Hope someone fixes them soon.
+     (I don't test with -m2, so I don't catch pr10412.)
+     It looks like the fix for pr11587 worked, and fixed pr11162 as well...
+
+     Tried gcc3.3.1-glibc2.2.2 with sh4, but it turns out glibc-2.2.2 doesn't
+     support sh4, and its configure script gets stuck in an infinite loop on
+     "checking sysdep dirs..." :-)
+
+0.23 9 Sept 2003 "all your base are belong to ptxdist"
+     Added gcc-3.4-20030903-glibc2.3.2.dat, gcc3.3.1-glibc2.2.5.dat
+     --builduserspace: updated to a new ptxdist snapshot, added libnet, libpcap, and ncurses
+
+0.22 26 Aug 2003 "towards userspace -- and beyond!"
+
+     glibc-2.2.5 and glibc-2.3.2 now build on arm with gcc-3.3.x thanks to
+     glibc-2.2.5-patches/dl-machine-arm.patch,
+     glibc-2.2.5-patches/arm-asm-clobber.patch, and
+     glibc-2.3.2-patches/arm-asm-clobber.patch
+
+     crosstest.sh now invokes the gcc-3.4-20030813 libstdc++ testsuite properly.
+
+     crosstool.sh and crosstest.sh now work even if PATH contains a space
+     (as it often does on Cygwin).
+
+     doc/crosstool-howto.html now mentions the need for gcc-3.2 or higher to
+     compile a recent toolchain
+
+     doc/crosstool-howto.html now suggests setting tcp_tw_recycle both
+     locally and on target to allow lots of rsh sessions, and has a harsher
+     test for whether rsh is in fact configured to allow lots of sessions.
+     doc/chroot-login-howto.html now has instructions for configuring xinetd
+     to allow lots of rsh sessions.  (Hmm, seems like the rsh configuration
+     doc should be in one place, not in two... fixme)  Thanks to Michael
+     LeBlanc for xinetd config info.
+
+     Deleted glibc-2.3.2-patches/sh-fpscr-libc-kludge.patch, and
+     added back to sh4.dat the line GLIBC_CONFIGPARMS="no-z-defs=yes",
+     to fix the following gcc tests that fail with that patch:
+      20000605-1.c 20020411-1.c 930603-1.c complex-6.c conversion.c gofast.c
+      ieee/{20010114-2.c, inf-1.c, rbug.c}
+     (no-z-defs is only needed for gcc-3.4-*/glibc-2.3.2, but shouldn't hurt older versions.).
+     This means I can't run my old binaries on sh4, but that's ok.
+
+     all.sh now takes an optional --builduserspace flag.  
+     If this is set, all.sh uses ptx.sh to build busybox, and crosstest.sh
+     uses this busybox instead of the target's normal shell.
+     This is useful if you can't run the target's normal shell with
+     the new toolchain.
+     (e.g. when the target's old /bin/sh is linked against a newer glibc,
+     or when the target's old /bin/sh and libc used a different shared
+     library interface).
+     Thanks to Pengutronix for PTXdist.
+     I plan to use it to build things like ncurses and libreadline
+     in the next release; ncurses-5.3 already builds, but I commented that
+     line out of ptx.config as it's not needed for testing toolchains.  
+     Eventually crosstool and PTXdist may merge somehow.
+     Caution: if you use --builduserspace, you must install the graphviz package (see
+     http://www.research.att.com/sw/tools/graphviz/), else the
+     build will fail in ptx.sh with 'dot: command not found'.
+     This is a usability problem with ptxdist; it shouldn't require graphviz by default.
+
+     Discovered why the libstdc++ 27_io testcases fail when run remotely: 
+     it's a bug in the testcase driver, which needs to use dejagnu's remote
+     file operations during test setup and evaluation.  Updated http://gcc.gnu.org/PR11610
+
+     Likewise, the testcase g++-bprob-1 fails when run remotely due
+     to a similar bug in the testcase driver.  Filed http://gcc.gnu.org/PR12055
+
+0.21 23 Aug 2003 "poopiest baby in the world"
+
+     Added gcc2.95.3-glibc2.2.5.dat
+     Added gcc3.2.3-glibc2.3.2.dat
+     Added arm9tdmi.dat
+
+     crosstest.sh now edits linker scripts to remove BUG line to work 
+     around bug described at http://sources.redhat.com/ml/bug-glibc/2003-05/msg00055.html,
+     needed to fix gcc-3.2.3/glibc-2.3.2 targeting arm
+
+     crosstest.sh now finds the libstdc++ test whether it's named
+     libstdc++ or libstdc++-v3.  This was needed for gcc2.95.3.
+     Tests still not invoked quite right on that version, but it's close.
+
+     crosstool.sh now can use a .config that was copied by hand into
+     the kernel source directory even if you don't set KERNELCONFIG,
+     at Dara's request.
+ 
+     Refactored 
+	gcc-3.4-20030813-patches/compat.exp.patch
+	gcc-3.4-20030813-patches/gcc-3.4-20030813-g++.exp.patch
+	gcc-3.4-20030813-patches/gcc-3.4-20030813-libstdc++.exp.patch
+     into
+	gcc-3.4-20030813-patches/pr12009.patch
+	gcc-3.4-20030813-patches/pr12010.patch
+
+     Replaced
+	gcc-3.4-20030813-patches/gcc-3.4-20030813-dj0815.patch
+     with
+	gcc-3.4-20030813-patches/kaz-gcc-3.4-20030813-abi_check.patch
+     because Kaz pointed out a problem.  This probably isn't the final
+     solution to the libstdc++-v3/testsuite/abi_check.c link failure on sh.
+     This did not change regression test results, but then, gcc-3.4-20030813
+     fails many of the floating point tests anyway, so maybe the change is masked.
+
+     Started experimenting with using ptxdist to build busybox etc.
+     ptx.sh and ptx.config only support powerpc-750 at the moment,
+     and fail compiling busybox, so don't try ptx.sh unless you like
+     broken stuff :-)
+
+0.20 19 Aug 2003 "oops"
+     getandpatch.sh falls back to .gz if .bz2 not available; this is
+     important when compiling older versions, which haven't been recompressed
+     yet.
+
+     Added glibc-2.3.2-patches/string2-typedef.patch to fix bad attribute
+     revealed by compiling with gcc-3.4
+
+0.19 18 Aug 2003 "static on the baby monitor"
+     getandpatch.sh fetches .bz2 archives where possible to save download time
+
+     Switch to linux-2.4.21 as that includes
+     asm-ppc/unistd.h changes that supposedly fix a
+     busybox compilation problem.  The problem is described at
+     http://lists.debian.org/debian-glibc/2003/debian-glibc-200305/msg00190.html
+     and may be fixed in busybox cvs, but what the heck, let's support
+     the old busybox sources.
+
+     Added gcc-3.4 snapshot support.   
+     Patches:
+     Forward port of testsuite fixes for cross-compilation:
+	gcc-3.4-20030813-patches/compat.exp.patch
+	gcc-3.4-20030813-patches/gcc-3.4-20030813-g++.exp.patch
+	gcc-3.4-20030813-patches/gcc-3.4-20030813-libstdc++.exp.patch
+     Fix --without-fp (thanks, Dan J.!):
+        glibc-2.3.2-patches/glibc-2.3.2-without-fp.patch  [fixed typo here 21 aug 2003]
+     Fix --without-headers:
+	gcc-3.4-20030813-patches/gcc-3.4-without-headers.patch
+     Kludge to let me run old binaries on sh4:
+        glibc-2.3.2-patches/sh-fpscr-libc-kludge.patch
+
+     Note that most people building gcc-3.4/glibc-2.3.2 on sh4 will want
+     to remove sh-fpscr-libc-kludge.patch and use sh4-normal.dat rather
+     than sh4.dat.  I needed to do things a bit oddly because I didn't
+     want to have to recompile busybox with the new toolchain.
+     Thanks to Kaz and Dan J. for hints about fpscr_values issues.
+
+     crosstool.sh now grabs files from lib/nof if glibc is built --without-fp.
+     gcc-3.4 doesn't build non-nof version of libstdc++ in that case, which
+     made it pretty obvious I wasn't handling that right!
+
+0.18 12 Aug 2003 "not enough sleep"
+     Added gcc-3.3.1 support and test results.  Removed same for pre-gcc-3.3.1 snapshots.
+     Tested with ppc405, ppc750, sh4; see summaries directory.
+     Did all sorts of little cleanup after testing, so I might have botched
+     something; hope not.  I really need to run through demo.sh again; I
+     haven't compiled for anything but ppc405, ppc750, and sh4 in several
+     releases, though they should all still work.
+
+     The sh4 glibc string functions problems appear to be a gcc-3.3
+     regression; see http://gcc.gnu.org/PR11864
+     Kaz has a patch that papers over the problem without causing any
+     caught regressions, but he's not happy with it yet, so I'm not including it.
+
+     gcc-3.3.1/glibc-2.3.2 failed glibc's tst-fseek test on ppc750 with errors
+        353: st_ctime not changed
+        358: st_mtime not changed
+     Possible causes: on my target, /tmp is tmpfs and /build-glibc is
+     nfs; maybe those don't update those fields on write, or perhaps
+     the version of the kernel I ran it on (linux-2.4.17 ppc_devel)
+     has a problem.  I haven't really looked.
+
+     mipsel.config now sets little-endian mode to match the name (thanks, Guido!)
+     all.sh now delivered chmod +x in the source tarball as suggested by jfreeman
+
+     I've added two user-contributed patches to a 'contrib' subdirectory:
+     contrib/bz2.patch adds support for bz2, which should make fetching source
+     much faster.
+     contrib/xtool-ro.patch lets you run with sources in a read-only directory.
+     I'll integrate these patches once I have time to try 'em.
+
+     Submitted gcc PRs for the problems fixed by the following patches:
+        gcc-3.3.1-patches/sh-pic-set_fpscr.patch  http://gcc.gnu.org/PR11901
+        gcc-3.3.1-patches/sh-spec.patch           http://gcc.gnu.org/PR11902
+        gcc-3.3.1-patches/sh4-pthread.patch       http://gcc.gnu.org/PR11903
+
+0.17 4 Aug 2003
+     The sh4 toolchain is now in about the same state on glibc-2.3.2 as it was on
+     glibc-2.2.5, which is to say a bit shaky compared to ppc405 and ppc750:
+     powerpc-750/gcc-3.3/glibc-2.3.2: fails 1 out of 339 glibc tests
+     powerpc-750/gcc-3.3/glibc-2.2.5: fails 1 out of 247 glibc tests
+     powerpc-405/gcc-3.3/glibc-2.3.2: fails 5 out of 339 glibc tests
+     powerpc-405/gcc-3.3/glibc-2.2.5: fails 5 out of 247 glibc tests
+     sh4/gcc-3.3/glibc-2.3.2:         fails 19 out of 339 glibc tests
+     sh4/gcc-3.3/glibc-2.2.5:         fails 12 out of 247 glibc tests
+     Still, at least crosstool can now build sh4/gcc-3.3/glibc-2.3.2, which
+     should make it easier for newcomers to verify these test failures and
+     perhaps even fix them.
+
+     Thanks to Kaz Kojima for his patient assistance!  This release contains
+     three patches he wrote to help me get past dynamic linking problems on SH:
+
+     1. gcc-3.3-patches/sh-spec.patch fixes an early segmentation fault in ld-linux.so
+     which caused all dynamically-linked programs to fail on sh4 with glibc-2.3.2.
+     It seems gcc on SH has for years been inserting an rpath of /lib
+     when you didn't specify one, which runs afoul of the new
+       assert (info[DT_RPATH] == NULL);
+     at line 161 in glibc-2.3.2/elf/dynamic-link.h.  
+     Simply removing this default rpath from gcc's spec file cures the crash.
+
+     The following two patches are needed because glibc-2.3.2 (as of Dec
+     2002) checks at build time to make sure its shared libraries don't
+     need text relocations (which would hurt prelinking).
+
+     2. gcc-3.3-patches/sh-pic-set_fpscr.patch fixes part one cause of
+     make[2]: *** [/build/sh4-unknown-linux-gnu/gcc-3.3-glibc-2.3.2/build-glibc/elf/check-textrel.out] Error 1
+     Without it, check-textrel complains
+             libc.so: text relocations used
+             linuxthreads/libc.so: text relocations used
+             math/libm.so: text relocations used
+     because there was no PIC version of set_fpscr().
+
+     3. binutils-2.14.90.0.5-patches/binutils-sh-relocs.patch fixes another cause of:
+     make[2]: *** [/build/sh4-unknown-linux-gnu/gcc-3.3-glibc-2.3.2/build-glibc/elf/check-textrel.out] Error 1
+     Without it, check-textrel complains
+             libc.so: text relocations used
+             linuxthreads/libc.so: text relocations used
+             linuxthreads/libpthread.so: text relocations used
+             math/libm.so: text relocations used
+             resolv/libresolv.so: text relocations used
+     because DT_TEXTREL was set even though there were no text relocations.
+
+     Other changes: 
+
+     glibc-{2.2.5,2.3.2}-patches/glibc-test-lowram.patch prevents glibc's
+     tst-calloc from running out of RAM on 32MB target systems, at the cost of
+     weakening the test a bit.  The test should probably check RLIMIT_DATA
+     and/or RLIMIT_AS, and use them at runtime to decide how big a test to
+     run.  Instead, I've just hardcoded it to be one sixth the original size.
+
+     Other notes:
+
+     On sh4, g++'s thread/pthread6.cc test failed with gcc-3.3, but not with
+     gcc-ss-3_3-20030714.  Not sure what's going on there yet.
+
+     On sh4, until gcc-3.4, the -mrelax option in gcc is broken,
+     and the corresponding test in the binutils test suite fails.
+     If you need this to work in gcc-3.3, Kaz says use binutils-2.14.90.0.5 or later,
+     and see http://gcc.gnu.org/ml/gcc-patches/2003-03/msg00226.html
+     and http://gcc.gnu.org/ml/gcc-patches/2003-03/msg00213.html
+     I have not tested these patches yet.
+     The error in the binutils test log is
+       ERROR: -O -mrelax ...ld/testsuite/ld-sh/sh2.c: compilation failed
+
+0.16 31 July 2003 "Shaking out glibc-2.3.2 a bit"
+
+     glibc-2.3.2-patches/glibc-2.3.2-without-fp.patch, straight from Daniel
+     Jacobowitz, fixes the --without-fp option of glibc-2.3.2, needed for ppc405.
+
+     glibc-2.3.2-patches/glibc-2.3.2-cross.patch, from cvs, avoids a glaring build failure.
+
+     gcc-3.3-patches/sh-pic-set_fpscr.patch is a partial fix for problems
+     building gcc-3.3/glibc-2.3.2 for sh4.  Work in progress.
+     
+     gcc3.3-glibc2.3.2.dat now refers to binutils-2.14.90.0.5 in hopes
+     that fixes problems on sh4 (or at least makes it easier for Kaz to
+     play with)
+
+     My gcc-*-patches directories are a bit out of sync; if you run
+     into a problem, it could be the patch you need hasn't been copied
+     or symlinked into your version of gcc's patches directory yet.
+
+     Note that wget on Red Hat 9 is rumored to not be able to fetch from
+     gnu.org.  Workaround - use vanilla wget, or perhaps add the flag to use
+     passive mode.
+
+0.15 26 July 2003 "if it hurts, don't do it"
+     crosstool.sh now obeys GCC_EXTRA_CONFIG when building bootstrap gcc,
+     otherwise glibc's shared libraries have bad code linked into them on some cpus.
+
+     crosstool.sh sets BUILD_CC when configuring glibc so it can build datafiles needed for test.
+
+     crosstest.sh now runs subset of glibc regression test.
+
+     glibc-2.2.5-patches/sh-setjmp-fix.patch fixes glibc isomac conformance failure on sh.
+
+     glibc-2.2.5-patches/glibc-2.2.5-crosstest.patch tells glibc to actually
+     compile shared libraries needed to run its unit tests.
+
+     Test results in 'summaries' directory.
+     Actually passes most of the gcc and glibc regression tests for ppc405 and
+     ppc750.  Doesn't fare quite so well yet on sh4.  
+
+0.14 21 July 2003
+     Tracked down some test failures, documented in gcc-ss-3_3-20030714-bugs.txt
+
+     Fixed four test failures, mostly-fixed another, and suppressed several
+     failures caused by bugs in expect:
+
+     gcc-ss-3_3-20030714-patches/pthread4.patch from cvs should fix
+       FAIL: thread/pthread4.cc execution test
+
+     gcc-ss-3_3-20030714-patches/empty6.patch from cvs should fix
+       FAIL: g++.dg/abi/empty6.C  (test for warnings, line 6)
+
+     gcc-ss-3_3-20030714-patches/thunk3.patch, a little patch I wrote, should fix
+       FAIL: g++.jason/thunk3.C (test for excess errors)
+
+     gcc-ss-3_3-20030714-patches/sh4-pthread.patch, from http://www.sh-linux.org/rpm-2003/SRPMS/gcc-3.2.3-3.src.rpm's
+     gcc-20030210-sh-linux-1.patch, should fix -pthread on sh4, symptom
+       FAIL: thread/pthread1.cc (test for excess errors)
+
+     crosstest.sh now configures final gcc with --with-headers to avoid
+     setting inhibit_glibc; this causes -g -fprofile-arcs to actually compile,
+     fixing e.g.
+       FAIL: g++.dg/bprob/g++-bprob-1.C compilation,  -g  -fprofile-arcs
+     It now gets a little farther, namely
+       FAIL: g++.dg/bprob/g++-bprob-1.C execution: file g++-bprob-1.da does not exist,  -g  -fprofile-arcs
+     The tcl for that test doesn't seem to use the proper remote file operations.
+
+     dejagnu-bug is a list of test failures known to be caused by dejagnu 
+     (all due to truncating compiler output in local_exec).  
+     For convenience, crosstest.sh now does 'fgrep -v -f dejagnu-bug < *.sum > *.sum2'
+
+0.13 17 July 2003: no, really this time.
+     Worked some kinks out of running crosstest.sh in parallel for different targets
+     Fix one more place g++ testsuite is improperly setting LD_LIBRARY_PATH
+     cleantmp.sh now runs outside the jail
+     crosstest.sh now enforces tcp_tw_recycle=1 on Linux to avoid dreaded rsh failure
+     Include test summaries from ppc405, ppc750, sh4 in files summaries/$TARGET-$GCC-$GLIBC.tool.sum
+
+0.12 13 July 2003: actually runs gcc/g++/stdlibc++ testsuites on sh4,ppc405,ppc750
+     Details:
+     crosstest.sh now tests binutils, gcc, g++, and stdlibc++ instead of just gcc
+     crosstest.sh creates file LAST_UPDATED if missing so contrib/test_summary doesn't abort
+     crosstest.sh now mentions how to force static linking of test programs
+     crosstest.sh checks remote execution early, and aborts if it fails
+     crosstest.sh now saves gcc test summary as $TARGET-$TOOLCOMBO.gcc.sum in top level
+     crosstool.sh now lets caller pass glibc config args in GLIBC_EXTRA_CONFIG (needed for ppc405)
+     crosstool.sh disables nls in final gcc build (somewhat arbitrarily)
+     glibc-2.2.5-patches & gcc-3.2.3-patches include my ppc405 erratum 77 patches 
+     glibc-2.2.5-patches includes Montavista's hhl-powerpc-float patch, rediffed
+     gcc-{3.2.3,3.3}-patches now include my g++ and libstdc++-v3 cross-test patches
+     getandpatch.sh now uses -f so patches which delete files apply properly.
+     demo.sh uses target name powerpc instead of ppc, because test suites have
+     'powerpc' hardcoded in their exception lists & binutils' make check disallows ppc.
+     all.sh now lets caller override TARBALLS_DIR, RESULT_TOP, and PREFIX 
+     doc/dejagnu-remote-howto.html now mentions that rsh/rcp are the default,
+     and no longer claims that glibc uses dejagnu
+
+0.11: Updated crosstest.sh to actually work.
+     Added doc/crosstool-howto.html, doc/chroot-login-howto.html
+     Added chrootshell.c
+     Added inetutils-1.4.2-patches/*.patch to work around old sh4 compiler bug
+     that made rcp fail.
+     Renamed dejagnu tutorial doc/dejagnu-remote-howto.html
+     Remove absolute paths from libpthread.so (by analogy with libc.so;
+     untested)
+
+0.10: Added initial try at m68k, hppa, and x86_64 support.
+     hppa might work if you enable the experimental patches; see
+     glibc-2.3.2-patches/README-hppa.  I haven't tried them.
+
+0.9: Added initial cris support.
+
+0.8: Added mips support.
+     Added notes on how to run tests remotely with dejagnu (not finished).
+
+0.7: Got arm building properly for gcc-3.2.3 and gcc-2.95.3
+     Added ia64 support.  Started adding s390 support.
+     Fixed HOST setting to make sense (thanks to Dan Jacobowitz for his
+     assistance).
+     Added speculative patch to fix config.sub so users running this
+     script on s390 and cris don't fail in gcc configure.
+
+0.6: Added sparc support.  Haven't actually run binaries compiled for sparc yet.
+     Added arm support, but gcc-3.3 isn't building glibc-2.3.2 
+     (see http://gcc.gnu.org/PR11103), and I haven't tried the others yet.
+
+0.5: Run 'make check' after building binutils, gcc, and glibc
+     but only if DEJAGNU environment variable set.
+     And since Dejagnu hates abbreviated target names, use names like xxx-yyy-linux-gnu
+     Added initial alpha support
+
+0.4: Add gcc-3.3-patches/{sh-predef-gnu_source,sh4-no-fix-protos}.patch
+     to fix sh4 build for glibc-2.2.5.  
+     Fixed typo in glibc-2.3.2 support; it builds for ppc and x86 now.
+     (sh4 build dies with "include/asm/user.h:32: error: redefinition of `struct
+     user_fpu_struct'".)
+
+0.3: add x86->x86 support
+     This involved twiddling HOST in crosstool.sh to force cross-compiler even if HOST = TARGET.  
+     Not sure this is a good idea yet (and I got it wrong; fixed in rev 0.7).
+     See also http://gcc.gnu.org/ml/gcc-patches/2003-06/msg00246.html 
+
+0.2: add glibc-2.3.2 support, move options from demo script into .dat files
+
+0.1: Starting with Bill Gatliff's script, add framework for downloading
+     and patching.

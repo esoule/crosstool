@@ -1,0 +1,252 @@
+<html>
+<head>
+<title>crosstool-howto</title>
+</head>
+<body>
+<h1>crosstool-howto</h1>
+Crosstool is a set of scripts to build and test several versions of gcc and glibc for 
+most architectures supported by glibc.
+It will even download and patch the original tarballs for you.
+The resulting script and associated patches, and the latest version of this doc,
+are available at <a href="http://kegel.com/crosstool/">kegel.com/crosstool</a>.
+<p>
+It includes minimal gcc and glibc needed to build a few combinations of 
+(alpha, arm, cris, i686, ia64, mips, ppc750, ppc405, sh4, sparc, s390, x86_64) x (gcc-2.95.3, gcc-3.2.3, gcc-3.3).
+The patches for each tool are stored in a subdirectory of <a href="../patches/">patches/</a>
+named after the tool, (e.g. <a href="../patches/gcc-3.3/">patches/gcc-3.3</a>,
+Each patch starts with comments about what it's for, and has links to the bug it fixes and any associated discussion.
+<p>
+To get started, unpack the tarball, and read the shell scripts.  Start with
+demo.sh, which runs all.sh, which runs getandpatch.sh, crosstool.sh, and crosstest.sh.
+Or start with demo-{ppc405,ppc750,mipsel}.sh, which are shorter, and show how
+to put the resulting toolchains somewhere useful.
+<p>
+If you want to build gcc-3.3 or later, you'll need a recent gcc (3.2 or later)
+on your workstation to build it with.
+<p>
+Then edit the script demo.sh, uncomment just the line for the toolchain you want to build,
+and run it.  About an hour or two later, you should have a toolchain.
+Use testhello.sh to compile simple statically linked 'hello, world' programs in both
+C and C++, and try to run them on the target.
+<p>
+Then, if needed, tweak the parameters of the script to match your exact CPU type if needed,
+or add any patches needed to the patches/* directories, and run the build script again.
+In particular, if your CPU lacks an FPU, you might need to tell glibc that by setting
+before running all.sh.  For example, see powerpc-405.dat, which sets
+<pre>
+GLIBC_EXTRA_CONFIG="--without-fp"
+</pre>
+<p>
+Once you trust the toolchain can build and run the statically linked 'hello, world' programs,
+run the remote regression test, which checks whether your new toolchain
+can compile and run a large number of test programs correctly.
+<p>
+If you use these scripts to build a toolchain, please send a note to the
+<a href="http://sources.redhat.com/ml/crossgcc/">crossgcc mailing list</a>
+indicating which platform you used it on, and
+how well it worked for you.  Please be sure to mention which release of the crosstool
+scripts you used.
+
+<h2>Options</h2>
+all.sh takes four options:
+<ul>
+<li>--nounpack, which means 'don't run getandbuild.sh'.  This is useful for quick reruns or when just testing.
+<li>--nobuild, which means 'don't run crosstool.sh'.  This is useful for when you just want to run regression tests.
+<li>--builduserspace, which means 'run ptx.sh'.  This is useful for when you need to build busybox for some reason,
+e.g. if you want to run the regression tests, but the target's normal shell can't run against the new shared C libraries.
+<li>--notest, which means 'don't run crosstest.sh'.  This is useful for when you don't have a target to test on,
+or don't want to spend the time to test.
+</ul>
+
+<h2>Testing</h2>
+demo.sh runs all.sh with the --notest option, since you need to prepare a bit before you can run the tests.
+<p>
+Unless you give the --notest option when running all.sh, it will try to test the resulting
+tools using their built-in regression test, which is based on Dejagnu, and which requires
+a remote target to run on, preferably with a chroot jail that allows remote login.  
+<p>
+Before you try this, you may wish to read <a href="dejagnu-remote-howto.html">dejagnu-remote-howto.html</a>
+and <a href="chroot-login-howto.html">chroot-login-howto.html</a>, which explain 
+how one uses Dejagnu with remote targets, and how one sets up a chroot jail that allows remote login.
+<p>
+Before you use all.sh to test the toolchain, you need to do six things:
+<ol>
+<li>add an entry in /etc/hosts for each target you want to test.  
+e.g. if you want to test sh4-unknown-linux-gnu,
+you must have an sh4 system running linux online somewhere, and
+'ping sh4-unknown-linux-gnu' must be able to get packets to it.
+This is not normal dejagnu practice, but it made it much easier to
+write this doc and the example scripts.  (It also restricts you to
+just one remote target of each type, but if that limitation ever
+bothers you, you can probably afford to set up your own dejagnu configuration
+and not use these scripts.)
+<li>set up rsh/rlogin/rcp client and server apps on your workstation and on each target system,
+and make sure they work.  (<a href="chroot-login-howto.html">chroot-login-howto.html</a> should be helpful here.)
+(Note: if you run into a strange "Unable to allocate memory" error when using rcp to retrieve files
+from an sh4 system, you may need to apply the patch inetutils-1.4.2/sh4-div.patch.)
+<li>The rsh / rcp protocol only has 512 IP ports available, so if you launch more
+than 512 rsh or rcp commands during a 2MSL (120 second) period,
+the resulting zombie TCP connections hanging around in TIME_WAIT state (you can observe this with netstat -pant)
+will cause rsh or rcp to fail with error "rcmd: socket: All ports in use".  
+<p>
+To prevent this, issue the following command both locally and on the target
+(only works on Linux):
+<pre>
+# echo 1 > /proc/sys/net/ipv4/tcp_tw_recycle
+</pre>
+This is completely illegal with respect to the Internet RFCs, but it does prevent
+the rsh and rcp connections from stacking up in state TIME_WAIT.  
+(crosstest.sh checks to make sure you've done this locally, but doesn't check that you've done it on the target.)
+
+<li>Following the instructions in <a href="chroot-login-howto.html">chroot-login-howto.html</a>,
+set up and test a chroot jail in /jail for user root-jail on each target system you want to test on,
+and make sure you can use rsh and rcp into the jail remotely as user root-jail.
+<li>Make sure you can re-initialize the chroot jails remotely; see testjail.sh for an example of how to test this.
+<li>Run mkdejagnu.sh to compile a known good copy of dejagnu.
+</ol>
+Once all the above are working, you should be able to run all.sh without the --notest argument.
+For instance, to test a gcc-3.3/glibc-2.2.5 toolchain you already built for sh4-unknown-linux-gnu:
+<pre>
+eval `cat sh4.dat` `cat gcc-3.3-glibc-2.2.5.dat`    sh all.sh --nounpack --nobuild > x.log 2>&1 &
+</pre>
+Keep an eye on the log file; after twenty seconds or so, you should check
+that dejagnu is able to download and run test apps.  Easiest way to check is to use grep
+to look for passed tests.  For example:
+<pre>
+$ egrep 'PASS|FAIL|UNRESOLVED' x.log
+PASS: gcc.c-torture/execute/20000112-1.c compilation,  -O0 
+PASS: gcc.c-torture/execute/20000112-1.c execution,  -O0 
+PASS: gcc.c-torture/execute/20000112-1.c compilation,  -O1 
+PASS: gcc.c-torture/execute/20000112-1.c execution,  -O1 
+...
+</pre>
+If you see lots of FAILed or UNRESOLVED tests, something's wrong, and you'll have to start digging.
+For instance, make sure there's enough free RAM and disk space on the target system.
+<p>
+The test will take some time to run.  When it's done, it will create
+$TOP_DIR/$TARGET-$TOOLCOMBO-{gcc,binutil}.sum (e.g. sh4-unknown-linux-gnu-gcc-3.3-glibc-2.2.5-gcc.sum)
+which will tell how many tests failed unexpectedly.  Interpreting these results is tricky;
+see <a href="http://gcc.gnu.org/install/test.html">Installing GCC: Testing</a> at the GCC home page,
+and /or <a href="http://gcc.gnu.org/ml/gcc-testresults/">the gcc-testresults mailing list</a>
+for what kind of results other people are getting.
+<p>
+If you use these scripts to test your toolchain, please send
+the test results to the 
+<a href="http://sources.redhat.com/ml/crossgcc/">crossgcc mailing list</a>
+and the <a href="http://gcc.gnu.org/ml/gcc-testresults/">gcc-testresults</a>
+mailing list.  Be sure to mention which release of the crosstool scripts you used.
+
+<h3>Notes on testing</h3>
+If testing a small (&lt; 64 MB RAM) target with no swap space, you probably want to reboot the target before starting each run.
+<p>
+The glibc tests probably require about 16MB RAM free on the target system (before setting up the jail)
+and about 16MB of free disk space.  On systems with less than 128MB of physical RAM and no swap,
+you may want to mount /jail via NFS from some Linux box with a bit of free disk space.
+<p>
+I have seen the testcases forget to delete files on the target after trying
+to run them.  (Possibly this is normal in the case of failed tests?)
+On small targets, you should run cleantmp.sh in the background
+before starting the first test to prevent /tmp from filling up.
+<p>
+If your toolchain is missing some crucial patches or is misconfigured, you might
+not be able to get a chroot jail working.  In that case, try linking the
+gcc regression tests statically, and running them without the jail;
+edit crosstest.sh where it's creating boards/$TARGET.exp, and
+uncomment the lines that set cflags to -static and username to root.
+That should get you to a point where you can at least run the gcc and glibc tests and see what's screwing up!
+<p>
+You can rerun an individual gcc test by hand with a command like
+<pre>
+$ cd ~/crosstool-0.25/build/powerpc-405-linux-gnu/gcc-3.3-glibc-2.2.5/build-gcc
+$ DEJAGNU=~/crosstool-0.25/boards/master.exp PATH=~/crosstool-0.25/result/dejagnu/bin:$PATH RUNTESTFLAGS="--target=powerpc-405-linux-gnu -v -v -v -v -a execute.exp=20000731-1.c" make check-gcc
+</pre>
+(Be sure to edit that command to match your paths and target!)  
+That tells runtest to run just testcase gcc/testsuite/gcc.c-torture/execute/20000731-1.c.
+It may be easier to run runtest directly, rather than through make.  The same command above can be run as
+<pre>
+$ cd ~/crosstool-0.25/build/powerpc-405-linux-gnu/gcc-3.3-glibc-2.2.5/build-gcc/testsuite
+$ DEJAGNU=~/crosstool-0.25/boards/master.exp PATH=~/crosstool-0.25/result/dejagnu/bin:$PATH runtest --tool=gcc --target=powerpc-405-linux-gnu -v -v -v -v -a execute.exp=20000731-1.c
+</pre>
+
+<p>
+You can also rerun individual tests by just compiling them by hand,
+transferring them to the target, and running them.  Dejagnu is just
+a fancy way of doing that automatically.
+<p>
+When running gcc execution tests with whatever glibc is laying about,
+you may get the error "error in loading shared libraries: undefined symbol: __register_frame_info"
+To work around this, see register_frame_info_fix.{sh,c}
+The right fix is probably to use a chroot environment and test with your 
+newly built glibc, as documented above.
+<p>
+The dejagnu in debian is old, and will fail on c-torture's first test (20000112-1.c)
+unless you copy share/dejagnu/standard.exp to share/dejagnu/baseboards/
+That one reason I tell you to compile dejagnu-1.4.3 fresh instead of using the system's copy of dejagnu.
+<p>
+If you're testing on a busybox-0.65 system, sometimes tar -z fails.  Using uncompressed tar archives is safer.
+
+<h2>Current Issues</h2>
+<ul>
+<li>
+<li>These scripts, unlike Bill Gatliff's original crossgcc scripts,
+don't support bare metal newlib targets.  They should, but I needed to
+focus on targeting Linux first.  See contrib/newlib for a user-contributed fix.
+<li>These scripts don't support ucLibc.
+<li>Supposedly doesn't run on Red Hat 9 because wget on rh9 can't fetch from gnu.org.
+<li>gcc-3.3 doesn't build glibc-2.3.2 for arm; see <a href="http://gcc.gnu.org/PR11103">gcc pr11103</a>
+(The Red Hat 9.0 glibc SRPM should contain a snapshot of glibc recent enough to contain the fix, though.)
+<li>gcc-3.3 doesn't build glibc-2.3.2 for s390; see <a href="http://gcc.gnu.org/PR9552">gcc pr9552</a>
+<li>glibc-2.3.2 doesn't build for cris; <a href="http://sources.redhat.com/ml/libc-alpha/2003-01/msg00008.html">looks
+like the maintainer needs to create a sysdep-cancel.h for cris</a>.
+</ul>
+See the ChangeLog for more issues.
+
+<h2>Contributed Patches</h2>
+A few users of the crosstool scripts have submitted patches.  I'm
+saving these in the 'contrib' directory until I have time to test them.
+<ul>
+<li> contrib/xtool-ro.patch lets you run with sources in a read-only directory.
+</ul>
+
+<h2>Links</h2>
+There are many good references for people building crosscompilers:
+<ul>
+<li>Bill Gatliff's <a href="http://crossgcc.billgatliff.com/build-crossgcc.sh">crossgcc build script</a>
+<li>Bill's <a href="http://billgatliff.com/twiki/bin/view/Crossgcc/ToolSetup">Crossgcc Wiki</a>
+<li>Karim Yaghmour's book <a href="http://www.oreilly.com/catalog/belinuxsys/">Building Embedded Linux Systems</a>
+<li>Karim Yaghmour's web site <a href="http://www.embeddedtux.org/">embeddedtux.org</a> and his
+<a href="http://www.embeddedtux.org/gnu-tools.html">matrix of known working toolchain combinations</a>
+<li><a href="http://www.embeddedlinuxinterfacing.com/sourcecode.shtml">Scripts from "Embedded Linux: Hardware, Software and Interfacing"</a>, by Dr. Craig Hollabaugh
+<li>the <a href="http://sources.redhat.com/ml/crossgcc/">crossgcc mailing list</a>
+<li><a href="http://www.busybox.net/cgi-bin/cvsweb/buildroot/">buildroot</a> - a cool build-from-scratch embedded distro by Erik Andersen.  Needs a homepage badly!
+<li><a href="http://www.pengutronix.de/software/ptxdist_en.html">PTXdist</a> - a fork of buildroot, by Pengutronix/Robert Schwebel; adds glibc and a gui config menu
+<li><a href="http://lug-owl.de/~jbglaw/linux-ports/#EasilyBuildableCrossToolchains">Proposal: Merging all Outstanding Linux Ports to Linus</a>, by Jan-Benedict Glaw
+<li><a href="http://sed.inf.u-szeged.hu/gcc-arm/">GCC ARM pages at the University of Szeged</a> - very high quality resource;
+impressive <a href="http://sed.inf.u-szeged.hu/gcc-arm/gnats.php">"ARM related GCC Bugzilla Problem Reports"</a>
+and <a href="http://sed.inf.u-szeged.hu/gcc-arm/prs.php">"Results, Problem Reports and Patches"</a> pages.
+<li><a href="http://www.arm.linux.org.uk/developer/">ARM Linux Developer</a> pages - kernel stuff mostly
+<li><a href="http://www.ltc.com/~brad/mips/mips-cross-toolchain.html">Building a Modern MIPS Cross-Toolchain for Linux</a>, by 
+Bradley D. LaRonde
+<li><a href="http://www.develer.com/uclinux/uclinux-elf-tools.html">GCC 3.3 toolchain for uClinux ColdFire platforms</a> by  Bernardo Innocenti
+<li><a href="ftp://ftp.fairwayacademy.org/pub/armlinux/toolchain/">Jeff Sutherland's gcc-3.3 toolchain for xscale</a>
+<li><a href="http://sourceforge.net/projects/gnude">gnude - gnu development environment</a>, 
+currently an arm/newlib cross toolchain compiled for Windows, but aiming to do more
+<li><a href="http://cvs.mandrakesoft.com/cgi-bin/cvsweb.cgi/SPECS/gcc/">Mandrake's gcc patch archive</a> - could be handy in a pinch
+<li><a href="http://www.gentoo.org/cgi-bin/viewcvs.cgi/sys-devel/gcc/">gentoo's gcc build scripts</a>
+<li><a href="http://www.gentoo.org/cgi-bin/viewcvs.cgi/sys-libs/glibc/">gentoo's glibc build scripts</a>
+</ul>
+And some not so good ones :-)
+<ul>
+<li>
+My <a href="http://kegel.com/xgcc3">older cross compiler stuff</a> is still
+online.  This is where I documented the patches needed to run on ppc405;
+these patches are included in my glibc-2.2.5/gcc-3.2.3 patches collection,
+and some of them have made it in to gcc-3.3.
+</ul>
+<p>
+<hr>
+Portions copyright 2003, <a href="http://ixiacom.com">Ixia Communications</a>.<br>
+Released under the GPL.<br>
+Last revision 11 November 2003 by dkegel@ixiacom.com / dank@kegel.com
+</body>
+</html>

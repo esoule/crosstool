@@ -1,0 +1,9 @@
+FAIL: gcc.dg/cpp/tr-warn3.c 
+FAIL: gcc.dg/format/c90-printf-1.c 
+FAIL: gcc.dg/format/c99-printf-1.c
+FAIL: gcc.dg/format/ext-1.c
+FAIL: gcc.dg/format/ext-3.c 
+FAIL: gcc.dg/format/ext-6.c 
+FAIL: gcc.dg/noncompile/voidparam-1.c
+FAIL: gcc.dg/typespec-1.c
+FAIL: g++.law/visibility19.C

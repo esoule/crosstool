@@ -1,0 +1,6 @@
+BINUTILS_DIR=binutils-2.11.2
+BINUTILS_URL=ftp://ftp.gnu.org/pub/gnu/binutils
+GCC_DIR=gcc-2.95.3
+GLIBC_DIR=glibc-2.2.5
+LINUX_DIR=linux-2.4.3
+GLIBCTHREADS_FILENAME=glibc-linuxthreads-2.2.5

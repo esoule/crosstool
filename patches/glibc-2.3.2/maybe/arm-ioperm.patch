@@ -1,0 +1,67 @@
+#
+# Submitted:
+#
+# Marc Kleine-Budde <kleine-budde@gmx.de>, 2003-28-11
+#
+# Error:
+#
+# arm-unknown-linux-gnu-gcc ../sysdeps/unix/sysv/linux/arm/ioperm.c -c
+# -std=gnu99 -O2 -Wall -Winline -Wstrict-prototypes -Wwrite-strings -g
+# -I../include
+# -I. -I/home/frogger/projects/ptxdist/ptxdist-arm/build/glibc-2.3.2-build/misc
+# -I.. -I../libio
+# -I/home/frogger/projects/ptxdist/ptxdist-arm/build/glibc-2.3.2-build
+# -I../sysdeps/arm/elf -I../linuxthreads/sysdeps/unix/sysv/linux/arm
+# -I../linuxthreads/sysdeps/unix/sysv/linux
+# -I../linuxthreads/sysdeps/pthread -I../sysdeps/pthread
+# -I../linuxthreads/sysdeps/unix/sysv -I../linuxthreads/sysdeps/unix
+# -I../linuxthreads/sysdeps/arm -I../sysdeps/unix/sysv/linux/arm
+# -I../sysdeps/unix/sysv/linux -I../sysdeps/gnu
+# -I../sysdeps/unix/common -I../sysdeps/unix/mman
+# -I../sysdeps/unix/inet -I../sysdeps/unix/sysv -I../sysdeps/unix/arm
+# -I../sysdeps/unix -I../sysdeps/posix -I../sysdeps/arm/fpu
+# -I../sysdeps/arm -I../sysdeps/wordsize-32
+# -I../sysdeps/ieee754/flt-32 -I../sysdeps/ieee754/dbl-64
+# -I../sysdeps/ieee754 -I../sysdeps/generic/elf -I../sysdeps/generic
+# -nostdinc -isystem
+# /home/frogger/ptxdist/xchain/arm/lib/gcc-lib/arm-unknown-linux-gnu/3.3.2/include
+# -isystem
+# /home/frogger/ptxdist/xchain/arm/arm-unknown-linux-gnu/include
+# -D_LIBC_REENTRANT -include ../include/libc-symbols.h -o
+# /home/frogger/projects/ptxdist/ptxdist-arm/build/glibc-2.3.2-build/misc/ioperm.o
+# ../sysdeps/unix/sysv/linux/arm/ioperm.c: In function `init_iosys':
+# ../sysdeps/unix/sysv/linux/arm/ioperm.c:103: error: `BUS_ISA' undeclared (first use in this function)
+# ../sysdeps/unix/sysv/linux/arm/ioperm.c:103: error: (Each undeclared identifier is reported only once
+# ../sysdeps/unix/sysv/linux/arm/ioperm.c:103: error: for each function it appears in.)
+# ../sysdeps/unix/sysv/linux/arm/ioperm.c:103: error: initializer element is not constant
+# ../sysdeps/unix/sysv/linux/arm/ioperm.c:103: error: (near initialization for `iobase_name[1]')
+# ../sysdeps/unix/sysv/linux/arm/ioperm.c:104: error: initializer element is not constant
+# ../sysdeps/unix/sysv/linux/arm/ioperm.c:104: error: (near initialization for `ioshift_name[1]')
+# make[3]: *** [/home/frogger/projects/ptxdist/ptxdist-arm/build/glibc-2.3.2-build/misc/ioperm.o] Error 1
+# make[3]: Leaving directory `/home/frogger/projects/ptxdist/ptxdist-arm/build/glibc-2.3.2/misc'
+# make[2]: *** [misc/subdir_lib] Error 2
+# make[2]: Leaving directory `/home/frogger/projects/ptxdist/ptxdist-arm/build/glibc-2.3.2'
+# make[1]: *** [all] Error 2
+# make[1]: Leaving directory `/home/frogger/projects/ptxdist/ptxdist-arm/build/glibc-2.3.2-build'
+# make: *** [/home/frogger/projects/ptxdist/ptxdist-arm/state/glibc.compile] Error 2
+#
+# Description:
+#
+# linux-2.6.0-test10 headers break with glibc-2.3.2
+# http://lists.arm.linux.org.uk/pipermail/linux-arm/2003-January/004711.html
+# 
+# State:
+#
+# _this_ patch is not in CVS, maybe there is a fix
+#
+diff -ru glibc-2.3.2-orig/sysdeps/unix/sysv/linux/arm/ioperm.c glibc-2.3.2/sysdeps/unix/sysv/linux/arm/ioperm.c
+--- glibc-2.3.2-orig/sysdeps/unix/sysv/linux/arm/ioperm.c	Thu Feb 20 23:22:24 2003
++++ glibc-2.3.2/sysdeps/unix/sysv/linux/arm/ioperm.c	Fri Nov 28 23:26:40 2003
+@@ -43,6 +43,7 @@
+ 
+ #include <sys/types.h>
+ #include <sys/mman.h>
++#include <linux/input.h>
+ 
+ #include <asm/page.h>
+ #include <sys/sysctl.h>
