@@ -19,11 +19,6 @@ Verify http://gcc.gnu.org/PR12009 fixed in 3.4 so we can drop pr12009.patch
 
 Verify http://gcc.gnu.org/PR13260 fixed in 3.4
 
-add linux-2.6.0
-
-Add check to getandpatch to warn if patches required offsets or fuzz
-or if the patches applied with -f failed to apply (!)
-
 rpjday@mindspring.com 9/25: env var error messages in crosstool.sh misleading,
 should only say var is a directory name, as getandpatch has already run by then
 

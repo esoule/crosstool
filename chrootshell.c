@@ -91,7 +91,7 @@ void _die(int line, const char *fmt, const void *val)
 	exit(1);
 }
 
-#define die(msg) _die(__LINE__, "", 0)
+#define die(msg) _die(__LINE__, msg, 0)
 #define die2(fmt, val) _die(__LINE__, fmt, val)
 
 void mysetenv(const char *name, const char *value)

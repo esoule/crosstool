@@ -6,7 +6,7 @@
 # transfer this to the embedded system and run it in the background
 # while running the test suite.
 JAIL=/jail
-while /bin/true; do
+while true; do
    ls -t $JAIL/tmp/*.*.* 2>/dev/null | tail +20 | xargs rm -f > /dev/null 2>&1
    sleep 60
 done

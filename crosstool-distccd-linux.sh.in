@@ -1,0 +1,89 @@
+#!/bin/bash
+# Script to control crosstool's distccd on Red Hat Linux
+# [FIXME: add support for Debian...]
+# Lurks in __ABSTOP__/common/bin/crosstool-distccd.sh until you run
+# __ABSTOP__/common/bin/install-distccd.sh to install it into /etc/init.d
+#
+# WARNING: Don't enable on untrusted networks
+#
+# Following line causes the daemon to be started by default at boot time
+# after install when booting to runlevels 3, 4, or 5:
+# chkconfig: 345 80 20
+# description: Start the distcc daemon
+# processname: distccd
+#
+
+# Source function library.
+. /etc/init.d/functions
+
+# Source networking configuration.
+. /etc/sysconfig/network
+
+# Check that networking is up.
+[ ${NETWORKING} = "no" ] && exit 0
+
+# We'd want --pid-file=/var/run/$NAME.pid but then we'd have to trust
+# it to su itself to nobody
+
+OPTIONS="--daemon"
+USER=nobody
+
+RETVAL=0
+prog="crosstool-distccd"
+
+DISTCC_CMDLIST=__ABSTOP__/common/etc/distcc/apps
+export DISTCC_CMDLIST
+DISTCC_CMDLIST_NUMWORDS=4
+export DISTCC_CMDLIST_NUMWORDS
+
+[ -x __ABSTOP__/common/bin/$prog ] || exit 0
+
+start() {
+	echo -n "Starting $prog"
+	daemon --user $USER __ABSTOP__/common/bin/$prog $OPTIONS
+	RETVAL=$?
+        echo
+	[ $RETVAL -eq 0 ] && touch /var/lock/subsys/$prog
+        return $RETVAL
+}
+
+stop() {
+	echo -n "Shutting down $prog"
+	killproc $prog
+	RETVAL=$?
+        echo
+        [ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/$prog
+        return $RETVAL
+}
+
+# See how we were called.
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	status)
+		status $prog
+		RETVAL=$?
+		;;
+	restart|reload)
+		stop
+		start
+		RETVAL=$?
+		;;
+	condrestart)
+		if [ -f /var/lock/subsys/$prog ]; then
+			stop
+			start
+			RETVAL=$?
+		fi
+		;;
+	*)
+		echo $"Usage $0 {start|stop|restart|condrestart|status}"
+		exit 1
+esac
+
+exit $RETVAL
+

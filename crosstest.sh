@@ -3,7 +3,7 @@ set -x -e
 
 abort() {
     echo $@
-    exec /bin/false
+    exec false
 }
 
 #
@@ -84,7 +84,7 @@ cd $BUILD_DIR
 
 # Assume that remote test environment for $TARGET is at hostname $TARGET
 REMOTE=$TARGET
-rm -rf jail_etc_passwd || /bin/true
+rm -rf jail_etc_passwd || true
 rcp root@$REMOTE:/jail/etc/passwd jail_etc_passwd
 if test -x $BUILD_DIR/ptxdist-0.3.23/root/bin/busybox; then
 	echo Grabbing busybox from ptxdist
@@ -146,7 +146,7 @@ cat make.out \
 echo "#!/bin/sh" > ../glibctest.sh
 echo "set -x" >> ../glibctest.sh
 # be nice to the tests in dlfcn and elf, which contain hardcoded paths
-echo "rm -rf $BUILD_DIR || /bin/true" >> ../glibctest.sh
+echo "rm -rf $BUILD_DIR || true" >> ../glibctest.sh
 
 # this fails on one of my systems with EDIRTOOLONG (glibc problem?), so break it up
 #echo "mkdir -p $BUILD_DIR; ln -s /build-glibc $BUILD_DIR/build-glibc" >> ../glibctest.sh
@@ -165,7 +165,7 @@ INPUTFILES="glibc*/*/*.input glibc*/stdio-common/xbug.c glibc*/io/Makefile glibc
 TESTLIBS=`ls build-glibc/elf/*.so build-glibc/dlfcn/*.so | grep -v ld.so`
 tar -czf test.tar.gz glibctest.sh $TESTPROGRAMS $INPUTFILES $TESTLIBS
 # Strip the executables we're going to send to the target - makes a difference when compiled -g
-rm -rf tmp || /bin/true
+rm -rf tmp || true
 mkdir tmp
 cd tmp
 tar -xzf ../test.tar.gz
@@ -260,9 +260,9 @@ cd ..
 cd build-binutils
 
 # Run binutils' built-in regression test.
-RUNTESTFLAGS="--target=$TARGET -v" make -k check || /bin/true
+RUNTESTFLAGS="--target=$TARGET -v" make -k check || true
 
-rm -f test_summary.log || /bin/true
+rm -f test_summary.log || true
 for file in binutils/binutils.sum gas/testsuite/gas.sum ld/ld.sum; do
 	echo "[---------------------------- $file ---------------------------]" >> test_summary.log
 	cat $file >> test_summary.log

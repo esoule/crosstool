@@ -1,0 +1,300 @@
+make -j1 -C stdlib install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/stdlib'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/stdlib'
+make -j1 -C stdio-common install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/stdio-common'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/stdio-common'
+make -j1 -C libio install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/libio'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/libio'
+make -j1 -C dlfcn install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/dlfcn'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/dlfcn'
+make -j1 -C malloc install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/malloc'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/malloc'
+make -j1 -C string install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/string'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/string'
+make -j1 -C wcsmbs install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/wcsmbs'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/wcsmbs'
+make -j1 -C timezone install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/timezone'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/timezone'
+make -j1 -C time install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/time'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/time'
+make -j1 -C dirent install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/dirent'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/dirent'
+make -j1 -C grp install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/grp'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/grp'
+make -j1 -C pwd install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/pwd'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/pwd'
+make -j1 -C posix install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/posix'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/posix'
+make -j1 -C io install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/io'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/io'
+make -j1 -C termios install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/termios'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/termios'
+make -j1 -C resource install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/resource'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/resource'
+make -j1 -C misc install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/misc'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/misc'
+make -j1 -C socket install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/socket'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/socket'
+make -j1 -C sysvipc install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/sysvipc'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/sysvipc'
+make -j1 -C gmon install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/gmon'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/gmon'
+make -j1 -C gnulib install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/gnulib'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/gnulib'
+make -j1 -C wctype install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/wctype'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/wctype'
+make -j1 -C manual install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/manual'
+../scripts/mkinstalldirs /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/info
+for file in libc.info*; do \
+  /usr/bin/install -c -m 644 $file /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/info/$file; \
+done
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/manual'
+make -j1 -C shadow install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/shadow'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/shadow'
+make -j1 -C po install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/po'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/po'
+make -j1 -C argp install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/argp'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/argp'
+make -j1 -C crypt install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/crypt'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/crypt'
+make -j1 -C linuxthreads install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/linuxthreads'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/linuxthreads'
+make -j1 -C resolv install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/resolv'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/resolv'
+make -j1 -C nss install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/nss'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/nss'
+make -j1 -C rt install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/rt'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/rt'
+make -j1 -C conform install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/conform'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/conform'
+make -j1 -C debug install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/debug'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/debug'
+make -j1 -C linuxthreads_db install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/linuxthreads_db'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/linuxthreads_db'
+make -j1 -C inet install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/inet'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/inet'
+make -j1 -C hesiod install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/hesiod'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/hesiod'
+make -j1 -C sunrpc install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/sunrpc'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/sunrpc'
+make -j1 -C nis install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/nis'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/nis'
+make -j1 -C nscd install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/nscd'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/nscd'
+make -j1 -C streams install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/streams'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/streams'
+make -j1 -C login install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/login'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/login'
+make -j1 -C soft-fp install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/soft-fp'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/soft-fp'
+make -j1 -C elf install-data
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/elf'
+make[2]: `install-data' is up to date.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5/elf'
+make[1]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/glibc-2.2.5'
++ cd /home/dank/queue/jobdir.k8/crosstool-0.30
++ sh mkoverride.sh
++ LIBS='libgcc_s.so libstdc++.so'
++ for LIB in '$LIBS'
+++ find /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/libexec -name 'libgcc_s.so*' -type f
+++ grep -v '\.dir$'
++ FILES=/home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/libgcc_s.so.1
++ for FILE in '$FILES'
++ installOneLib /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/libgcc_s.so.1
++ FILE=/home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/libgcc_s.so.1
++ NEWDIR=/home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/libgcc_s.so.1.dir
++ rm -rf /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/libgcc_s.so.1.dir
++ mkdir -p /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/libgcc_s.so.1.dir
++ ln /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/libgcc_s.so.1 /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/libgcc_s.so.1.dir
++ cat
++ cat
++ for LIB in '$LIBS'
+++ find /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/libexec -name 'libstdc++.so*' -type f
+++ grep -v '\.dir$'
++ FILES='/home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/nof/libstdc++.so.5.0.6
+/home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/libstdc++.so.5.0.6'
++ for FILE in '$FILES'
++ installOneLib /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/nof/libstdc++.so.5.0.6
++ FILE=/home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/nof/libstdc++.so.5.0.6
++ NEWDIR=/home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/nof/libstdc++.so.5.0.6.dir
++ rm -rf /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/nof/libstdc++.so.5.0.6.dir
++ mkdir -p /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/nof/libstdc++.so.5.0.6.dir
++ ln /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/nof/libstdc++.so.5.0.6 /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/nof/libstdc++.so.5.0.6.dir
++ cat
++ cat
++ for FILE in '$FILES'
++ installOneLib /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/libstdc++.so.5.0.6
++ FILE=/home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/libstdc++.so.5.0.6
++ NEWDIR=/home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/libstdc++.so.5.0.6.dir
++ rm -rf /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/libstdc++.so.5.0.6.dir
++ mkdir -p /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/libstdc++.so.5.0.6.dir
++ ln /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/libstdc++.so.5.0.6 /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/powerpc-750-linux-gnu/lib/libstdc++.so.5.0.6.dir
++ cat
++ cat
++ install -D -m755 install-shared-lib.sh /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/libexec/install-shared-lib.sh
+Cross-toolchain build complete. Result in /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5.
++ echo Cross-toolchain build complete. Result in /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5.
++ exit 0
++ cd /home/dank/queue/jobdir.k8/crosstool-0.30
++ sh testhello.sh
++ cd /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5
++ test '!' -d tmp
++ mkdir tmp
++ cd tmp
++ test x '!=' x
++ cat
++ /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/bin/powerpc-750-linux-gnu-gcc -static hello.c -o powerpc-750-linux-gnu-hello-static
++ /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/bin/powerpc-750-linux-gnu-gcc hello.c -o powerpc-750-linux-gnu-hello
++ test -x /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/bin/powerpc-750-linux-gnu-g++
++ cat
++ /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/bin/powerpc-750-linux-gnu-g++ -static hello2.cc -o powerpc-750-linux-gnu-hello2-static
++ /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/bin/powerpc-750-linux-gnu-g++ hello2.cc -o powerpc-750-linux-gnu-hello2
+testhello: C compiler can in fact build a trivial program.
++ echo testhello: C compiler can in fact build a trivial program.
++ test 1 = 1
++ sh testlinux.sh
++ env
++ sort
+BINUTILS_DIR=binutils-2.15
+BUILD_DIR=/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5
+GCC_DIR=gcc-3.3.4
+GCC_EXTRA_CONFIG=--with-cpu=750 --enable-cxx-flags=-mcpu=750
+GCC_LANGUAGES=c,c++
+GLIBCTHREADS_FILENAME=glibc-linuxthreads-2.2.5
+GLIBC_DIR=glibc-2.2.5
+HOME=/home/dank
+LINUX_DIR=linux-2.4.26
+LOGNAME=dank
+MAIL=/var/mail/dank
+PARALLELMFLAGS=-j1
+PATH=/usr/local/bin:/bin:/usr/bin
+PREFIX=/home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5
+PWD=/home/dank/queue/jobdir.k8/crosstool-0.30
+QUIET_EXTRACTIONS=1
+RESULT_TOP=/home/dank/crosstooltest
+SHELL=/bin/bash
+SHLVL=4
+SRC_DIR=/home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5
+SSH_CLIENT=::ffff:192.168.123.1 34491 22
+SSH_CONNECTION=::ffff:192.168.123.1 34491 ::ffff:192.168.123.209 22
+TARBALLS_DIR=/home/dank/downloads
+TARGET=powerpc-750-linux-gnu
+TARGET_CFLAGS=-O
+TOOLCOMBO=gcc-3.3.4-glibc-2.2.5
+TOP_DIR=/home/dank/queue/jobdir.k8/crosstool-0.30
+USER=dank
+_=/bin/env
++ test -z /home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5
++ test -z linux-2.4.26
++ test -z /home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5
++ test -z powerpc-750-linux-gnu
++ test x '!=' x
++ case $TARGET in
++ ARCH=ppc
++ cd /home/dank/queue/jobdir.k8/crosstool-0.30/build/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5
+++ awk '/^VERSION =/ { print $3 }' linux-2.4.26/Makefile
++ KERNEL_VERSION=2
+++ awk '/^PATCHLEVEL =/ { print $3 }' linux-2.4.26/Makefile
++ KERNEL_PATCHLEVEL=4
++ cd linux-2.4.26
++ ARCH=ppc
++ CROSS_COMPILE=/home/dank/crosstooltest/powerpc-750-linux-gnu/gcc-3.3.4-glibc-2.2.5/bin/powerpc-750-linux-gnu-
++ case "$KERNEL_VERSION.$KERNEL_PATCHLEVEL.x" in
++ test -f .config
++ abort 'sorry, for 2.4 kernel you need a config file'
+sorry, for 2.4 kernel you need a config file
++ echo sorry, for 2.4 kernel you need a config file
++ exec false
+
+real	30m8.611s
+user	22m55.874s
+sys	5m17.568s
++ df
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/mapper/VolGroup00-LogVol00
+                      63088564  16871076  43012780  29% /
+/dev/hda2               101105      8947     86937  10% /boot
+none                    257652         0    257652   0% /dev/shm
+Finished job powerpc-750-gcc-3.3.4-glibc-2.2.5.sh on node k8

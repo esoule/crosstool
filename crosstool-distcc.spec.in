@@ -1,0 +1,83 @@
+# Workaround for rpm bug #90691
+%undefine __check_files
+Name: crosstool-distcc
+Version: 2.16
+Release: 1
+
+Summary: distcc is a program to distribute builds C/C++/ Objective C/C++
+License: GNU GPL
+Group: Development/C
+Url: http://distcc.samba.org/
+
+Source0: %name-%version.tar.bz2
+
+Requires: initscripts
+
+%description
+distcc is a program to distribute builds of C, C++, Objective C 
+or Objective C++ code across several machines on a network. 
+distcc should always generate the same results as a local build, 
+is simple to install and use, and is often two or more 
+times faster than a local compile.
+This version has support for multiple installed versions of
+cross-compilers with the same name, so it requires you to
+invoke the compiler with an absolute path.  (This is done
+for you if you use the masquerade distributed/bin directory set up by
+the crosstool RPMs.)
+The client reads a list of servers from __PREFIX__/common/etc/distcc/hosts.
+
+%prep
+#%setup -q -n %name-%version
+
+%build
+# Done for us by mkdistcc.sh
+
+%install
+# Ditto
+
+%files
+%defattr(-,root,root)
+__PREFIX__/bin/distcc
+__PREFIX__/bin/distccmon-text
+__PREFIX__/bin/mkdistcclinks.sh
+__PREFIX__/bin/config.guess
+__PREFIX__/man/man1/distcc.1
+__PREFIX__/man/man1/distccmon-text.1
+__PREFIX__/share/
+
+%package server
+Summary: The distributed build server
+Group: Development/C
+# Don't install this and the plain vanilla distcc server at same time,
+# since they use the same port number.  (FIXME - either use different
+# port number, or get these changes rolled in to standard distcc rpm?)
+Conflicts: distcc-server
+
+%description server
+The distcc server accepts compilation requests from distcc clients.
+It reads the list of allowed compilers from __PREFIX__/common/etc/distcc/apps.
+(That file is automatically updated when you install or uninstall
+any of the crosstool RPMs.)  
+
+%post server
+# Create a script to start distccd as a service
+ABSTOP=`echo __PREFIX__ | sed -e "s,\(.*\)/common,\1,"`
+sed "s,__ABSTOP__,${ABSTOP}," < $ABSTOP/common/etc/crosstool-distccd-linux.sh.in > /etc/init.d/crosstool-distccd
+chmod 755 /etc/init.d/crosstool-distccd
+# Register it with the system
+/sbin/chkconfig --add crosstool-distccd
+# Enable and start the service (FIXME: is this a good idea?)
+/sbin/chkconfig crosstool-distccd on
+/sbin/service crosstool-distccd start > /dev/null 2>&1
+
+%preun server
+/sbin/service crosstool-distccd stop > /dev/null 2>&1 || true 
+/sbin/chkconfig --del crosstool-distccd
+rm /etc/init.d/crosstool-distccd
+
+%files server
+%defattr(-,root,root)
+__PREFIX__/bin/distccd
+__PREFIX__/bin/crosstool-distccd
+__PREFIX__/man/man1/distccd.1
+__PREFIX__/etc/crosstool-distccd-linux.sh.in

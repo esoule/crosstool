@@ -1,0 +1,300 @@
+make[1]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/intl'
+if test "@PACKAGE@" = "gettext" \
+   && test '' = 'intl-compat.o'; then \
+  if test -r /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/intl/../../mkinstalldirs; then \
+    /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/intl/../../mkinstalldirs /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/lib /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/include; \
+  else \
+    /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/intl/mkinstalldirs /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/lib /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/include; \
+  fi; \
+  /usr/bin/install -c -m 644 intlh.inst /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/include/libintl.h; \
+  /usr/bin/install -c -m 644 libintl.a /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/lib/libintl.a; \
+else \
+  : ; \
+fi
+if test "@PACKAGE@" = "gettext"; then \
+  if test -r /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/intl/../../mkinstalldirs; then \
+    /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/intl/../../mkinstalldirs /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/share/gettext/intl; \
+  else \
+    /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/intl/mkinstalldirs /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/share/gettext/intl; \
+  fi; \
+  /usr/bin/install -c -m 644 VERSION /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/share/gettext/intl/VERSION; \
+  dists="ChangeLog Makefile.in linux-msg.sed po2tbl.sed.in xopen-msg.sed gettext.h gettextP.h hash-string.h libgettext.h loadinfo.h bindtextdom.c dcgettext.c dgettext.c gettext.c finddomain.c loadmsgcat.c localealias.c textdomain.c l10nflist.c explodename.c intl-compat.c cat-compat.c"; \
+  for file in $dists; do \
+    /usr/bin/install -c -m 644 /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/intl/$file /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/share/gettext/intl/$file; \
+  done; \
+else \
+  : ; \
+fi
+make[1]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/intl'
+make[1]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/ld'
+Making install in po
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/ld/po'
+make[2]: Nothing to be done for `install'.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/ld/po'
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/ld'
+make[3]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/ld'
+/bin/sh /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/ld/../mkinstalldirs /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/bin /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/mips-unknown-linux-gnu/bin
+ /bin/sh ./libtool  --mode=install /usr/bin/install -c ld-new /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/bin/mips-unknown-linux-gnu-ld
+/usr/bin/install -c ld-new /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/bin/mips-unknown-linux-gnu-ld
+n=`echo ld | sed 's,^,mips-unknown-linux-gnu-,;'`; \
+if [ "/home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/bin/$n" != "/home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/mips-unknown-linux-gnu/bin/ld" ]; then \
+  rm -f /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/mips-unknown-linux-gnu/bin/ld; \
+  ln /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/bin/$n /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/mips-unknown-linux-gnu/bin/ld >/dev/null 2>/dev/null \
+  || /bin/sh ./libtool --mode=install /usr/bin/install -c ld-new /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/mips-unknown-linux-gnu/bin/ld; \
+fi
+make  install-man1
+make[4]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/ld'
+/bin/sh /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/ld/../mkinstalldirs /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/man/man1
+ /usr/bin/install -c -m 644 /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/ld/ld.1 /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/man/man1/mips-unknown-linux-gnu-ld.1
+make[4]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/ld'
+/bin/sh /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/ld/../mkinstalldirs /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/mips-unknown-linux-gnu/lib/ldscripts
+mkdir -p -- /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/mips-unknown-linux-gnu/lib/ldscripts
+for f in ldscripts/*; do \
+  /usr/bin/install -c -m 644 $f /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/mips-unknown-linux-gnu/lib/$f ; \
+done
+make[3]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/ld'
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/ld'
+Making install-info in po
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/ld/po'
+make[2]: Nothing to be done for `install-info'.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/ld/po'
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/ld'
+makeinfo --split-size=5000000 -I /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/ld -I /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/ld/../bfd/doc /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/ld/ld.texinfo
+/bin/sh /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/ld/../mkinstalldirs /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/info
+ /usr/bin/install -c -m 644 ./ld.info /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/info/ld.info
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/ld'
+make[1]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/ld'
+make[1]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/libiberty'
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/libiberty/testsuite'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/libiberty/testsuite'
+/bin/sh /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/libiberty/../mkinstalldirs /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/lib
+mkdir -p -- /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/lib
+/usr/bin/install -c -m 644 ./libiberty.a /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/lib/./libiberty.an
+( cd /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/lib ; ranlib ./libiberty.an )
+mv -f /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/lib/./libiberty.an /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/lib/./libiberty.a
+if test -n ""; then \
+  case "" in \
+    /*)    thd=;; \
+    *)     thd=/home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/include/;; \
+  esac; \
+  /bin/sh /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/libiberty/../mkinstalldirs ${thd}; \
+  for h in /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/libiberty/../include/ansidecl.h /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/libiberty/../include/demangle.h /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/libiberty/../include/dyn-string.h /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/libiberty/../include/fibheap.h /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/libiberty/../include/floatformat.h /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/libiberty/../include/hashtab.h /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/libiberty/../include/libiberty.h /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/libiberty/../include/objalloc.h /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/libiberty/../include/partition.h /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/libiberty/../include/safe-ctype.h /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/libiberty/../include/sort.h /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/libiberty/../include/splay-tree.h /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/binutils-2.15/libiberty/../include/ternary.h; do \
+    /usr/bin/install -c -m 644 $h ${thd}; \
+  done; \
+fi
+make[2]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/libiberty/testsuite'
+make[2]: Nothing to be done for `install'.
+make[2]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/libiberty/testsuite'
+make[1]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-binutils/libiberty'
+Install glibc headers needed to build bootstrap compiler -- but only if gcc-3.x
++ cd ..
++ test -x /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/bin/mips-unknown-linux-gnu-ld
++ echo 'Install glibc headers needed to build bootstrap compiler -- but only if gcc-3.x'
++ grep -q gcc-3 /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/gcc-3.3.4/ChangeLog
++ test '!' -f /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/mips-unknown-linux-gnu/include/features.h
++ mkdir -p build-glibc-headers
++ cd build-glibc-headers
++ test '!' -f Makefile
++ libc_cv_ppc_machine=yes
++ CC=gcc
++ /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/glibc-2.3.3/configure --prefix=/usr --build=i686-pc-linux-gnu --host=mips-unknown-linux-gnu --without-cvs --disable-sanity-checks --with-headers=/home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/mips-unknown-linux-gnu/include --enable-hacker-mode
+checking build system type... i686-pc-linux-gnu
+checking host system type... mips-unknown-linux-gnu
+checking sysdep dirs... sysdeps/mips/elf sysdeps/unix/sysv/linux/mips/mips32 sysdeps/unix/sysv/linux/mips sysdeps/unix/sysv/linux sysdeps/gnu sysdeps/unix/common sysdeps/unix/mman sysdeps/unix/inet sysdeps/unix/sysv sysdeps/unix/mips/mips32 sysdeps/unix/mips sysdeps/unix sysdeps/posix sysdeps/mips/mips32 sysdeps/mips sysdeps/ieee754/flt-32 sysdeps/ieee754/dbl-64 sysdeps/wordsize-32 sysdeps/mips/fpu sysdeps/ieee754 sysdeps/generic/elf sysdeps/generic
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether ln -s works... yes
+checking for mips-unknown-linux-gnu-gcc... gcc
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ANSI C... none needed
+checking for gcc... gcc
+checking how to run the C preprocessor... gcc -E
+checking for mips-unknown-linux-gnu-g++... no
+checking for mips-unknown-linux-gnu-c++... no
+checking for mips-unknown-linux-gnu-gpp... no
+checking for mips-unknown-linux-gnu-aCC... no
+checking for mips-unknown-linux-gnu-CC... no
+checking for mips-unknown-linux-gnu-cxx... no
+checking for mips-unknown-linux-gnu-cc++... no
+checking for mips-unknown-linux-gnu-cl... no
+checking for mips-unknown-linux-gnu-FCC... no
+checking for mips-unknown-linux-gnu-KCC... no
+checking for mips-unknown-linux-gnu-RCC... no
+checking for mips-unknown-linux-gnu-xlC_r... no
+checking for mips-unknown-linux-gnu-xlC... no
+checking for g++... g++
+checking whether we are using the GNU C++ compiler... yes
+checking whether g++ accepts -g... yes
+checking for mips-unknown-linux-gnu-ranlib... mips-unknown-linux-gnu-ranlib
+checking whether as is GNU as... yes
+checking whether ld is GNU ld... yes
+checking for as... as
+checking version of as... 2.15.92.0.2, ok
+checking for ld... ld
+checking version of ld... 2.15.92.0.2, ok
+checking for pwd... /bin/pwd
+checking for mips-unknown-linux-gnu-gcc... (cached) gcc
+checking version of gcc... 3.4.2, ok
+checking for gnumake... no
+checking for gmake... gmake
+checking version of gmake... 3.80, ok
+checking for gnumsgfmt... no
+checking for gmsgfmt... no
+checking for msgfmt... msgfmt
+checking version of msgfmt... 0.14.1, ok
+checking for makeinfo... makeinfo
+checking version of makeinfo... 4.7, ok
+checking for sed... sed
+checking version of sed... 4.1.2, ok
+checking for autoconf... autoconf
+checking whether autoconf works... yes
+checking whether ranlib is necessary... no
+checking LD_LIBRARY_PATH variable... ok
+checking whether GCC supports -static-libgcc... -static-libgcc
+checking for bash... /bin/sh
+checking for gawk... gawk
+checking for perl... /usr/bin/perl
+checking for install-info... /sbin/install-info
+checking for bison... /usr/bin/bison
+checking for signed size_t type... no
+checking for libc-friendly stddef.h... yes
+checking whether we need to use -P to assemble .S files... no
+checking whether .text pseudo-op must be used... yes
+checking for assembler global-symbol directive... .globl
+checking for .set assembler directive... yes
+checking for assembler .type directive prefix... @
+checking for .symver assembler directive... yes
+checking for ld --version-script... yes
+checking for .previous assembler directive... yes
+checking for .protected and .hidden assembler directive... yes
+checking whether __attribute__((visibility())) is supported... yes
+checking for broken __attribute__((visibility()))... no
+checking for broken __attribute__((alias()))... no
+checking whether to put _rtld_local into .sdata section... no
+checking for .preinit_array/.init_array/.fini_array support... yes
+checking for -z nodelete option... yes
+checking for -z nodlopen option... yes
+checking for -z initfirst option... yes
+checking for -Bgroup option... yes
+checking whether --noexecstack is desirable for .S files... yes
+checking for -z combreloc... yes
+checking for -z execstack... yes
+checking for -fpie... no
+checking whether cc puts quotes around section names... no
+checking for assembler .weak directive... yes
+checking whether CFI directives are supported... yes
+checking if -g produces usable source locations for assembler-with-cpp... yes
+checking for ld --no-whole-archive... yes
+checking for gcc -fexceptions... yes
+checking for DWARF2 unwind info support... no_registry_needed
+checking for __builtin_expect... yes
+checking for __builtin_memset... no
+checking for redirection of built-in functions... yes
+checking for local label subtraction... yes
+checking for __thread... yes
+checking for tls_model attribute... yes
+checking for libgd... yes
+checking for egrep... grep -E
+checking for ANSI C header files... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking for long double... yes
+checking size of long double... 12
+running configure fragment for sysdeps/unix/sysv/linux/mips
+running configure fragment for sysdeps/unix/sysv/linux
+checking for egrep... (cached) grep -E
+checking installed Linux kernel header files... 2.0.10 or later
+checking for kernel header at least 2.4.0... ok
+*** WARNING: Are you sure you do not want to use the `linuxthreads'
+*** add-on?
+running configure fragment for sysdeps/unix/common
+running configure fragment for sysdeps/unix
+running configure fragment for sysdeps/generic
+checking for old glibc 2.0.x headers... no
+checking whether -fPIC is default... no
+configure: creating ./config.status
+config.status: creating config.make
+config.status: creating glibcbug
+config.status: creating Makefile
+config.status: creating config.h
+config.status: executing default commands
++ grep -q GLIBC_2.3 /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/glibc-2.3.3/ChangeLog
++ libc_cv_ppc_machine=yes
++ make sysdeps/gnu/errlist.c
+make -r PARALLELMFLAGS="-j1" CVSOPTS="" -C /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/glibc-2.3.3 objdir=`pwd` sysdeps/gnu/errlist.c
+make[1]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/glibc-2.3.3'
+(echo 'sysd-rules-sysdirs := sysdeps/mips/elf sysdeps/unix/sysv/linux/mips/mips32 sysdeps/unix/sysv/linux/mips sysdeps/unix/sysv/linux sysdeps/gnu sysdeps/unix/common sysdeps/unix/mman sysdeps/unix/inet sysdeps/unix/sysv sysdeps/unix/mips/mips32 sysdeps/unix/mips sysdeps/unix sysdeps/posix sysdeps/mips/mips32 sysdeps/mips sysdeps/ieee754/flt-32 sysdeps/ieee754/dbl-64 sysdeps/wordsize-32 sysdeps/mips/fpu sysdeps/ieee754 sysdeps/generic/elf sysdeps/generic';		      \
+ for dir in '$(..)sysdeps/mips/elf' '$(..)sysdeps/unix/sysv/linux/mips/mips32' '$(..)sysdeps/unix/sysv/linux/mips' '$(..)sysdeps/unix/sysv/linux' '$(..)sysdeps/gnu' '$(..)sysdeps/unix/common' '$(..)sysdeps/unix/mman' '$(..)sysdeps/unix/inet' '$(..)sysdeps/unix/sysv' '$(..)sysdeps/unix/mips/mips32' '$(..)sysdeps/unix/mips' '$(..)sysdeps/unix' '$(..)sysdeps/posix' '$(..)sysdeps/mips/mips32' '$(..)sysdeps/mips' '$(..)sysdeps/ieee754/flt-32' '$(..)sysdeps/ieee754/dbl-64' '$(..)sysdeps/wordsize-32' '$(..)sysdeps/mips/fpu' '$(..)sysdeps/ieee754' '$(..)sysdeps/generic/elf' '$(..)sysdeps/generic'; do			      \
+   for o in .o .os .op .og .ob .oST; do \
+      \
+     echo "\$(objpfx)%$o: $dir/%.S \$(before-compile); \
+	  \$(compile-command.S)";				      \
+     echo "\$(objpfx)%$o: $dir/%.s \$(before-compile); \
+	  \$(compile-command.s)";			              \
+     echo "\$(objpfx)rtld-%$o: $dir/%.S \$(before-compile); \
+	  \$(compile-command.S)";				      \
+     echo "\$(objpfx)rtld-%$o: $dir/%.s \$(before-compile); \
+	  \$(compile-command.s)";			              \
+     echo "\$(objpfx)ptw-%$o: $dir/%.S \$(before-compile); \
+	  \$(compile-command.S)";				      \
+     echo "\$(objpfx)ptw-%$o: $dir/%.s \$(before-compile); \
+	  \$(compile-command.s)";			              \
+     	\
+     echo "\$(objpfx)%$o: $dir/%.c \$(before-compile); \
+	  \$(compile-command.c)";				      \
+     echo "\$(objpfx)rtld-%$o: $dir/%.c \$(before-compile); \
+	  \$(compile-command.c)";				      \
+     echo "\$(objpfx)ptw-%$o: $dir/%.c \$(before-compile); \
+	  \$(compile-command.c)";				      \
+   done; \
+   echo "\$(objpfx)m_%.S: $dir/s_%.S; \$(+make-include-of-dep)";   \
+   echo "\$(objpfx)m_%.c: $dir/s_%.c; \$(+make-include-of-dep)";   \
+ done;								      \
+ echo 'sysd-rules-done = t') > /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-glibc-headers/sysd-rulesT
+mv -f /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-glibc-headers/sysd-rulesT /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-glibc-headers/sysd-rules
+for dir in /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-glibc-headers sysdeps/mips/elf sysdeps/unix/sysv/linux/mips/mips32 sysdeps/unix/sysv/linux/mips sysdeps/unix/sysv/linux sysdeps/gnu sysdeps/unix/common sysdeps/unix/mman sysdeps/unix/inet sysdeps/unix/sysv sysdeps/unix/mips/mips32 sysdeps/unix/mips sysdeps/unix sysdeps/posix sysdeps/mips/mips32 sysdeps/mips sysdeps/ieee754/flt-32 sysdeps/ieee754/dbl-64 sysdeps/wordsize-32 sysdeps/mips/fpu sysdeps/ieee754 sysdeps/generic/elf sysdeps/generic; do \
+  test -f $dir/syscalls.list && \
+  { /bin/sh sysdeps/unix/make-syscalls.sh $dir || exit 1; }; \
+  test $dir = sysdeps/unix && break; \
+done > /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-glibc-headers/sysd-syscallsT
+mv -f /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-glibc-headers/sysd-syscallsT /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-glibc-headers/sysd-syscalls
+gawk 'BEGIN { subdirs = ""; inhibit = "" };			\
+/^#/ { next };						\
+/^[^-]/ { subdirs = subdirs " " $0 };			\
+/^-/ { inhibit = inhibit " " substr($0, 2) };		\
+END { printf "sysdep-subdirs =%s\n", subdirs;		\
+      printf "sysdep-inhibit-subdirs =%s\n", inhibit;	\
+      print "sysd-dirs-done = t" }'			\
+       /dev/null sysdeps/unix/inet/Subdirs sysdeps/unix/Subdirs > /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-glibc-headers/sysd-dirs-tmp
+mv -f /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-glibc-headers/sysd-dirs-tmp /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-glibc-headers/sysd-dirs
+make[1]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/glibc-2.3.3'
+make[1]: Entering directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/glibc-2.3.3'
+{ echo '#include "posix/bits/posix1_lim.h"';		\
+  echo '#define _LIBC 1';					\
+  echo '#include "misc/sys/uio.h"'; } |			\
+gcc -mabi=32 -E -dM -MD -MP -MF /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-glibc-headers/bits/stdio_lim.dT -MT '/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-glibc-headers/bits/stdio_lim.h /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-glibc-headers/bits/stdio_lim.d' 	\
+      -Iinclude -I. -I/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-glibc-headers  -Ilibio  -I/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-glibc-headers -Isysdeps/mips/elf -Isysdeps/unix/sysv/linux/mips/mips32 -Isysdeps/unix/sysv/linux/mips -Isysdeps/unix/sysv/linux -Isysdeps/gnu -Isysdeps/unix/common -Isysdeps/unix/mman -Isysdeps/unix/inet -Isysdeps/unix/sysv -Isysdeps/unix/mips/mips32 -Isysdeps/unix/mips -Isysdeps/unix -Isysdeps/posix -Isysdeps/mips/mips32 -Isysdeps/mips -Isysdeps/ieee754/flt-32 -Isysdeps/ieee754/dbl-64 -Isysdeps/wordsize-32 -Isysdeps/mips/fpu -Isysdeps/ieee754 -Isysdeps/generic/elf -Isysdeps/generic -nostdinc -isystem /usr/lib/gcc/i386-redhat-linux/3.4.2/include -isystem /home/dank/crosstooltest/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/mips-unknown-linux-gnu/include -xc - -o /home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-glibc-headers/bits/stdio_lim.hT
+cc1: error: invalid option `abi=32'
+make[1]: *** [/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/build-glibc-headers/bits/stdio_lim.st] Error 1make[1]: Leaving directory `/home/dank/queue/jobdir.k8/crosstool-0.30/build/mips-unknown-linux-gnu/gcc-3.3.4-glibc-2.3.3/glibc-2.3.3'
+
+make: *** [sysdeps/gnu/errlist.c] Error 2
+
+real	3m50.888s
+user	2m25.135s
+sys	0m35.786s
++ df
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/mapper/VolGroup00-LogVol00
+                      63088564  14171096  45712760  24% /
+/dev/hda2               101105      8947     86937  10% /boot
+none                    257652         0    257652   0% /dev/shm
+Finished job mips-gcc-3.3.4-glibc-2.3.3.sh on node k8

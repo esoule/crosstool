@@ -7,7 +7,7 @@
 
 abort() {
     echo $@
-    exec /bin/false
+    exec false
 }
 set -x
 test $# -ge 2 || abort "Usage: $0 PREFIX ETCPASSWD [PREFIX2], where PREFIX/lib/libc.so.* is the C library to grab, ETCPASSWD is the passwd file to use in the jail, and PREFIX2/bin contains busybox"
@@ -19,8 +19,12 @@ fi
 PREFIX=`cd $1; pwd`
 
 echo $PREFIX/lib/libc.so.* | grep -q '\*' && abort "Couldn't find $PREFIX/lib/libc.so.*"
-STRIPDIR=`cd $PREFIX/../bin; pwd`
-STRIP=`echo $STRIPDIR/*-strip`
+for STRIPDIR in `cd $PREFIX/../bin; pwd` `cd $PREFIX/../usr/bin; pwd`; do
+  for file in $STRIPDIR/*strip; do
+    test -x $file && STRIP=$file
+  done
+done
+test -s "$STRIP" || abort "Error: strip not found"
 test -x "$STRIP" || abort "Error: $STRIP not executable"
 set -e -x
 
@@ -35,30 +39,39 @@ mkdir bin dev home lib opt proc sbin tmp usr var
 mkdir usr/bin usr/sbin usr/lib
 cd $PREFIX
 
+# FIXME: doesn't pick up all multilibbed variants (libgcc, libstdc++_pic, etc.)
+# FIXME: doesn't know about all languages (e.g. ada)
+# FIXME: knows a bit about gcj, but doesn't pick up lib-gnu-* or lib-org-* 
+# (see http://gcc.gnu.org/ml/java-patches/2001-q3/msg00282.html)
+# FIXME: picks up libs for all languages unconditionally
+STD_CXX_LIBS="libstdc++ "
+STD_JAVA_LIBS="libgcj "
+STD_FORTRAN_LIBS="libg2c "
 for lib in \
  ld libBrokenLocale libSegFault libanl libc libcrypt libdl libgcc_s libgcc_s_nof libm \
  libmemusage libnsl libnss_compat libnss_dns libnss_files libnss_hesiod libnss_nis \
- libnss_nisplus libpcprofile libpthread libresolv librt libstdc++ libthread_db libutil; do
-	ls     lib/$lib[-.]*so* || /bin/true
-	ls usr/lib/$lib[-.]*so* || /bin/true
+ libnss_nisplus libpcprofile libpthread libresolv librt libthread_db libutil \
+ $STD_JAVA_LIBS $STD_FORTRAN_LIBS $STD_CXX_LIBS; do
+	ls     lib/$lib[-.]*so* || true
+	ls usr/lib/$lib[-.]*so* || true
 done 2> /dev/null | cpio -pvm $WORKDIR
 
 for prog in \
  ldconfig ldd catchsegv; do
-	ls      bin/$prog || /bin/true
-	ls  usr/bin/$prog || /bin/true
-	ls     sbin/$prog || /bin/true
-	ls usr/sbin/$prog || /bin/true
+	ls      bin/$prog || true
+	ls  usr/bin/$prog || true
+	ls     sbin/$prog || true
+	ls usr/sbin/$prog || true
 done 2> /dev/null |  cpio -pvm $WORKDIR
 
 if test "$PREFIX2" != ""; then
 	cd $PREFIX2
 	for prog in \
 	 busybox; do
-		ls      bin/$prog || /bin/true
-		ls  usr/bin/$prog || /bin/true
-		ls     sbin/$prog || /bin/true
-		ls usr/sbin/$prog || /bin/true
+		ls      bin/$prog || true
+		ls  usr/bin/$prog || true
+		ls     sbin/$prog || true
+		ls usr/sbin/$prog || true
 	done 2> /dev/null |  cpio -pvm $WORKDIR
 fi
 

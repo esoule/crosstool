@@ -1,0 +1,300 @@
+checking for ar... ar
+checking for ranlib... ranlib
+checking for gcc... gcc
+checking whether we are using GNU C... yes
+checking whether gcc accepts -g... yes
+checking for POSIXized ISC... no
+checking for a BSD compatible install... /usr/bin/install -c
+checking how to run the C preprocessor... gcc -E
+checking for sys/file.h... yes
+checking for sys/param.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for unistd.h... yes
+checking for strings.h... yes
+checking for sys/time.h... yes
+checking for sys/resource.h... yes
+checking for sys/wait.h that is POSIX.1 compatible... yes
+checking whether the C compiler (gcc -g -O2 ) works... yes
+checking whether the C compiler (gcc -g -O2 ) is a cross-compiler... no
+checking for asprintf... yes
+checking for atexit... yes
+checking for basename... yes
+checking for bcmp... yes
+checking for bcopy... yes
+checking for bzero... yes
+checking for calloc... yes
+checking for clock... yes
+checking for getcwd... yes
+checking for getpagesize... yes
+checking for index... yes
+checking for insque... yes
+checking for memchr... yes
+checking for memcmp... yes
+checking for memcpy... yes
+checking for memmove... yes
+checking for memset... yes
+checking for mkstemps... no
+checking for putenv... yes
+checking for random... yes
+checking for rename... yes
+checking for rindex... yes
+checking for setenv... yes
+checking for sigsetmask... yes
+checking for strcasecmp... yes
+checking for strchr... yes
+checking for strdup... yes
+checking for strncasecmp... yes
+checking for strrchr... yes
+checking for strstr... yes
+checking for strtod... yes
+checking for strtol... yes
+checking for strtoul... yes
+checking for tmpnam... yes
+checking for vasprintf... yes
+checking for vfprintf... yes
+checking for vprintf... yes
+checking for vsprintf... yes
+checking for waitpid... yes
+checking for working alloca.h... yes
+checking for alloca... yes
+checking for ANSI C header files... yes
+checking for pid_t... yes
+checking for vfork.h... no
+checking for working vfork... yes
+checking for sys_errlist... yes
+checking for sys_nerr... yes
+checking for sys_siglist... yes
+checking for getrusage... yes
+checking for on_exit... yes
+checking for psignal... yes
+checking for strerror... yes
+checking for strsignal... yes
+checking for sysconf... yes
+checking for times... yes
+checking for sbrk... yes
+checking for gettimeofday... yes
+updating cache ../config.cache
+creating ./config.status
+creating Makefile
+creating testsuite/Makefile
+creating config.h
+Configuring texinfo...
+loading cache ../config.cache
+checking for a BSD compatible install... (cached) /usr/bin/install -c
+checking whether build environment is sane... yes
+checking whether make sets ${MAKE}... yes
+checking for working aclocal... found
+checking for working autoconf... found
+checking for working automake... found
+checking for working autoheader... found
+checking for working makeinfo... found
+checking for gcc... (cached) gcc
+checking whether the C compiler (gcc -g -O2 ) works... yes
+checking whether the C compiler (gcc -g -O2 ) is a cross-compiler... no
+checking whether we are using GNU C... (cached) yes
+checking whether gcc accepts -g... (cached) yes
+checking how to run the C preprocessor... (cached) gcc -E
+checking whether gcc needs -traditional... no
+checking for a BSD compatible install... /usr/bin/install -c
+checking for ranlib... (cached) ranlib
+checking for texconfig... true
+checking for POSIXized ISC... no
+checking for minix/config.h... no
+checking whether to enable maintainer-specific portions of Makefiles... no
+checking for Cygwin32 environment... no
+checking for Mingw32 environment... no
+checking for executable suffix... no
+checking for sigblock... yes
+checking for tputs in -lncurses... yes
+checking for ncurses/termcap.h... yes
+checking for ANSI C header files... (cached) yes
+checking for fcntl.h... yes
+checking for pwd.h... yes
+checking for string.h... (cached) yes
+checking for strings.h... (cached) yes
+checking for termcap.h... yes
+checking for termio.h... yes
+checking for termios.h... yes
+checking for unistd.h... (cached) yes
+checking for sys/fcntl.h... yes
+checking for sys/file.h... (cached) yes
+checking for sys/ptem.h... no
+checking for sys/time.h... (cached) yes
+checking for sys/ttold.h... no
+checking for sys/wait.h... (cached) yes
+checking for off_t... yes
+checking return type of signal handlers... void
+checking for working const... yes
+checking whether struct tm is in sys/time.h or time.h... time.h
+checking for working alloca.h... (cached) yes
+checking for alloca... (cached) yes
+checking for vprintf... (cached) yes
+checking for setvbuf... yes
+checking for getcwd... (cached) yes
+checking for memset... (cached) yes
+checking for bzero... (cached) yes
+checking for strchr... (cached) yes
+checking for strcasecmp... (cached) yes
+checking for sigprocmask... yes
+checking for sigsetmask... (cached) yes
+checking for memcpy... (cached) yes
+checking for memmove... (cached) yes
+checking for strdup... (cached) yes
+checking for strerror... (cached) yes
+checking for inline... inline
+checking for size_t... yes
+checking for unistd.h... (cached) yes
+checking for getpagesize... (cached) yes
+checking for working mmap... yes
+checking for argz.h... yes
+checking for limits.h... yes
+checking for locale.h... yes
+checking for nl_types.h... yes
+checking for malloc.h... yes
+checking for string.h... (cached) yes
+checking for unistd.h... (cached) yes
+checking for values.h... yes
+checking for sys/param.h... (cached) yes
+checking for getcwd... (cached) yes
+checking for munmap... yes
+checking for putenv... (cached) yes
+checking for setenv... (cached) yes
+checking for setlocale... yes
+checking for strchr... (cached) yes
+checking for strcasecmp... (cached) yes
+checking for __argz_count... yes
+checking for __argz_stringify... yes
+checking for __argz_next... yes
+checking for stpcpy... yes
+checking for LC_MESSAGES... yes
+checking whether NLS is requested... no
+updating cache ../config.cache
+creating ./config.status
+creating Makefile
+creating doc/Makefile
+creating info/Makefile
+creating intl/Makefile
+creating lib/Makefile
+creating makeinfo/Makefile
+creating po/Makefile.in
+creating util/Makefile
+creating config.h
+linking /home/dank/queue/jobdir.k8/crosstool-0.30/build/sh4-unknown-linux-gnu/gcc-2.95.3-glibc-2.1.3/gcc-2.95.3/texinfo/intl/libgettext.h to intl/libintl.h
+Configuring gcc...
+loading cache ../config.cache
+checking LIBRARY_PATH variable... ok
+checking GCC_EXEC_PREFIX variable... ok
+checking host system type... i686-host_pc-linux-gnu
+checking target system type... sh4-unknown-linux-gnu
+checking build system type... i686-host_pc-linux-gnu
+checking for gcc... (cached) gcc
+checking whether the C compiler (gcc -g -O2 ) works... yes
+checking whether the C compiler (gcc -g -O2 ) is a cross-compiler... no
+checking whether we are using GNU C... (cached) yes
+checking whether gcc accepts -g... (cached) yes
+checking whether make sets ${MAKE}... (cached) yes
+checking whether a default assembler was specified... no
+checking whether a default linker was specified... no
+checking for gawk... gawk
+checking for flex... flex
+checking for yywrap in -lfl... yes
+checking whether ln works... yes
+checking whether ln -s works... yes
+checking for volatile... yes
+checking for ranlib... (cached) ranlib
+checking for bison... bison -y
+checking for a BSD compatible install... (cached) /usr/bin/install -c
+checking how to run the C preprocessor... (cached) gcc -E
+checking for ANSI C header files... (cached) yes
+checking whether time.h and sys/time.h may both be included... yes
+checking whether string.h and strings.h may both be included... yes
+checking for sys/wait.h that is POSIX.1 compatible... (cached) yes
+checking for limits.h... (cached) yes
+checking for stddef.h... yes
+checking for string.h... (cached) yes
+checking for strings.h... (cached) yes
+checking for stdlib.h... (cached) yes
+checking for time.h... yes
+checking for fcntl.h... (cached) yes
+checking for unistd.h... (cached) yes
+checking for stab.h... yes
+checking for sys/file.h... (cached) yes
+checking for sys/time.h... (cached) yes
+checking for sys/resource.h... (cached) yes
+checking for sys/param.h... (cached) yes
+checking for sys/times.h... yes
+checking for sys/stat.h... yes
+checking for direct.h... no
+checking for thread.h... no
+checking for pthread.h... yes
+checking for gnatbind... no
+checking whether cpp understands the stringify operator... yes
+checking for inttypes.h... yes
+checking for strtoul... (cached) yes
+checking for bsearch... yes
+checking for strerror... (cached) yes
+checking for putenv... (cached) yes
+checking for popen... yes
+checking for bcopy... (cached) yes
+checking for bzero... (cached) yes
+checking for bcmp... (cached) yes
+checking for index... (cached) yes
+checking for rindex... (cached) yes
+checking for strchr... (cached) yes
+checking for strrchr... (cached) yes
+checking for kill... yes
+checking for getrlimit... yes
+checking for setrlimit... yes
+checking for atoll... yes
+checking for atoq... no
+checking for sysconf... (cached) yes
+checking for isascii... yes
+checking for gettimeofday... (cached) yes
+checking for strsignal... (cached) yes
+checking for putc_unlocked... yes
+checking for fputc_unlocked... yes
+checking for fputs_unlocked... yes
+checking for vprintf... (cached) yes
+checking whether the printf functions support %p... yes
+checking for pid_t... (cached) yes
+checking for vfork.h... (cached) no
+checking for working vfork... (cached) yes
+checking whether malloc must be declared... no
+checking whether realloc must be declared... no
+checking whether calloc must be declared... no
+checking whether free must be declared... no
+checking whether bcopy must be declared... no
+checking whether bzero must be declared... no
+checking whether bcmp must be declared... no
+checking whether index must be declared... no
+checking whether rindex must be declared... no
+checking whether getenv must be declared... no
+checking whether atol must be declared... no
+checking whether sbrk must be declared... no
+checking whether abort must be declared... no
+checking whether atof must be declared... no
+checking whether strerror must be declared... no
+checking whether getcwd must be declared... no
+checking whether getwd must be declared... no
+checking whether strsignal must be declared... yes
+checking whether putc_unlocked must be declared... no
+checking whether fputs_unlocked must be declared... yes
+checking whether strstr must be declared... no
+checking whether getrlimit must be declared... no
+checking whether setrlimit must be declared... no
+checking for sys_siglist declaration in signal.h or unistd.h... yes
+checking if mkdir takes one argument... no
+Configuration sh4-unknown-linux-gnu not supported
+Configure in /home/dank/queue/jobdir.k8/crosstool-0.30/build/sh4-unknown-linux-gnu/gcc-2.95.3-glibc-2.1.3/build-gcc-core/gcc failed, exiting.
+
+real	3m6.235s
+user	1m51.254s
+sys	0m32.574s
++ df
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/mapper/VolGroup00-LogVol00
+                      63088564  15126196  44757660  26% /
+/dev/hda2               101105      8947     86937  10% /boot
+none                    257652         0    257652   0% /dev/shm
+Finished job sh4-gcc-2.95.3-glibc-2.1.3.sh on node k8

@@ -50,18 +50,18 @@ for lib in \
  ld libBrokenLocale libSegFault libanl libc libcrypt libdl libgcc_s libgcc_s_nof libm \
  libmemusage libnsl libnss_compat libnss_dns libnss_files libnss_hesiod libnss_nis \
  libnss_nisplus libpcprofile libpthread libresolv librt libstdc++ libthread_db libutil; do
-	ls     lib/$lib[-.]*so* || /bin/true
-	ls usr/lib/$lib[-.]*so* || /bin/true
+	ls     lib/$lib[-.]*so* || true
+	ls usr/lib/$lib[-.]*so* || true
 done 2> /dev/null | cpio -pvm $PREFIX/target
 
 for prog in \
  catchsegv gencat getconf getent glibcbug iconv ldd locale \
  localedef mtrace pcprofiledump rpcgen sprof tzselect xtrace \
  iconvconfig ldconfig nscd nscd_nischeck rpcinfo sln zdump zic; do
-	ls      bin/$prog || /bin/true
-	ls  usr/bin/$prog || /bin/true
-	ls     sbin/$prog || /bin/true
-	ls usr/sbin/$prog || /bin/true
+	ls      bin/$prog || true
+	ls  usr/bin/$prog || true
+	ls     sbin/$prog || true
+	ls usr/sbin/$prog || true
 done 2> /dev/null |  cpio -pvm $PREFIX/target
 
 echo userspace complete, result in $PREFIX/target

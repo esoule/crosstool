@@ -1,0 +1,63 @@
+#!/bin/sh
+
+# Script to start crosstool's distccd on Mac OS X
+# Lurks in __ABSTOP__/common/bin/crosstool-distccd.sh until you run
+# __ABSTOP__/common/bin/install-distccd.sh to install it as a StartupItem
+#
+# add this line in /etc/hostconfig
+#	CROSSTOOL_DISTCCD=-YES-
+
+. /etc/rc.common
+
+NAME=crosstool-distccd
+OPTIONS="--daemon --pid-file=/var/run/$NAME.pid"
+
+DISTCC_CMDLIST=__ABSTOP__/common/etc/distcc/apps
+export DISTCC_CMDLIST
+DISTCC_CMDLIST_NUMWORDS=4
+export DISTCC_CMDLIST_NUMWORDS
+
+StartService ()
+{
+	if [ "${CROSSTOOL_DISTCCD:=-YES-}" = "-YES-" ]; then
+		ConsoleMessage "Configuring $NAME"
+		CheckForNetwork
+		if [ "${NETWORKUP}" = "-NO-" ]; then 
+			echo "Network not available"; exit;
+		fi
+
+		if [ -f /var/run/$NAME.pid ]; then
+			rm /var/run/$NAME.pid
+		fi
+
+		ConsoleMessage "Starting $NAME..."
+		__ABSTOP__/common/bin/$NAME $OPTIONS
+
+		if [ $? -eq 0 ]; then
+			ConsoleMessage "$NAME successfully started..."
+		else
+			rm -f /var/run/$NAME.pid
+			ConsoleMessage "Could not start $NAME..."
+			exit 1
+		fi
+	fi
+}
+
+StopService ()
+{
+	if [ -f /var/run/$NAME.pid ]; then
+	       	ConsoleMessage "Stopping $NAME..."
+		kill -TERM `cat /var/run/$NAME.pid`
+		rm /var/run/$NAME.pid
+	else
+		ConsoleMessage "$NAME is not running!"
+	fi
+}
+
+
+RestartService () 
+{ 	StopService; 
+	StartService; 
+}
+
+RunService "$1"

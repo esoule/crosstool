@@ -1,0 +1,300 @@
+a - elf/dl-sym.o
+a - elf/dl-tsd.o
+a - elf/dl-static.o
+a - elf/dl-symaddr.o
+a - elf/dl-fptr.o
+ia64-unknown-linux-gnu-ranlib /home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc.a
+cd /home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc && /home/dank/crosstooltest/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/lib/gcc/ia64-unknown-linux-gnu/4.0.0/../../../../ia64-unknown-linux-gnu/bin/ar cruv libc_nonshared.a `cat csu/stamp.oS iconv/stamp.oS iconvdata/stamp.oS locale/stamp.oS localedata/stamp.oS assert/stamp.oS ctype/stamp.oS intl/stamp.oS catgets/stamp.oS math/stamp.oS setjmp/stamp.oS signal/stamp.oS stdlib/stamp.oS stdio-common/stamp.oS libio/stamp.oS dlfcn/stamp.oS malloc/stamp.oS string/stamp.oS wcsmbs/stamp.oS timezone/stamp.oS time/stamp.oS dirent/stamp.oS grp/stamp.oS pwd/stamp.oS posix/stamp.oS io/stamp.oS termios/stamp.oS resource/stamp.oS misc/stamp.oS socket/stamp.oS sysvipc/stamp.oS gmon/stamp.oS gnulib/stamp.oS wctype/stamp.oS manual/stamp.oS shadow/stamp.oS po/stamp.oS argp/stamp.oS crypt/stamp.oS linuxthreads/stamp.oS resolv/stamp.oS nss/stamp.oS rt/stamp.oS conform/stamp.oS debug/stamp.oS linuxthreads_db/stamp.oS inet/stamp.oS hesiod/stamp.oS sunrpc/stamp.oS nis/stamp.oS nscd/stamp.oS streams/stamp.oS login/stamp.oS elf/stamp.oS stamp.oS`
+a - csu/elf-init.oS
+a - stdlib/atexit.oS
+a - io/stat.oS
+a - io/fstat.oS
+a - io/lstat.oS
+a - io/mknod.oS
+a - io/stat64.oS
+a - io/fstat64.oS
+a - io/lstat64.oS
+ia64-unknown-linux-gnu-ranlib /home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_nonshared.a
+ia64-unknown-linux-gnu-gcc    -nostdlib -nostartfiles -r -o /home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os \
+ -Wl,-d -Wl,--whole-archive /home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.a
+ia64-unknown-linux-gnu-gcc    -shared -Wl,-O1 \
+  -nostdlib -nostartfiles \
+   -Wl,-dynamic-linker=/lib/ld-linux-ia64.so.2 -Wl,-z,combreloc \
+  -Wl,--verbose 2>&1 | \
+  sed > /home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/shlib.ldsT \
+      -e '/^=========/,/^=========/!d;/^=========/d' \
+      -e 's/^.*\.hash[ 	]*:.*$/  .note.ABI-tag : { *(.note.ABI-tag) } &/' \
+      -e 's/^.*\*(\.dynbss).*$/& \
+	 PROVIDE(__start___libc_freeres_ptrs = .); \
+	 *(__libc_freeres_ptrs) \
+	 PROVIDE(__stop___libc_freeres_ptrs = .);/'\
+      -e 's/^.*\*(\.jcr).*$/& \
+	 PROVIDE(__start___libc_subfreeres = .);\
+	 __libc_subfreeres : { *(__libc_subfreeres) }\
+	 PROVIDE(__stop___libc_subfreeres = .);\
+	 PROVIDE(__start___libc_atexit = .);\
+	 __libc_atexit : { *(__libc_atexit) }\
+	 PROVIDE(__stop___libc_atexit = .);\
+	 PROVIDE(__start___libc_thread_subfreeres = .);\
+	 __libc_thread_subfreeres : { *(__libc_thread_subfreeres) }\
+	 PROVIDE(__stop___libc_thread_subfreeres = .);/'
+mv -f /home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/shlib.ldsT /home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/shlib.lds
+ia64-unknown-linux-gnu-gcc    -shared -static-libgcc -Wl,-O1  -Wl,-z,defs -Wl,-dynamic-linker=/lib/ld-linux-ia64.so.2  -B/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/csu/  -Wl,--version-script=/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc.map -Wl,-soname=libc.so.6.1 -Wl,-z,combreloc -nostdlib -nostartfiles -e __libc_main -L/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc -L/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/math -L/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/elf -L/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/dlfcn -L/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/nss -L/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/nis -L/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/rt -L/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/resolv -L/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/crypt -L/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/linuxthreads -Wl,-rpath-link=/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc:/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/math:/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/elf:/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/dlfcn:/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/nss:/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/nis:/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/rt:/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/resolv:/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/crypt:/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/linuxthreads -o /home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc.so -T /home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/shlib.lds /home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/csu/abi-note.o /home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/elf/soinit.os /home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os /home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/elf/sofini.os /home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/elf/interp.os /home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/elf/ld.so -lgcc
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x62a2): In function `add_module':
+: undefined reference to `__strtol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x20762): In function `__dcigettext':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x21e02): In function `plural_lookup':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x27792): In function `_nl_make_l10nflist':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x28182): In function `_nl_explode_name':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x29ae2): In function `__gettext_extract_plural':
+: undefined reference to `__strtoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x2f512): In function `atof':
+: undefined reference to `__strtod_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x2f572): In function `atoi':
+: undefined reference to `__strtol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x2f5d2): In function `atol':
+: undefined reference to `__strtol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x45dd2): In function `realpath@@GLIBC_2.3':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x4a042): In function `init':
+: undefined reference to `__strtol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x4a5d2): In function `strtoimax':
+: undefined reference to `__strtol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x4a632): In function `strtoumax':
+: undefined reference to `__strtoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x4a692): In function `wcstoimax':
+: undefined reference to `__wcstol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x4a6f2): In function `wcstoumax':
+: undefined reference to `__wcstoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x58dc2): In function `vprintf':
+: undefined reference to `__GI_vfprintf'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x63e42): In function `__GI_fprintf':
+: undefined reference to `vfprintf'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x63f12): In function `_IO_printf':
+: undefined reference to `vfprintf'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x6c1a2): In function `_IO_vfscanf':
+: undefined reference to `__mbrlen'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x6ed42): In function `_IO_vfscanf':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x6ee92): In function `_IO_vfscanf':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x6f102): In function `_IO_vfscanf':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x6f412): In function `_IO_vfscanf':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x706a2): In function `_IO_vfscanf':
+: undefined reference to `__strtol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x706e2): In function `_IO_vfscanf':
+: undefined reference to `__strtoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x73042): In function `_IO_vfscanf':
+: undefined reference to `__strtold_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x731c2): In function `_IO_vfscanf':
+: undefined reference to `__strtod_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x73332): In function `_IO_vfscanf':
+: undefined reference to `__strtof_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x78852): In function `_IO_vfwscanf':
+: undefined reference to `__wcstol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x78892): In function `_IO_vfwscanf':
+: undefined reference to `__wcstoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x7ac92): In function `_IO_vfwscanf':
+: undefined reference to `__wcstold_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x7ae12): In function `_IO_vfwscanf':
+: undefined reference to `__wcstod_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x7af82): In function `_IO_vfwscanf':
+: undefined reference to `__wcstof_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x7ea02): In function `__find_specmb':
+: undefined reference to `__mbrlen'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x9cac2): In function `_IO_str_init_static_internal':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x9ed52): In function `ptmalloc_init':
+: undefined reference to `__strtol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x9ede2): In function `ptmalloc_init':
+: undefined reference to `__strtol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x9ee72): In function `ptmalloc_init':
+: undefined reference to `__strtol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x9eef2): In function `ptmalloc_init':
+: undefined reference to `__strtol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0xaeb02): In function `__GI_strrchr':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0xaf652): In function `strtok':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0xaf742): In function `__GI___strtok_r':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0xb3a92): In function `argz_next':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0xb4592): In function `argz_replace':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0xd3a52): In function `tzset_internal':
+: undefined reference to `__strtoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0xe68d2): In function `_nl_init_era_entries':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0xe68f2): In function `_nl_init_era_entries':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0xe6fe2): In function `_nl_init_alt_digit':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0xec0c2): In function `_nss_files_parse_grent':
+: undefined reference to `__strtoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0xec192): In function `_nss_files_parse_grent':
+: undefined reference to `__strtoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0xec262): In function `_nss_files_parse_grent':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0xee9f2): In function `__GI__nss_files_parse_pwent':
+: undefined reference to `__strtoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0xeead2): In function `__GI__nss_files_parse_pwent':
+: undefined reference to `__strtoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0xeeba2): In function `__GI__nss_files_parse_pwent':
+: undefined reference to `__strtoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0xeec52): In function `__GI__nss_files_parse_pwent':
+: undefined reference to `__strtoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0xf0642): In function `fexecve':
+: undefined reference to `__xstat'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0xf2d92): In function `linux_sysconf':
+: undefined reference to `__strtol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x1003a2): In function `build_wcs_buffer':
+: undefined reference to `mbrtowc'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x1009d2): In function `build_wcs_upper_buffer':
+: undefined reference to `mbrtowc'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x100e42): In function `build_wcs_upper_buffer':
+: undefined reference to `mbrtowc'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x1016a2): In function `re_string_skip_chars':
+: undefined reference to `mbrtowc'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x102252): In function `re_string_reconstruct':
+: undefined reference to `mbrtowc'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x106552): more undefined references to `mbrtowc' follow
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x126c52): In function `gaih_inet':
+: undefined reference to `__strtoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x127072): In function `gaih_inet':
+: undefined reference to `__h_errno_location'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x1275e2): In function `gaih_inet':
+: undefined reference to `__h_errno_location'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x127612): In function `gaih_inet':
+: undefined reference to `__h_errno_location'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x127642): In function `gaih_inet':
+: undefined reference to `__h_errno_location'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x129fd2): In function `__GI_getaddrinfo':
+: undefined reference to `__strtoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x12c6d2): In function `eval_expr_val':
+: undefined reference to `__strtol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x12f1d2): In function `parse_param':
+: undefined reference to `__strtol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x1340d2): In function `mkfifo':
+: undefined reference to `__xmknod'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x137192): In function `process_entry':
+: undefined reference to `__lxstat'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x1371c2): In function `process_entry':
+: undefined reference to `__xstat'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x137252): In function `process_entry':
+: undefined reference to `__lxstat'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x137ca2): In function `ftw_dir':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x137f22): In function `ftw_dir':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x138822): In function `ftw_startup':
+: undefined reference to `__lxstat'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x138842): In function `ftw_startup':
+: undefined reference to `__xstat'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x1388b2): In function `ftw_startup':
+: undefined reference to `__lxstat'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x139ba2): In function `ftw_dir':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x139e22): In function `ftw_dir':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x13d2f2): In function `fts_stat':
+: undefined reference to `__xstat'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x13d352): In function `fts_stat':
+: undefined reference to `__lxstat'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x13d3a2): In function `fts_stat':
+: undefined reference to `__lxstat'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x148842): In function `__GI_vsyslog':
+: undefined reference to `vfprintf'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x14d742): In function `vwarnx':
+: undefined reference to `vfprintf'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x14d9a2): In function `__GI_vwarn':
+: undefined reference to `vfprintf'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x14e072): In function `error_tail':
+: undefined reference to `vfprintf'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x1571f2): In function `wctrans':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x158cd2): In function `wctrans_l':
+: undefined reference to `__rawmemchr'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x15adb2): In function `_nss_files_parse_spent':
+: undefined reference to `__strtoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x15ae92): In function `_nss_files_parse_spent':
+: undefined reference to `__strtoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x15af72): In function `_nss_files_parse_spent':
+: undefined reference to `__strtoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x15b242): In function `_nss_files_parse_spent':
+: undefined reference to `__strtoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x15b322): In function `_nss_files_parse_spent':
+: undefined reference to `__strtoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x15b402): more undefined references to `__strtoul_internal' follow
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x15eaf2): In function `fill_in_uparams':
+: undefined reference to `__strtol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x166b92): In function `__argp_error':
+: undefined reference to `vfprintf'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x166fe2): In function `argp_failure':
+: undefined reference to `vfprintf'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x167472): In function `argp_default_parser':
+: undefined reference to `__strtol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x16c232): In function `herror':
+: undefined reference to `__h_errno_location'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x16c562): In function `__GI___inet_aton':
+: undefined reference to `__strtoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x16f8a2): In function `res_setoptions':
+: undefined reference to `__strtol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x16f992): In function `res_setoptions':
+: undefined reference to `make[1]: Leaving directory `/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/glibc-2.3.4'
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/hda2              8064304   2416848   5237800  32% /
+/dev/hda1                62193      9361     49621  16% /boot
+/dev/hda5             29308456  17813196  10006440  65% /home
+none                    127624         0    127624   0% /dev/shm
+__strtol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x16fa12): In function `res_setoptions':
+: undefined reference to `__strtol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x175c82): In function `__nss_setent':
+: undefined reference to `__h_errno_location'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x175ee2): In function `__nss_endent':
+: undefined reference to `__h_errno_location'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x1761b2): In function `__nss_getent_r':
+: undefined reference to `__h_errno_location'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x17a212): In function `__printf_chk':
+: undefined reference to `vfprintf'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x17a462): In function `__fprintf_chk':
+: undefined reference to `vfprintf'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x17a6a2): In function `__vprintf_chk':
+: undefined reference to `vfprintf'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x17a8b2): In function `__vfprintf_chk':
+: undefined reference to `vfprintf'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x17ade2): In function `__readonly_area':
+: undefined reference to `__strtoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x17ae62): In function `__readonly_area':
+: undefined reference to `__strtoul_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x17c112): In function `gethostbyaddr':
+: undefined reference to `__h_errno_location'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x17ca82): In function `gethostbyname':
+: undefined reference to `__h_errno_location'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x17ce92): In function `gethostbyname2':
+: undefined reference to `__h_errno_location'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x17da12): In function `gethostent':
+: undefined reference to `__h_errno_location'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x17df12): In function `__new_gethostent_r':
+: undefined reference to `__h_errno_location'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x17e3e2): more undefined references to `__h_errno_location' follow
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x1884c2): In function `rexec_af':
+: undefined reference to `__strtol_internal'
+/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc_pic.os(.text+0x18c411): In function `getnameinfo':
+: undefined reference to `__h_errno_location'
+collect2: ld returned 1 exit status
+make[1]: *** [/home/dank/queue/jobdir.fast/crosstool-0.30/build/ia64-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3.4/build-glibc/libc.so] Error 1
+make: *** [lib] Error 2
+
+real	23m31.054s
+user	17m13.310s
+sys	2m52.130s
++ df
+Finished job ia64-gcc-4.0-20050305-glibc-2.3.4.sh on node fast

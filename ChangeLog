@@ -1,8 +1,861 @@
 Note: a description of why each patch is needed is embedded
 *inside* the patch file at the top, so read the patch file
 for more info.
+ 
+0.30:
+    crosstool.sh:
+    * kludge from Cort Dougan to deal with fact gcc-3.3.[34] don't know about lib64.
+      ppc970 gcc-3.3.4/glibc-2.3.2 build now gets further,
+      and both x86_64 and ppc970 gcc-3.3.4/glibc-2.3.3 build work.
 
-0.27 1 Feb 2004 "ow ow ow should have worn hocky skates"
+    regtest-run.sh:
+    * Added armeb to build matrix
+    * Added gcc-3.3.4-glibc-2.3.3, gcc-4.0-20050305-glibc-2.2.5 to build matrix
+    * Now runs ssh-add at start.  Run with 'nohup ssh-agent sh crosstool-0.30/regtest-run.sh'.
+      This avoids nasty multiple ssh prompts if you lose your X session during the run.
+
+    gcc-4.0:
+    * added gcc-4.0-arm-bigendian.patch from Lennert Buytenhek; cf. http://gcc.gnu.org/PR16350 
+
+    gcc-3.4.3:
+    * Added gcc-3.4.3-glibc-2.3.4.dat.  
+
+    glibc-2.2.5:
+    * added glibc-2.2.5-allow-gcc-4.0-powerpc-procfs.patch from Martin Nielsen
+
+    m68k:
+    * gcc-4.0 can't build glibc-2.3.x for m68k at moment; see http://gcc.gnu.org/PR20583
+
+    i386:
+    * Added demo-i386.sh by popular demand :-) Builds fine with gcc-3.4.3/glibc-2.3.4, 
+      though it's not listed in the buildlogs.
+
+
+0.29:
+    numbering change:
+    0.28 was getting too long in the tooth, so I gave up on the 0.28-rc* names,
+    and am back to just major.minor.
+
+    gcc-4.0:
+    * getandpatch.sh can now download gcc-4.0 snapshots
+    * glibc-2.2.5, glibc-2.3.4, glibc-2.3-20050307 patched to build with 
+      gcc-4.0-20050305
+    * glibc-2.3.[34], glibc-2.3-20050307 patched to allow building and 
+      installing libs and apps separately, and crosstool.sh now builds apps 
+      again with final gcc for glibc-2.3.4 and later.
+
+    Cygwin build support:
+    * tweak to crosstool.sh by Steve Papacharalambous; no longer aborts
+      just because compilers that run on cygwin have names *.exe
+
+    Self-test:
+    * replaced demo-loop.sh with regtest-{run.report,kill}.sh.
+      This lets me generate build result matrices much faster.
+
+    Linux version:
+    * gcc-*-glibc-*.dat files now default to using linux-2.4.26 for all older 
+      versions of gcc, linux-2.6.8 for gcc-3.4.x.  There's no good 
+      way to pick a default, but this one probably causes fewer problems.  
+      (but see http://sources.redhat.com/ml/crossgcc/2004-12/msg00135.html,
+      I'll probably need to use linux-2.4.21 for some targets).
+      Note that users can easily specify the kernel version themselves,
+      so the value in the .dat files isn't supremely important...
+
+0.28-rc37:
+    doc:
+    * crosstool-howto.html now explains how to build statically linked tools 
+      (although there are some reports it's wrong, and
+      http://sources.redhat.com/ml/crossgcc/2004-10/msg00136.html points
+      out it doesn't work everywhere anyway...)
+
+    Cygwin target support: 
+    * Modifications for building cygwin targets from Steve Papacharalambous (stevep@metrowerks.com)
+    * new files crosstool-cygwin.sh, cygwin.dat, demo-cygwin.sh, gcc-3.3.2-cygwin-1.5.10-3.dat
+    * small mods to all.sh, getandpatch.sh
+
+    demo-loop.sh:
+    * now builds kernel, and generates build result matrix with three possible
+      outcomes for each combination: ok, kernel fail (but tools ok), or tools fail.
+    * split out html generation into demo-loop-report.sh so you can join runs from 
+      multiple machines or partial runs
+
+    crosstool.sh:
+    * added new parameter EXTRA_TARGET_CFLAGS so toolcombo .dat files can set
+      CFLAGS options for glibc; needed by gcc-3.4.2-glibc-2.2.5.dat to turn on -fno-unit-at-a-time
+      to avoid having to backport patches/glibc-2.3.2/glibc-2.3.2-allow-gcc-3.4-nounit.patch
+
+    targets:
+    * added config file for i686 so we can build kernels with 2.4
+    * updated config files for m68k, powerpc64 so we can build kernels
+    * arm: 
+      - carried gcc-3.4.0-arm-nolibfloat.patch forward to gcc-3.4.2
+      - copied patches/glibc-2.2.5/arm-ctl_bus_isa.patch to patches/glibc-2.1.3 so
+        glibc-2.1.3 can build against newer kernels
+      - renamed patches/glibc-2.3.2/glibc-vfp.patch to glibc-fp-byteorder.patch,
+        updated comments, copied to patches/glibc-{2.3.3,20040827}
+      - added patches/linux-2.4.26/linux-2.4.21-arm-allow-gcc3.3.patch,
+        linux-2.4.26-wdt977-uaccess.patch, and linux-2.4.26-arm-nonofpu.patch 
+        to fix 2.4 kernel build problems (before I switched to using 2.6 everywhere)
+    * mips / glibc-2.2.5:
+      - fixed glibc-2.2.5-mips-dl-machine-1.59.patch, renamed to glibc-2.2.5-mips-dl-machine-1.59-kinda.patch
+      - added glibc-2.2.5-mips-dl-machine-1.60.patch (thanks to ml@bitbash.net)
+    * alpha:
+      - added patches/linux-2.4.26/01-kmap-types-cleanup.patch to fix an alpha build problem
+    * ia64:
+      - added patches/glibc-2.2.5/initfini-ia64.patch
+    * m68k:
+      - added patches/glibc-2.2.5/glibc-2.2.5-m68k-pwrite.patch
+
+    Linux kernel:
+    * carried linux-2.4.26-mkdep-xargs.patch back to linux-2.4.21
+    * updated linux-2.6.8-build_on_case_insensitive_fs-1.patch to work
+      for sh64 and sparc32, and dropped the -1 from the name
+    * updated all toolcombo .dat files to use linux-2.6.8, since the 2.4 kernel doesn't
+      lend itself to compiling for all architectures, as required by demo-loop.sh
+
+    binutils:
+    * updated all toolcombo .dat files that specified anything earlier
+      than binutils-2.14 to use binutils-2.15.  
+      Sadly, it looks like m68k has trouble with binutils-2.15
+      (see http://lists.debian.org/debian-68k/2004/08/msg00307.html and
+      e.g. buildlogs/0.28/m68k-gcc-3.4.2-glibc-2.3.3.log.txt),
+      maybe I'll ask on the binutils mailing list if there's a patch for this yet...
+
+0.28-rc36:
+    all.sh:
+    * added --testlinux option to try building linux kernel (via new script testlinux.sh)
+      Used by demo-loop.sh, which now says whether each toolchain builds a kernel, too
+
+    kernel patches:
+    * renamed linux-2.6.6-cygwin-kconfig.patch to linux-2.6.8-noshared-kconfig.patch,
+      cleaned up.  Lets you run 'make menuconfig' on systems where kconfig shared library didn't build
+    * added linux-2.4.26-mkdep-xargs.patch so commandline doesn't blow up (happened to me on Linux!)
+
+    new versions:
+    * added gcc-3.4.2 (but didn't carry all patches forward yet; let me know which are still needed)
+    * updated gcc-*-glibc-2.3.3.dat to reference linux-2.6.8 instead of linux-2.4.26
+
+    targets:
+    * Tom Warzeka <waz@quahog.npt.nuwc.navy.mil> contributed patches to allow building ppc7450 toolchains:
+      gcc-3.2.3/gcc-3.2.3-ppc-asm-spec.patch
+      gcc-3.3.4/gcc-3.3.4-ppc-asm-spec.patch
+      glibc-2.2.5/glibc-2.2.5-powerpc-as.patch
+    * Robert Schwebel contributed file i586.config to allow building i586 toolchains
+    * Robert Schwebel contributed patch glibc-2.2.5/glibc-2.2.5-i386-pwrite64.patch 
+      to allow building glibc-2.2.5 with newer kernels
+    * Shay Gal-On contributed mips.dat, mips.config, and demo-mips.sh for big-endian mips
+    * Updated arm.config to use linux-2.6.8's "make netwinder_defconfig", since old one didn't build kernel
+    * "Michael Geiger" <mcgege@gmx.de> contributed patches/binutils-2.15/s390-invalid-insn-format.patch 
+      to fix problem building Linux kernel on s390.  Not sure this really does it, though,
+      as I still can't build a s/390 kernel.  I'm including it so he can test whether I added it right.
+    * Added comment in patches/gcc-3.4.0/gcc-3.4.0-arm-lib1asm.patch explaining why it's
+      not in mainline yet
+
+
+0.28-rc35:
+    getandpatch.sh:
+    * Fetch glibc from cvs (via script glibc-get.sh) if user asks for glibc-200YMMDD
+
+    glibc-20040827:
+    * Brought forward two good patches also needed by earlier versions:
+        arm-ctl_bus_isa.patch, glibc-2.3.2-sparc64-dl-machine.patch
+      and one kludge (unsuitable for building nptl, but good enough for linuxthreads):
+        glibc-2.3.3-libeh-kludge.patch
+      Added one tiny patch based on private email from the s390 maintainer:
+        glibc-20040822-s390-sysdep_inc.patch
+    * brought forward case-insensitive-filesystem patches so it can be built on cygwin
+
+    glibc-2.3.3:
+    * brought forward case-insensitive-filesystem patches so it can be built on cygwin
+
+    gcc-3.4.2-20040829:
+    * Brought forward gcc-3.4.0-arm-lib1asm.patch, noted that it seems to fix
+      http://gcc.gnu.org/PR16314, proposed it be added into 3.4.2 (better late than never)
+
+    Known issues (pretty much same as with rc34): 
+    * gcc-3.4.1-glibc-2.2.5 on i686 doesn't seem happy with linux-2.6.7,
+      failed for me with "`__NR_pread' undeclared".  Should be easy to fix.
+      Patches welcome
+    * gcc-3.4.1-glibc-2.3.3, gcc-3.4.1-glibc-20040826:
+      target mips fails on "make sysdeps/gnu/errlist.c" with
+      sysdeps/generic/bits/types.h:127:3: #error
+      It looks like my tricks to prevent real building when doing that make
+      are failing, as glibc-2.3.3 and later reconfigure then (but only for mips?!)
+      Suggestions welcome
+    * gcc-3.4.1-glibc-2.3.3 target arm-ixwwm (any softfloat?) fails on glibc build with
+      ld-collate.s:6287: Error: bad immediate value for offset (4112)
+      Reported as new bug http://gcc.gnu.org/PR17209
+      Resembles http://gcc.gnu.org/PR16201 and http://gcc.gnu.org/PR11442
+
+0.28-rc34:
+    glibc-2.3.3:
+    * Adds support for glibc-2.3.3, but not for nptl.
+      Added gcc-3.3.4-glibc-2.3.3.dat and gcc-3.4.1-glibc-2.3.3.dat,
+      changed crosstool.sh to explicitly specify addons so nptl doesn't
+      get built by accident, brought forward a few patches previously needed with glibc-2.3.2:
+        arm-ctl_bus_isa.patch
+        fixup.patch
+        glibc-2.3.2-allow-gcc-3.4-inline.patch
+        glibc-2.3.2-powerpc-procfs.patch
+        glibc-2.3.2-pr139-fix.patch
+        glibc-2.3.2-sparc32-sysdep.patch
+        glibc-2.3.2-sparc64-dl-machine.patch
+        glibc-2.3.2-without-fp.patch
+      backported two patches from glibc cvs:
+        glibc-2.3.3-s390-fadvise64.patch
+        glibc-2.3.3-unwind-dw2.patch
+      and pulled in a probably-wrong-but-works-for-me patch:
+        glibc-2.3.3-libeh-kludge.patch
+
+    glibc-2.2.5:
+    * Added three patches to help building (and running) with gcc-3.4:
+      glibc-2.2.5/glibc-2.2.5-allow-gcc-3.4-weakextern.patch
+      glibc-2.2.5/glibc-2.2.5-mips-dl-machine-1.56.patch
+      glibc-2.2.5/glibc-2.2.5-mips-dl-machine-1.57.patch
+    * Renamed glibc-2.2.5/dl-machine-mips.patch to glibc-2.2.5/glibc-2.2.5-mips-dl-machine-1.59.patch
+
+    binutils-2.15:
+    * added patches/binutils-2.15/binutils-2.15-solaris-qsort.patch to fix build problem on Solaris
+
+    arm:
+    * added big-endian arm support for gcc-3.3.[234] from buytenh@wantstofly.org:
+      armeb.dat, demo-armeb.sh patches/gcc-3.3.[234]/gcc-3.3.[234]-arm-bigendian.patch
+    * added arm-xscale.dat, removed xscale stuff from arm-softfloat.dat
+
+
+0.28-rc33:
+    distcc:
+    * Updated crosstool-distcc.spec to generate separate client and server RPMs
+    * Made crosstool-distcc-server RPM conflict with the standard distcc-server RPM
+
+    crosstool.sh:
+    * now invokes mkoverrides.sh (see below)
+
+    crosstool-generic.spec.in:
+    * For gcc-3.x, create extra RPMs *-{libgcc,libstdc++}*.rpm which
+      just invoke the library's install.sh script on installation, 
+      and its uninstall.sh script on uninstallation (see mkoverrides.sh below)
+
+    mkoverrides.sh:
+    * Makes it easy to add individual shared libraries into /etc/ld.so.conf by
+      creating a directory for each shared library.  This is useful e.g. when
+      using a self-cross gcc-3.4 on a system that only has gcc-3.3 installed.
+      For convenience, also puts install.sh and uninstall.sh scripts in
+      that directory that just invoke install-shared-lib.sh (see below)
+
+    install-shared-lib.sh:
+    * Adds (or, if --uninstall given, removes) a directory from /etc/ld.so.conf, 
+      then runs ldconfig.
+
+    buildrpm.sh:
+    * update embedded version number (again)
+
+0.28-rc32:
+    arm:
+    * Disabled patches/gcc-3.3.[23]/gcc-3.3.2-arm-softfloat.patch by moving
+      it to a 'feature' subdirectory.  If you need softfloat, please either
+      use gcc-3.4.1 (where it's officially supported) or copy those patches 
+      back up a level yourself.
+    * patches/gcc-3.3.3/pr15089-fix.patch fixes http://gcc.gnu.org/PR15089
+      (bad optimization causing failed builds of kernel?)
+    * Copied forward some patches from gcc-3.4.0 to gcc-3.4.1:
+      gcc-3.4.0-arm-{bigendian,lib1asm,nolibfloat}.patch
+
+    glibc-2.2.5:
+    * Backported some patches from glibc-2.3.2 to glibc-2.2.5:
+      {arm-ctl_bus_isa,glibc-2.2.5-alpha-pwrite64,glibc-2.2.5-arm-pwrite64}.patch
+    * patches/glibc-linuxthreads-2.2.5/glibc-2.2.5-alpha-self-clobber.patch
+      fixes alpha error "internals.h:381: error: asm-specifier for variable 
+      `__self' conflicts with asm clobber list"
+
+    mkdistcclinks.sh:
+    * don't crash if no toolchains installed
+
+    buildrpm.sh:
+    * clean up $PREFIX/tmp before packaging
+
+0.28-rc31bis:
+    rpm:
+    * added demo-rpm.sh to make it easier to try building rpms
+    * use absolute paths in rpmrc and rpmmacros to avoid "can't open temporary file" error
+    * update embedded version number in buildrpm.sh to 0.28-rc31 (annoying...)
+    * set AutoReqProv: no in crosstool-generic.spec.in; it gets in the way for 
+      cross-libraries
+    * use %package directive in crosstool-generic.spec.in 
+      on theory that lets us keep target out of .srpm name 
+
+0.28-rc31:
+    glibc-2.3.2:
+    * partial support for gcc-3.5-20040718.  Added patches
+        glibc-2.3.2-allow-gcc-3.5-elf.patch
+        glibc-2.3.2-allow-gcc-3.5-gconv.patch
+        glibc-2.3.2-allow-gcc-3.5-msort.patch
+        glibc-2.3.2-allow-gcc-3.5-PR14096.patch
+        glibc-2.3.2-allow-gcc-3.5-sunrpc.patch
+        glibc-2.3.2-allow-gcc-3.5-xdr.patch
+      Still fails to build, but it's getting close.
+    * Added two SH-4 bugfix patches from CVS for Ankur Sheth as described
+      in http://sources.redhat.com/ml/crossgcc/2004-07/msg00147.html
+    * Updated glibc-linuxthreads-2.3.2-allow-3.4.patch slightly as described 
+      in http://sources.redhat.com/ml/crossgcc/2004-07/msg00169.html;
+
+    binutils-2.15:
+    * enable cross-gprof, which ought to be useful especially for 
+      64 bit targets vs. 32 bit hosts or vice versa, but which
+      (according to njuguna.njoroge@xilinx.com) is helpful even
+      for ppc405 targets.
+
+    doc:
+    * crosstool-howto.html: lots of platform notes, notes on how to build RPMs
+
+    linux-2.6.7:
+    * copied patches from patches/linux-2.6.6
+    * included patches/linux-2.6.7/linux-2.6.7-build_on_case_insensitive_fs-1.patch
+      as a convenience for users who need to build the Linux kernel
+      Also included patches/linux-2.6.7/maybe/linux-2.6.7-build_on_osx-1.patch, but 
+      that's not applied automatically...
+
+0.28-rc30ter:
+     all.sh:
+     * added --buildrpm option
+
+     mkdistcc.sh:
+     * added --buildrpm option
+     * updated to distcc-2.16
+
+0.28-rc29:
+     crosstool.sh:
+     * fix check for $TARGET-gcc to search PATH
+
+0.28-rc28:
+     gcc:
+     * added gcc-3.3.4 support, removed gcc-3.3-20040630 support
+     sh4:
+     * added patches/gcc-3.3.4/gcc-3.3.4-libstdcxx-sh.patch from Kaz
+     crosstool.sh:
+     * added environment variable GLIBC_ADDON_OPTIONS.  Set to 
+       "=linuxthreads" or "=nptl" when building with glibc from cvs,
+       or it'll try to build both threading packages, which doesn't work.
+       Patch from Martin H. VanLeeuwen.  I may change the interface later
+       to get rid of the =.
+     solaris:
+     * added note in doc/crosstool-howto.html about binutils patch
+       (I'll apply it automatically once it makes it into cvs)
+
+0.28-rc27:
+     gcc:
+     * added gcc-3.3-20040630 and gcc-3.4.1 support, but haven't brought
+       forward any patches from previous versions yet.  Some will surely
+       still be needed, but I haven't checked which ones yet.
+     arm:
+     * added patches/binutils-2.15/binutils-arm-undef-imm.patch
+       so ld doesn't silently ignore certain types of linking errors on arm
+     * added patches/gcc-3.4.0/gcc-3.4.0-arm-bigendian.patch,
+       armv5b-softfloat.dat, demo-armv5b-softfloat.sh
+       from Lennert Buytenhek [buytenh at wantstofly.org]
+       Patch turns on big-endian mode if the target is named arm*b-*
+     misc:
+     * added missing --enable-cxx-flags=-mcpu=xxxx option to 
+       arm-softfloat.dat powerpc-7450.dat powerpc-750.dat powerpc-860.dat sparc64.dat
+       to match --with-cpu option, to make sure libstdc++ is compiled for right cpu
+       (this was done on a hunch, not sure it's really needed)
+
+0.28-rc26:
+     uClibc:
+     * added contrib/demo-uclibc.sh, contrib/crosstool-uclibc-0.28-rc5-ter.patch
+       for those who really want uclibc support
+
+     crosstool.sh:
+     * added 'sleep 2' before touching errlist-compat.c in case it's on
+       a filesystem with lousy time resolution (like FAT).  Thanks
+       to jdubois@mc.com for the suggestion.
+
+     glibc-2.2.5:
+     * fixed typo in patches/glibc-2.2.5/dl-machine-mips.patch
+
+0.28-rc25:
+     doc:
+     * updated doc/crosstool-howto.html to add Solaris notes
+     binutils:
+     * renamed binutils-m68k-ignore-comments.patch to binutils-skip-comments.patch
+       since it's needed for more systems than just m68k
+     sh4, mips, m68k:
+     * added patches/glibc-2.2.5/dl-machine-{sh,mips,m68k}.patch to fix build errors
+        found with demo-loop.sh
+
+0.28-rc24:
+     big endian arm:
+     * added patches/glibc-2.3.2/glibc-2.3.2-arm-fix-strlen.patch (now in glibc cvs)
+     doc:
+     * updated doc/crosstool-howto.html to cover how to deal with ICE caused
+       by PR9552
+     demo-loop.sh:
+     * create buildlogs/$ver and index.html showing summary of build status
+     glibc-2.1.3:
+     * moved glibc-2.1.3-fix-gcc3-llabs.patch to bad/ since it breaks toolchain build
+
+0.28-rc23:
+     All cpu types that should build with gcc-3.4.0/glibc-2.3.2 now do.  Sweet.
+
+     * crosstool.sh: 
+       - sh4 still needs version.h
+       - check for AR and target compiler when doing canadian cross
+       - updated crosstool-howto.html
+     * linux-2.6.6:
+       - gee, all it took to fix sh and s390 was to pull forward kaz-types.patch!
+     * gcc-3.4.0:
+       - gcc-3.4.0-pr14808-refix.patch: Christopher Faylor says changing cygming.h suffices
+     * glibc-2.1.3:
+       - patches/glibc-2.1.3/glibc-2.1.3-fix-gcc3-llabs.patch fixes? obscure
+         incompatibility related to llabs() with gcc-3.x's libstdc++
+     * demo.sh:
+       - added demo-s390.sh
+
+0.28-rc22:
+     cygwin:
+     * patches/gcc-3.4.0/gcc-3.4.0-pr14808-refix.patch lets gcc-3.4.0 x86 build finish.
+     * patches/linux-2.6.6/linux-2.6.6-cygwin-kconfig.patch lets gcc-3.4.0 sh4 build finish.
+
+     distcc:
+     * update to 2.14
+     * patches/distcc-2.14/randomhost.patch improves load balancing on large clusters
+
+0.28-rc21bis:
+     all.sh: uncomment call to testhello.sh (oops)
+     ppc: added patches/glibc-2.3.2/glibc-2.3.2-powerpc-as.patch to fix ppc7450 error
+
+0.28-rc21:
+     demo-loop.sh:
+     * added.   Like demo.sh, but directly sets tool versions itself.
+       Handy for testing whether one or more versions of gcc build for all CPU types.
+
+     getandpatch.sh:
+     * handle gcc-2.95.3 hide-and-go-seek at gnu.org
+     * handle gcc-3.5 snapshots and gcc-3.3.4 release candidates
+
+     doc:
+     * fix typo in doc/chroot-login-howto.html
+
+     mkjail.sh:
+     * locate strip better for workstation case
+
+     crosstool.sh:
+     * use -sysinclude to get right kernel headers when building glibc for mips on linux-2.6
+     * let user specify BUILD machine tuple by setting GCC_BUILD (useful when crosstool.sh stands alone)
+     * now knows how to coax linux-2.6 to emulate 'make symlinks' for more architectures (sh, mips, and arm)
+
+     patches:
+     * arm-softfloat:
+       Note that I patch gcc-3.4.0 much less heavily than gcc-3.3.3 for arm-softfloat;
+       much of Nico's gcc-3.3.3 patch is already in gcc-3.4.0.  All that's left is tidying.
+       Thanks to Dmitry Andric for putting up his patches at 
+       http://www.andric.com/cross/patches/gcc-3.3.2-arm-softfloat.patch.bz2
+       http://www.andric.com/cross/patches/gcc-3.4.0-arm-softfloat.patch.bz2
+       http://www.andric.com/cross/patches/gcc-3.4.0-arm-lib1asm.patch.bz2
+       from which I mostly only used the lib1asm.patch, but others may want to look into the others.
+       - added patches/gcc-3.4.0/gcc-3.4.0-arm-lib1asm.patch
+       - added patches/gcc-3.4.0/gcc-3.4.0-arm-nolibfloat.patch
+
+    * mips:
+       Get mips building with linux-2.6 and gcc-3.4.0:
+       - patches/glibc-2.3.2/glibc-2.3.2-mips-user.patch
+       - patches/glibc-2.3.2/glibc-2.3.2-allow-gcc-3.4-nounit.patch
+       - patches/glibc-linuxthreads-2.3.2/glibc-linuxthreads-2.3.2-allow-3.4.patch (the mips hunk is not from cvs!)
+
+     * sh4:
+       - patches/gcc-{3.3.3,3.4.0}/pr13250-fix.patch
+       - patches/gcc-3.4.0/pr15647-fix.patch (gcc-3.3.3 backport coming soon from Kaz)
+
+     * ppc:
+       - patches/gcc-3.4.0/gcc-3.3.3h-ppc-asm-spec.patch to fix altivec problems with binutils-2.15
+
+     * glibc: 
+       fix cross-compilation detection (for canadian builds):
+       - patches/glibc-2.1.3/glibc-2.1.3-ac_cv_prog_cc_cross.patch
+       - patches/glibc-2.3.2/glibc-2.3.2-cross-2.patch
+       fix some errors flagged by gcc-3.5:
+       - patches/glibc-2.3.2/glibc-2.3.2-allow-gcc-3.5.patch
+
+0.28-rc19:
+     ppc:
+     * added demo-ppc440.sh and demo-ppc604.sh
+
+     alpha:
+     * added patches/glibc-2.3.2/glibc-2.3.2-alpha-pwrite64.patch; now alpha and glibc-2.3.2 build
+
+     linux-2.6:
+     * brought a few patches forward to linux-2.6.6 and binutils-2.15 from previous versions
+     * for 2.6 kernel headers on arm and cris, also do 'make include/asm-$ARCH/.arch'
+
+     known issues:
+     * demo-sh3.sh fails with
+         include/asm/sigcontext.h:4:32: asm/cpu/sigcontext.h: No such file or directory
+         make[2]: *** [libgcc/./_muldi3.o] Error 1
+       when built against 2.6 kernel; 
+       see http://marc.theaimsgroup.com/?l=linux-kernel&m=108554726629507&w=2
+
+     testhello.sh:
+     * now only checks c++ compiler if present (should check GCC_LANGUAGES...)
+       and doesn't do anything at all if GCC_HOST is set 
+
+     doc/crosstool-howto.html:
+     * document canadian cross building, sort of
+     * added ulimit -s tip for Mac OS X
+     * updated known issues
+
+0.28-rc18:
+     * use GCC_HOST instead of HOST, since tcsh sets HOST=`hostname` on entry
+     * modify $BUILD when doing canadian cross, so host never = build
+
+0.28-rc17:
+     canadian cross:
+     * added DISTCC_EXTRA_CONFIG in mkdistcc.sh
+     * added patches/glibc-{2.1.3,2.3.2}/glibc-*-override.sh; still need to set e.g. rpcgen_FOR_BUILD
+       in demo-canadian.sh
+     * disable testhello.sh in all.sh for the moment
+     * don't fail on older gccs that don't have all-build-libiberty target
+
+0.28-rc16bis:
+     * added missing quote in crosstool.sh
+
+0.28-rc16:
+     m68k:
+     * copied binutils-m68k-ignore-comments.patch to patches/binutils-2.14.92
+
+     Cleaning out the patch queue:
+
+     crosstool.sh:
+     * patch idea from AJLuse 3/2004:
+       - Added SHARED_MODE option to allow caller to enable/disable build of shared libraries.
+       - Keep copy from PowerPC NOF directory from failing if nothing there.
+     * patch idea from Jan-Benedict Glaw:
+       - extract kernel version from its Makefile rather than its directory name
+     * patches from Jan-Benedict Glaw:
+       - better error message for ppc64* targets (vs. powerpc*)
+       - support vax (!)
+     * assume canadian cross if BUILD and HOST are set by caller (untested)
+
+     crosstool-howto.html:
+     * patch from Hideki IWAMOTO: fix --builduserspace typo
+
+     getandpatch.sh:
+     * patch from Judith Lebzelter of OSDL: fall back to passive ftp if wget fails first time
+     * patch from Olexiy Avramchenko: unpack/download $PTXDIST_DIR only if set earlier in all.sh
+
+     testhello.sh:
+     * patch from AJLuse: don't fail if tmp already exists, just clean old output files
+
+     contrib:
+     * ajl-all.sh (patch from AJLuse 3/2004; seems risky to me, but someone might like it):
+       - Create SRC_DIR if it does not exist.
+       - If building to a potentially shared tree only delete TARGET files.
+
+
+0.28-rc15:
+     Seems to build gcc-3.4.0-glibc-2.3.2 for most architectures, yay...
+
+     getandpatch.sh: 
+     * always try getting .bz2 before .gz for gcc
+     * guess BINUTILS_URL if not set
+
+     binutils:
+     * default recent gcc's to use binutils-2.14.92 (the most recent official snapshot)
+       to fix strange sparc32 problem
+
+     sh4:
+     * copied linux-2.4.24/kaz-types.patch to linux-2.4.26 to fix same old problem compiling glibc with linux headers
+
+     powerpc64:
+     * binutils-2.14 can't link a powerpc64 toolchain, so try binutils-2.14.92 (an official prerelease?)
+
+     alpha:
+     * resurrected patches/glibc-linuxthreads-2.3.2/alpha_cfi1.patch, added alpha_cfi2.patch
+       (thanks to Mathieu Chouquet-Stringer)
+
+     sparc:
+     * added patches/glibc-2.3.2/glibc-2.3.2-sparc32-sysdep.patch to fix gcc-3.4.0 issue
+
+     sparc64:
+     * copied gccpr15247-fix.patch into patches/binutils-2.14.92
+
+0.28-rc14:
+     * updated doc/crosstool-howto.html
+
+0.28-rc13:
+     arm:
+     * Thanks to mroehner@gmx dot de for his crossgcc post of 9 May 2004,
+       which suggested the following changes:
+       - got rid of symlinks in patches/glibc-2.3.2 to avoid Windows problems
+       - use 2.4 kernel headers until arm can build with 2.6 headers
+       - moved contrib/glibc-vfp.patch to patches/glibc-2.3.2,
+         as it seems to solve problems even when using hard float
+
+     sparc64:
+     * H.J.Lu and M.H.VanLeeuwen helped with http://gcc.gnu.org/PR15345;
+       see patches/glibc-2.3.2/glibc-2.3.2-sparc64-dl-machine.patch
+
+     misc:
+     * fixed typo in chrootshell.c's die() macro that suppressed error text
+     * switched to linux-2.4.26 from linux-2.4.24 or linux-2.6.5 for recent gcc's
+
+0.28-rc12:
+     x86_64:
+     * added x86_64.config, generated by linux-2.6.5's "make allnoconfig"; seems
+       to be needed for glibc-2.3.2 on x86_64 + gcc-3.4.0
+     * added patches/linux-2.6.5/linux-2.6.5-x86_64-unistd.patch
+       to fix x86_64 build with kernel 2.6.5
+
+0.28-rc11:
+     sparc64:
+     * added patches/binutils-2.15.90.0.3/gccpr15247-fix.patch
+     Sadly build still fails with
+/home/dank/wk/crosstool-0.28-rc10/build/sparc64-unknown-linux-gnu/gcc-3.4.0-glibc-2.3.2/build-glibc/libc.a(dl-reloc.o)(.text+0x4b4): In function `elf_machine_load_address.3':
+: undefined reference to `_DYNAMIC'
+collect2: ld returned 1 exit status
+make[2]: *** [/home/dank/wk/crosstool-0.28-rc10/build/sparc64-unknown-linux-gnu/gcc-3.4.0-glibc-2.3.2/build-glibc/elf/sln] Error 1
+
+0.28-rc10:
+     sparc64:
+     * added gcc-3.4.0-ultrasparc3-default64.patch to get ultrasparc3 to default to 64 bits as it should
+
+0.28-rc9:
+     sparc64:
+     * added patches/glibc-2.3.2/glibc-2.3.2-pr139-fix.patch
+       to fix bug on sparc64 detected by latest hj lu binutils
+     * added sparc64.config, generated by linux-2.6.5's "make allnoconfig"
+     * still doesn't build; gcc defaults to sparc32, which causes a 32 bit libgcc.a to be built,
+       which breaks glibc build
+
+     * removed patches/binutils-2.15.90.0.3/binutils-sh-relocs.patch from binutils-2.14.90.0.5,
+       duh, as it seems to be already in cvs
+
+0.28-rc8:
+     powerpc64:
+     * added patches/glibc-2.3.2/glibc-2.3.2-powerpc-procfs.patch to fix linux-2.6.x builds
+     * fixed powerpc64 case in ARCH; how the heck was I building powerpc64 before?!
+     * added powerpc64.config
+
+     m68k:
+     * added patches/binutils-2.15.90.0.3/binutils-m68k-ignore-comments.patch to fix m68k build
+
+     sh:
+     * copied patches/binutils-2.15.90.0.3/binutils-sh-relocs.patch from binutils-2.14.90.0.5
+       (I expect it's still needed on sh, though I haven't verified this).
+
+0.28-rc7:
+     crosstool.sh:
+     * when building gcc, don't parallelize install, as that seems to be broken
+     * Added new environment variable GLIBC_EXTRA_CC_ARGS because there seems to be no way
+       to get gcc to default to 64 bits on sparc64; setting GLIBC_EXTRA_CC_ARGS to e.g. "-64" helps
+
+     arm:
+     * fixed typo in arm9tdmi.dat
+
+     sparc:
+     * sparc64.dat now makes gcc default to ultrasparc3 to get around glibc compile failure on .S files;
+       probably could also have worked around it by setting something like AS_OPTIONS, but didn't explore that
+     * updated sparc64.dat to use GLIBC_EXTRA_CC_ARGS to get around glibc link failure (glibc's configury
+       doesn't provide any way to pass options to gcc when linking some files!)
+       Still can't build glibc-2.3.2 for sparc64; error is
+       qp_qtoi.s:261: Error: Illegal operands: There are only 32 single precision f registers; [0-31]
+
+     powerpc:
+     * added patches/glibc-2.3.2/glibc-2.3.2-allow-gcc-3.4-inline.patch from cvs to allow building with gcc-3.4.0
+
+     m68k:
+     * Still can't build a gcc-3.4.0-glibc-2.3.2 toolchain; error is
+       localealias.s:544: Error: junk at end of line, first unrecognized character is `,'
+
+0.28-rc6:
+     * added gcc-3.4.0-glibc-{2.1.3,2.2.5,2.3.2}.dat, use it in demo scripts
+       (at least where it works)
+     * Moved gcc snapshot .dat files into old
+     * fixed typos in mkdistlinks.sh and demo-cluster.sh
+
+0.28-rc5:
+     * Revamped doc/crosstool-howto.html to describe distcc integration
+
+     * finally renamed mkcommon.sh to be mkdistcc.sh, and
+       moved tcl and expect builds into mkdejagnu.sh
+
+     * added support for gcc-3.4-20040414, gcc-3.4.0-20040416
+
+     crosstool.sh, mkjail.sh, demo-*.sh:
+     * add support for other languages, e.g. Java.  
+       To enable this, set the GCC_LANGUAGES variable, e.g.
+         export GCC_LANGUAGES="c,c++,java,f77"
+       before running.  (Inspired by http://ometer.com/desktop-language.html)
+
+     gcc-3.4.0:
+     * getandpatch.sh:
+       - added support for downloading gcc-3.4.0 prereleases
+     * glibc:
+       - added following patches to allow compiling with gcc-3.4.0 prereleases:
+         patches/glibc-2.3.2/fixup.patch 
+         patches/glibc-2.2.5/glibc-2.2.5-fixup.patch 
+         patches/glibc-linuxthreads-2.2.5/glibc-2.2.5-allow-gcc-3.4-td.patch
+
+     * mkcommon.sh avoids wget if distcc tarball already present,
+       to avoid unneccessary failure when network connectivity poor
+
+0.28-rc4:
+     * common/bin/install-distccd.sh tested on Red Hat Linux, seems to work
+       Not yet tested on cygwin or Mac
+
+     * mkcommon.sh and mkdistcclinks.sh now set permission 755 on directories
+
+     * mkcommon.sh now installs startup script templates 
+       crosstool-distccd-{linux,mac,cygwin}.sh.in to common/etc
+
+       mkdistcclinks.sh now creates common/bin/install-distccd.sh
+
+       The user then runs common/bin/install-distccd.sh
+       which expands the appropriate startup script template,
+       installs it whereever the OS wants it, and registers
+       the service so it'll automatically start on future system boots
+
+     * added StartupParameters.plist, used by mkdistcclinks.sh on Mac OS X
+
+0.28-rc3:
+     getandpatch.sh:
+     * don't set +e anymore, that was a kludge that's no longer needed
+     * fix error message from wrong cd when patching glibc addon
+
+     mkcommon.sh, mkdistcclinks.sh:
+     * create common/bin/install-distccd.sh for all operating systems we can,
+       not just cygwin-install-distccd.sh
+
+0.28-rc2:
+     Doc:
+     * split off crosstest-howto.html from crosstool-howto.html
+
+     powerpc64:
+     * added powerpc970.dat and demo-ppc970.sh (thanks Rafael Ávila de Espíndola)
+
+     crosstool.sh:
+     * abort if PREFIX is set to / or /usr or user running as root
+
+0.28-rc1:
+     Executive summary: 
+     * can now build on Mac OS X and Cygwin (though it still only targets Linux)
+     * can now build on x86_64 Linux systems
+     * supports hetrogenous distcc build clusters out-of-the-box
+     * supports building programs to run on Red Hat 6.2 with gcc-2.95.3
+       or gcc-3.3.3
+     * no longer requires internet connection if you already have the tarballs
+     * supports new target sparc64
+
+     distcc:
+     * To create a build cluster:
+       - make a shared directory all computers can see on network, say /shared
+       - edit demo-cluster.sh to select the toolchains and targets you want,
+         and set RESULT_TOP to /shared/`config.guess`
+       - run demo-cluster.sh on one machine of each type
+       - run $RESULT_TOP/common/bin/run-distccd.sh on each machine
+       Voila!  You now have a compile cluster!
+       To use it, set CC in your program's Makefile to 
+       $RESULT_TOP/$target/$toolcombo/distributed/bin/$TARGET-gcc
+       You may want to invoke config.guess in your Makefile when setting
+       CC, so the same Makefile can run on multiple architectures.
+       The distcc that comes with this release contains the following patch:
+         patches/distcc-2.13/distcc-stringmap.patch
+       which is needed to support hetrogenous distccd clusters with
+       multiple targets and toolchains.
+
+     crosstool.sh:
+     * uses right --build argument on binutils and glibc; fixes x86_64 build
+     * remove bogus --enable-clocale=gnu from glibc configure
+     * use own copy of config.guess instead of relying on gcc's
+     * On exit, say *where* the result was stored
+     * Verify that LD_LIBRARY_PATH is not set, since glibc complains if set
+     * handle 2.6 kernel better
+     * obey PARALLELMFLAGS when building binutils and gcc (glibc already did)
+
+     mkdist.sh:
+     * renamed to clean.sh
+
+     gcc/glibc versions:
+     * support gcc-3.3.3
+     * added gcc-2.95.3-glibc-2.1.3.dat to target Red Hat 6.2 boxes
+     * Added patches/glibc-2.1.3/glibc-2.1.3-allow-gcc3-*.patch
+       to allow compiling glibc-2.1.3 with gcc-3.x
+
+     getandpatch.sh (thanks to Alan Luse for the first three):
+     * use BASENAME in test for previously extracted source trees
+     * don't cd to nonexistent patch directories
+     * Handle linux tarballs which extract to directory 'kernel'
+     * Added a QUIET_EXTRACTIONS option to do non-verbose extractions
+     * offline operation.  Important so you can still build if 
+       ftp.gnu.org is unreachable and you already have the tarballs.
+
+     demo.sh:
+     * updated to use gcc-3.3.3 where possible
+     * created demo-$CPU.sh scripts for more processors
+     * demo.sh now just calls all the demo-$CPU.sh scripts
+     * demo.sh now runs through all cpu types even if one fails,
+       and makes separate log files for each
+     * added mkcommon.sh to compile distcc, tcl, expect, dejagnu
+
+     demo-runtest.sh:
+     * added as example of how to run a single regression test
+
+     newlib:
+     * added contrib/newlib2, files from Harry Kaes, who successfully built
+       gcc-3.3.2/newlib for mips
+
+     arm:
+     * Revert to binutils-2.14.90.0.5 because arm has trouble with plain 2.14
+     * copied gcc-3.3.2-arm-softfloat.patch to patches/gcc-3.3.3,
+       but probably still need contrib/glibc-vfp.patch 
+       Added more notes to demo-arm-softfloat.sh
+     * Added arm-iwmmxt
+
+     sparc64: thanks to Martin Van Leeuwen for the following changes:
+     * backported glibc-2.3.2 fixes from cvs:
+       - patches/glibc-2.3.2/glibc-2.3.2-sparc64-pause.patch
+       - patches/glibc-2.3.2/glibc-2.3.2-sparc64-pwrite64.patch
+       - patches/glibc-linuxthreads-2.3.2/glibc-2.3.2-sparc64-sigproc.patch
+     * tell the assembler to use CPU v9a, -mcpu=ultrasparc3 isn't enough
+
+     portability:
+     * use -g0 when invoking patch to keep it from checking CVS or Perforce
+     * update glibc-2.1.3's config.sub to avoid warnings on newer systems
+     * copied patches/linux-2.4.24/linux-2.4-bsd-expr.patch to
+       patches/linux-2.4.21/linux-2.4-bsd-expr.patch for Mac OS X's benefit
+     * update gcc-2.95.3's config.sub so we can build on newer systems
+     * patches/{gcc-2.95.3,binutils-2.11.2}/gcc-pr3106.patch fixes compile 
+       failure on Mac OS X
+     * patches/gcc-2.95.3/backport-config.gcc-{1.4,1.92}.patch
+       fix compile failures on Mac OS X and x86_64
+     * avoid using $PWD, since that's a bash feature, not part of POSIX
+   
+     cygwin compatibility:
+     * patch glibc's configure to not depend on case sensitivity:
+       patches/glibc-linuxthreads-2.3.2/glibc-linuxthreads-2.3.2-cygwin.patch
+       patches/glibc-2.3.2/glibc-2.3.2-cygwin.patch
+       patches/glibc-2.2.5/glibc-2.2.5-cygwin.patch
+       patches/glibc-2.1.3/glibc-2.1.3-cygwin.patch
+     * demo*.sh: don't use ~, as ash doesn't expand it
+     * getandpatch.sh: don't use set -e when calling functions that return 1
+     * don't let gcc-2.95.3 put .exe on end of Linux executables
+       (only ok because we are targeting Linux, not VMS, Windows, or Cygwin)
+       patches/gcc-2.95.3/gcc-2.95.3-cygwin-020611.patch
+
+     Mac OS X compatibility
+     * Note: you need to install gawk, gnu sed, and wget using fink before 
+       you can build crosstool.  If wget or any other fink program segfaults,
+       try 'sudo /sw/var/lib/fink/prebound/update-package-prebinding.pl -f'
+       once to get around a hiccup in fink's incremental prelinking of apps.
+     * Two patches from Martin Schaffner:
+       - patches/linux-2.4.24/linux-2.4-bsd-expr.patch
+       - patches/glibc-2.3.2/glibc-configure-apple-as.patch
+     * use 'true' and 'false' rather than '/bin/true' and '/bin/false'
+     * crosstool.sh: override LD and RANLIB when building glibc; fixes
+         ld: .../c_stubs/gconv_stubs.o bad magic number (not a Mach-O file)
+         make[2]: *** [.../build-glibc/c_stubs/libc_stubs.a] Error 1
+       which probably only happens when building redhat's glibc-2.1.3
+
+0.27 1 Feb 2004 "ow ow ow should have worn hockey skates"
 
      getandpatch.sh:
      * really try to detect patches that fail to apply
@@ -53,6 +906,7 @@ for more info.
        crosstool-0.26/patches/expect-5.39/pr12096.patch fixes that bug.
        You'll want to build expect from sources and apply that patch
        before running crosstest.sh (until I add that to dejagnu.sh)
+       (see mkcommon.sh)
 
      FIXME:
      * patches/linux-2.4.21/maybe/ia64-offsets.h.patch would partially fix
@@ -176,13 +1030,13 @@ for more info.
      had nice test cases that had not as far as I know made it into
      the testsuite, so I wrote the following eight patches and apply 
      them to both gcc-3.3.1 and gcc-3.4-20030903:
-	pr9365-1-test.patch  pr10392-1-test.patch pr10412-1-test.patch
-	pr10589-1-test.patch pr11162-1-test.patch pr11587-1-test.patch
-	pr11736-1-test.patch pr11864-1-test.patch
+        pr9365-1-test.patch  pr10392-1-test.patch pr10412-1-test.patch
+        pr10589-1-test.patch pr11162-1-test.patch pr11587-1-test.patch
+        pr11736-1-test.patch pr11864-1-test.patch
      Each of those creates a testcase prNNNNN-1.c.
 
      One of them had a fix in the report but not in cvs, so I added
-	pr11587.patch
+        pr11587.patch
      to both gcc-3.3.1 and gcc-3.4-20030903.
 
      I verified that the new tests pr9365-1.c pr10392-1.c pr10589-1.c
@@ -275,17 +1129,17 @@ for more info.
      at Dara's request.
  
      Refactored 
-	gcc-3.4-20030813-patches/compat.exp.patch
-	gcc-3.4-20030813-patches/gcc-3.4-20030813-g++.exp.patch
-	gcc-3.4-20030813-patches/gcc-3.4-20030813-libstdc++.exp.patch
+        gcc-3.4-20030813-patches/compat.exp.patch
+        gcc-3.4-20030813-patches/gcc-3.4-20030813-g++.exp.patch
+        gcc-3.4-20030813-patches/gcc-3.4-20030813-libstdc++.exp.patch
      into
-	gcc-3.4-20030813-patches/pr12009.patch
-	gcc-3.4-20030813-patches/pr12010.patch
+        gcc-3.4-20030813-patches/pr12009.patch
+        gcc-3.4-20030813-patches/pr12010.patch
 
      Replaced
-	gcc-3.4-20030813-patches/gcc-3.4-20030813-dj0815.patch
+        gcc-3.4-20030813-patches/gcc-3.4-20030813-dj0815.patch
      with
-	gcc-3.4-20030813-patches/kaz-gcc-3.4-20030813-abi_check.patch
+        gcc-3.4-20030813-patches/kaz-gcc-3.4-20030813-abi_check.patch
      because Kaz pointed out a problem.  This probably isn't the final
      solution to the libstdc++-v3/testsuite/abi_check.c link failure on sh.
      This did not change regression test results, but then, gcc-3.4-20030813
@@ -317,13 +1171,13 @@ for more info.
      Added gcc-3.4 snapshot support.   
      Patches:
      Forward port of testsuite fixes for cross-compilation:
-	gcc-3.4-20030813-patches/compat.exp.patch
-	gcc-3.4-20030813-patches/gcc-3.4-20030813-g++.exp.patch
-	gcc-3.4-20030813-patches/gcc-3.4-20030813-libstdc++.exp.patch
+        gcc-3.4-20030813-patches/compat.exp.patch
+        gcc-3.4-20030813-patches/gcc-3.4-20030813-g++.exp.patch
+        gcc-3.4-20030813-patches/gcc-3.4-20030813-libstdc++.exp.patch
      Fix --without-fp (thanks, Dan J.!):
         glibc-2.3.2-patches/glibc-2.3.2-without-fp.patch  [fixed typo here 21 aug 2003]
      Fix --without-headers:
-	gcc-3.4-20030813-patches/gcc-3.4-without-headers.patch
+        gcc-3.4-20030813-patches/gcc-3.4-without-headers.patch
      Kludge to let me run old binaries on sh4:
         glibc-2.3.2-patches/sh-fpscr-libc-kludge.patch
 

@@ -1,0 +1,44 @@
+From: "Daniel Goertzen" <daniel.goertzen@norscan.com>
+To: <dank@kegel.com>
+Subject: crosstool bash-3.00 patch
+Date: Fri, 20 Aug 2004 10:05:50 -0500
+Message-ID: <GEEBILGEBJJLIKCGMAGECEIMDOAA.daniel.goertzen@norscan.com>
+
+Hi Dan.  Anything earlier than gcc-3.3-20040728 (including gcc-3.3.4) will
+fail to configure under bash-3.00.  This has to do with a change to "trap",
+a bash builtin command.
+
+The patch below corrects the problem for bash-3.00.  I haven't tried it on
+bash-2.0x, but according to the man page "trap 0" and "trap - 0" are
+equivalent.
+
+Cheers,
+Daniel Goertzen
+
+
+diff -Naur gcc-3.3.4-pristine/configure gcc-3.3.4/configure
+--- gcc-3.3.4-pristine/configure	2002-09-29 11:11:24.000000000 -0500
++++ gcc-3.3.4/configure	2004-08-19 16:22:00.000000000 -0500
+@@ -697,7 +697,7 @@
+ if test -f skip-this-dir; then
+ 	# Perform the same cleanup as the trap handler, minus the "exit 1" of
+course,
+ 	# and reset the trap handler.
+-	trap 0
++	trap - 0
+ 	rm -rf Makefile* ${tmpdir}
+ 	# Execute the final clean-up actions
+ 	${config_shell} skip-this-dir
+@@ -1596,7 +1596,7 @@
+ # Perform the same cleanup as the trap handler, minus the "exit 1" of
+course,
+ # and reset the trap handler.
+ rm -rf ${tmpdir}
+-trap 0
++trap - 0
+
+ exit 0
+
+
+
+

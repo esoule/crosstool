@@ -22,7 +22,7 @@ ORIGDIR=`pwd`
 if test "$JAIL" = ""; then echo "bug"; exit 1; fi
 
 # Undo any earlier mount
-umount  $JAIL/proc 2> /dev/null || /bin/true
+umount  $JAIL/proc 2> /dev/null || true
 
 # Unpack compressed tarball from stdin
 rm -rf $JAIL/*

@@ -1,0 +1,300 @@
+                 from include/linux/thread_info.h:20,
+                 from include/linux/spinlock.h:12,
+                 from include/linux/capability.h:45,
+                 from include/linux/sched.h:7,
+                 from include/linux/module.h:10,
+                 from lib/extable.c:14:
+include/asm/cpu-single.h:44: warning: type qualifiers ignored on function return type
+In file included from include/linux/kernel.h:17,
+                 from include/linux/spinlock.h:13,
+                 from include/linux/capability.h:45,
+                 from include/linux/sched.h:7,
+                 from include/linux/module.h:10,
+                 from lib/extable.c:14:
+include/asm/bug.h:7: warning: type qualifiers ignored on function return type
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,lib/.idr.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fno-omit-frame-pointer -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110  -msoft-float -Uarm -Wdeclaration-after-statement -Wno-pointer-sign    -DKBUILD_BASENAME=idr -DKBUILD_MODNAME=idr -c -o lib/idr.o lib/idr.c
+In file included from include/asm/proc-fns.h:154,
+                 from include/asm/system.h:94,
+                 from include/asm/bitops.h:22,
+                 from include/linux/bitops.h:77,
+                 from include/linux/thread_info.h:20,
+                 from include/linux/spinlock.h:12,
+                 from include/linux/mmzone.h:8,
+                 from include/linux/gfp.h:4,
+                 from include/linux/slab.h:15,
+                 from lib/idr.c:28:
+include/asm/cpu-single.h:44: warning: type qualifiers ignored on function return type
+In file included from include/linux/kernel.h:17,
+                 from include/linux/spinlock.h:13,
+                 from include/linux/mmzone.h:8,
+                 from include/linux/gfp.h:4,
+                 from include/linux/slab.h:15,
+                 from lib/idr.c:28:
+include/asm/bug.h:7: warning: type qualifiers ignored on function return type
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,lib/.int_sqrt.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fno-omit-frame-pointer -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110  -msoft-float -Uarm -Wdeclaration-after-statement -Wno-pointer-sign    -DKBUILD_BASENAME=int_sqrt -DKBUILD_MODNAME=int_sqrt -c -o lib/int_sqrt.o lib/int_sqrt.c
+In file included from include/asm/proc-fns.h:154,
+                 from include/asm/system.h:94,
+                 from include/asm/bitops.h:22,
+                 from include/linux/bitops.h:77,
+                 from include/linux/kernel.h:15,
+                 from lib/int_sqrt.c:2:
+include/asm/cpu-single.h:44: warning: type qualifiers ignored on function return type
+In file included from include/linux/kernel.h:17,
+                 from lib/int_sqrt.c:2:
+include/asm/bug.h:7: warning: type qualifiers ignored on function return type
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,lib/.kobject.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fno-omit-frame-pointer -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110  -msoft-float -Uarm -Wdeclaration-after-statement -Wno-pointer-sign    -DKBUILD_BASENAME=kobject -DKBUILD_MODNAME=kobject -c -o lib/kobject.o lib/kobject.c
+In file included from include/asm/proc-fns.h:154,
+                 from include/asm/system.h:94,
+                 from include/linux/list.h:8,
+                 from include/linux/kobject.h:21,
+                 from lib/kobject.c:13:
+include/asm/cpu-single.h:44: warning: type qualifiers ignored on function return type
+In file included from include/linux/kernel.h:17,
+                 from include/linux/rwsem.h:18,
+                 from include/linux/kobject.h:23,
+                 from lib/kobject.c:13:
+include/asm/bug.h:7: warning: type qualifiers ignored on function return type
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,lib/.kobject_uevent.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fno-omit-frame-pointer -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110  -msoft-float -Uarm -Wdeclaration-after-statement -Wno-pointer-sign    -DKBUILD_BASENAME=kobject_uevent -DKBUILD_MODNAME=kobject_uevent -c -o lib/kobject_uevent.o lib/kobject_uevent.c
+In file included from include/asm/proc-fns.h:154,
+                 from include/asm/system.h:94,
+                 from include/asm/bitops.h:22,
+                 from include/linux/bitops.h:77,
+                 from include/linux/thread_info.h:20,
+                 from include/linux/spinlock.h:12,
+                 from lib/kobject_uevent.c:17:
+include/asm/cpu-single.h:44: warning: type qualifiers ignored on function return type
+In file included from include/linux/kernel.h:17,
+                 from include/linux/spinlock.h:13,
+                 from lib/kobject_uevent.c:17:
+include/asm/bug.h:7: warning: type qualifiers ignored on function return type
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,lib/.kref.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fno-omit-frame-pointer -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110  -msoft-float -Uarm -Wdeclaration-after-statement -Wno-pointer-sign    -DKBUILD_BASENAME=kref -DKBUILD_MODNAME=kref -c -o lib/kref.o lib/kref.c
+In file included from include/asm/proc-fns.h:154,
+                 from include/asm/system.h:94,
+                 from include/asm/atomic.h:100,
+                 from include/linux/kref.h:21,
+                 from lib/kref.c:14:
+include/asm/cpu-single.h:44: warning: type qualifiers ignored on function return type
+In file included from include/linux/kernel.h:17,
+                 from include/linux/spinlock.h:13,
+                 from include/linux/capability.h:45,
+                 from include/linux/sched.h:7,
+                 from include/linux/module.h:10,
+                 from lib/kref.c:15:
+include/asm/bug.h:7: warning: type qualifiers ignored on function return type
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,lib/.parser.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fno-omit-frame-pointer -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110  -msoft-float -Uarm -Wdeclaration-after-statement -Wno-pointer-sign    -DKBUILD_BASENAME=parser -DKBUILD_MODNAME=parser -c -o lib/parser.o lib/parser.c
+In file included from include/asm/proc-fns.h:154,
+                 from include/asm/system.h:94,
+                 from include/asm/bitops.h:22,
+                 from include/linux/bitops.h:77,
+                 from include/linux/thread_info.h:20,
+                 from include/linux/spinlock.h:12,
+                 from include/linux/capability.h:45,
+                 from include/linux/sched.h:7,
+                 from include/linux/module.h:10,
+                 from lib/parser.c:9:
+include/asm/cpu-single.h:44: warning: type qualifiers ignored on function return type
+In file included from include/linux/kernel.h:17,
+                 from include/linux/spinlock.h:13,
+                 from include/linux/capability.h:45,
+                 from include/linux/sched.h:7,
+                 from include/linux/module.h:10,
+                 from lib/parser.c:9:
+include/asm/bug.h:7: warning: type qualifiers ignored on function return type
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,lib/.prio_tree.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fno-omit-frame-pointer -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110  -msoft-float -Uarm -Wdeclaration-after-statement -Wno-pointer-sign    -DKBUILD_BASENAME=prio_tree -DKBUILD_MODNAME=prio_tree -c -o lib/prio_tree.o lib/prio_tree.c
+In file included from include/asm/proc-fns.h:154,
+                 from include/asm/system.h:94,
+                 from include/asm/bitops.h:22,
+                 from include/linux/bitops.h:77,
+                 from include/linux/thread_info.h:20,
+                 from include/linux/spinlock.h:12,
+                 from include/linux/capability.h:45,
+                 from include/linux/sched.h:7,
+                 from include/linux/mm.h:4,
+                 from lib/prio_tree.c:15:
+include/asm/cpu-single.h:44: warning: type qualifiers ignored on function return type
+In file included from include/linux/kernel.h:17,
+                 from include/linux/spinlock.h:13,
+                 from include/linux/capability.h:45,
+                 from include/linux/sched.h:7,
+                 from include/linux/mm.h:4,
+                 from lib/prio_tree.c:15:
+include/asm/bug.h:7: warning: type qualifiers ignored on function return type
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,lib/.radix-tree.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fno-omit-frame-pointer -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110  -msoft-float -Uarm -Wdeclaration-after-statement -Wno-pointer-sign    -DKBUILD_BASENAME=radix_tree -DKBUILD_MODNAME=radix_tree -c -o lib/radix-tree.o lib/radix-tree.c
+In file included from include/asm/proc-fns.h:154,
+                 from include/asm/system.h:94,
+                 from include/asm/bitops.h:22,
+                 from include/linux/bitops.h:77,
+                 from include/linux/kernel.h:15,
+                 from lib/radix-tree.c:22:
+include/asm/cpu-single.h:44: warning: type qualifiers ignored on function return type
+In file included from include/linux/kernel.h:17,
+                 from lib/radix-tree.c:22:
+include/asm/bug.h:7: warning: type qualifiers ignored on function return type
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,lib/.rbtree.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fno-omit-frame-pointer -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110  -msoft-float -Uarm -Wdeclaration-after-statement -Wno-pointer-sign    -DKBUILD_BASENAME=rbtree -DKBUILD_MODNAME=rbtree -c -o lib/rbtree.o lib/rbtree.c
+In file included from include/asm/proc-fns.h:154,
+                 from include/asm/system.h:94,
+                 from include/asm/bitops.h:22,
+                 from include/linux/bitops.h:77,
+                 from include/linux/kernel.h:15,
+                 from include/linux/rbtree.h:97,
+                 from lib/rbtree.c:23:
+include/asm/cpu-single.h:44: warning: type qualifiers ignored on function return type
+In file included from include/linux/kernel.h:17,
+                 from include/linux/rbtree.h:97,
+                 from lib/rbtree.c:23:
+include/asm/bug.h:7: warning: type qualifiers ignored on function return type
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,lib/.rwsem-spinlock.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fno-omit-frame-pointer -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110  -msoft-float -Uarm -Wdeclaration-after-statement -Wno-pointer-sign    -DKBUILD_BASENAME=rwsem_spinlock -DKBUILD_MODNAME=rwsem_spinlock -c -o lib/rwsem-spinlock.o lib/rwsem-spinlock.c
+In file included from include/asm/proc-fns.h:154,
+                 from include/asm/system.h:94,
+                 from include/asm/bitops.h:22,
+                 from include/linux/bitops.h:77,
+                 from include/linux/kernel.h:15,
+                 from include/linux/rwsem.h:18,
+                 from lib/rwsem-spinlock.c:8:
+include/asm/cpu-single.h:44: warning: type qualifiers ignored on function return type
+In file included from include/linux/kernel.h:17,
+                 from include/linux/rwsem.h:18,
+                 from lib/rwsem-spinlock.c:8:
+include/asm/bug.h:7: warning: type qualifiers ignored on function return type
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,lib/.string.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fno-omit-frame-pointer -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110  -msoft-float -Uarm -Wdeclaration-after-statement -Wno-pointer-sign    -DKBUILD_BASENAME=string -DKBUILD_MODNAME=string -c -o lib/string.o lib/string.c
+In file included from include/asm/proc-fns.h:154,
+                 from include/asm/system.h:94,
+                 from include/asm/bitops.h:22,
+                 from include/linux/bitops.h:77,
+                 from include/linux/thread_info.h:20,
+                 from include/linux/spinlock.h:12,
+                 from include/linux/capability.h:45,
+                 from include/linux/sched.h:7,
+                 from include/linux/module.h:10,
+                 from lib/string.c:25:
+include/asm/cpu-single.h:44: warning: type qualifiers ignored on function return type
+In file included from include/linux/kernel.h:17,
+                 from include/linux/spinlock.h:13,
+                 from include/linux/capability.h:45,
+                 from include/linux/sched.h:7,
+                 from include/linux/module.h:10,
+                 from lib/string.c:25:
+include/asm/bug.h:7: warning: type qualifiers ignored on function return type
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,lib/.vsprintf.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fno-omit-frame-pointer -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110  -msoft-float -Uarm -Wdeclaration-after-statement -Wno-pointer-sign    -DKBUILD_BASENAME=vsprintf -DKBUILD_MODNAME=vsprintf -c -o lib/vsprintf.o lib/vsprintf.c
+In file included from include/asm/proc-fns.h:154,
+                 from include/asm/system.h:94,
+                 from include/asm/bitops.h:22,
+                 from include/linux/bitops.h:77,
+                 from include/linux/thread_info.h:20,
+                 from include/linux/spinlock.h:12,
+                 from include/linux/capability.h:45,
+                 from include/linux/sched.h:7,
+                 from include/linux/module.h:10,
+                 from lib/vsprintf.c:20:
+include/asm/cpu-single.h:44: warning: type qualifiers ignored on function return type
+In file included from include/linux/kernel.h:17,
+                 from include/linux/spinlock.h:13,
+                 from include/linux/capability.h:45,
+                 from include/linux/sched.h:7,
+                 from include/linux/module.h:10,
+                 from lib/vsprintf.c:20:
+include/asm/bug.h:7: warning: type qualifiers ignored on function return type
+  rm -f lib/lib.a; /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-ar  rcs lib/lib.a lib/bitmap.o lib/bust_spinlocks.o lib/cmdline.o lib/ctype.o lib/dec_and_lock.o lib/div64.o lib/dump_stack.o lib/errno.o lib/extable.o lib/idr.o lib/int_sqrt.o lib/kobject.o lib/kobject_uevent.o lib/kref.o lib/parser.o lib/prio_tree.o lib/radix-tree.o lib/rbtree.o lib/rwsem-spinlock.o lib/string.o lib/vsprintf.o
+make -f scripts/Makefile.build obj=arch/arm/lib
+   rm -f arch/arm/lib/built-in.o; /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-ar rcs arch/arm/lib/built-in.o
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.ashldi3.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fno-omit-frame-pointer -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110  -msoft-float -Uarm -Wdeclaration-after-statement -Wno-pointer-sign    -DKBUILD_BASENAME=ashldi3 -DKBUILD_MODNAME=ashldi3 -c -o arch/arm/lib/ashldi3.o arch/arm/lib/ashldi3.c
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.ashrdi3.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fno-omit-frame-pointer -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110  -msoft-float -Uarm -Wdeclaration-after-statement -Wno-pointer-sign    -DKBUILD_BASENAME=ashrdi3 -DKBUILD_MODNAME=ashrdi3 -c -o arch/arm/lib/ashrdi3.o arch/arm/lib/ashrdi3.c
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.backtrace.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/backtrace.o arch/arm/lib/backtrace.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.changebit.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/changebit.o arch/arm/lib/changebit.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.clearbit.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/clearbit.o arch/arm/lib/clearbit.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.copy_page.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/copy_page.o arch/arm/lib/copy_page.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.csumipv6.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/csumipv6.o arch/arm/lib/csumipv6.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.csumpartial.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/csumpartial.o arch/arm/lib/csumpartial.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.csumpartialcopy.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/csumpartialcopy.o arch/arm/lib/csumpartialcopy.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.csumpartialcopyuser.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/csumpartialcopyuser.o arch/arm/lib/csumpartialcopyuser.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.delay.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/delay.o arch/arm/lib/delay.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.div64.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/div64.o arch/arm/lib/div64.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.findbit.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/findbit.o arch/arm/lib/findbit.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.getuser.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/getuser.o arch/arm/lib/getuser.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.io-readsb.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/io-readsb.o arch/arm/lib/io-readsb.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.io-readsl.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/io-readsl.o arch/arm/lib/io-readsl.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.io-readsw-armv4.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/io-readsw-armv4.o arch/arm/lib/io-readsw-armv4.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.io-writesb.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/io-writesb.o arch/arm/lib/io-writesb.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.io-writesl.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/io-writesl.o arch/arm/lib/io-writesl.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.io-writesw-armv4.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/io-writesw-armv4.o arch/arm/lib/io-writesw-armv4.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.lib1funcs.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/lib1funcs.o arch/arm/lib/lib1funcs.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.lshrdi3.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fno-omit-frame-pointer -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110  -msoft-float -Uarm -Wdeclaration-after-statement -Wno-pointer-sign    -DKBUILD_BASENAME=lshrdi3 -DKBUILD_MODNAME=lshrdi3 -c -o arch/arm/lib/lshrdi3.o arch/arm/lib/lshrdi3.c
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.memchr.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/memchr.o arch/arm/lib/memchr.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.memcpy.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/memcpy.o arch/arm/lib/memcpy.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.memset.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/memset.o arch/arm/lib/memset.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.memzero.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/memzero.o arch/arm/lib/memzero.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.muldi3.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fno-omit-frame-pointer -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110  -msoft-float -Uarm -Wdeclaration-after-statement -Wno-pointer-sign    -DKBUILD_BASENAME=muldi3 -DKBUILD_MODNAME=muldi3 -c -o arch/arm/lib/muldi3.o arch/arm/lib/muldi3.c
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.putuser.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/putuser.o arch/arm/lib/putuser.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.setbit.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/setbit.o arch/arm/lib/setbit.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.strchr.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/strchr.o arch/arm/lib/strchr.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.strncpy_from_user.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/strncpy_from_user.o arch/arm/lib/strncpy_from_user.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.strnlen_user.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/strnlen_user.o arch/arm/lib/strnlen_user.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.strrchr.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/strrchr.o arch/arm/lib/strrchr.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.testchangebit.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/testchangebit.o arch/arm/lib/testchangebit.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.testclearbit.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/testclearbit.o arch/arm/lib/testclearbit.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.testsetbit.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/testsetbit.o arch/arm/lib/testsetbit.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.uaccess.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/lib/uaccess.o arch/arm/lib/uaccess.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.ucmpdi2.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fno-omit-frame-pointer -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110  -msoft-float -Uarm -Wdeclaration-after-statement -Wno-pointer-sign    -DKBUILD_BASENAME=ucmpdi2 -DKBUILD_MODNAME=ucmpdi2 -c -o arch/arm/lib/ucmpdi2.o arch/arm/lib/ucmpdi2.c
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/lib/.udivdi3.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fno-omit-frame-pointer -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110  -msoft-float -Uarm -Wdeclaration-after-statement -Wno-pointer-sign    -DKBUILD_BASENAME=udivdi3 -DKBUILD_MODNAME=udivdi3 -c -o arch/arm/lib/udivdi3.o arch/arm/lib/udivdi3.c
+  rm -f arch/arm/lib/lib.a; /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-ar  rcs arch/arm/lib/lib.a arch/arm/lib/ashldi3.o arch/arm/lib/ashrdi3.o arch/arm/lib/backtrace.o arch/arm/lib/changebit.o arch/arm/lib/clearbit.o arch/arm/lib/copy_page.o arch/arm/lib/csumipv6.o arch/arm/lib/csumpartial.o arch/arm/lib/csumpartialcopy.o arch/arm/lib/csumpartialcopyuser.o arch/arm/lib/delay.o arch/arm/lib/div64.o arch/arm/lib/findbit.o arch/arm/lib/getuser.o arch/arm/lib/io-readsb.o arch/arm/lib/io-readsl.o arch/arm/lib/io-readsw-armv4.o arch/arm/lib/io-writesb.o arch/arm/lib/io-writesl.o arch/arm/lib/io-writesw-armv4.o arch/arm/lib/lib1funcs.o arch/arm/lib/lshrdi3.o arch/arm/lib/memchr.o arch/arm/lib/memcpy.o arch/arm/lib/memset.o arch/arm/lib/memzero.o arch/arm/lib/muldi3.o arch/arm/lib/putuser.o arch/arm/lib/setbit.o arch/arm/lib/strchr.o arch/arm/lib/strncpy_from_user.o arch/arm/lib/strnlen_user.o arch/arm/lib/strrchr.o arch/arm/lib/testchangebit.o arch/arm/lib/testclearbit.o arch/arm/lib/testsetbit.o arch/arm/lib/uaccess.o arch/arm/lib/ucmpdi2.o arch/arm/lib/udivdi3.o
+  set -e; . /home/dank/queue/jobdir.fast/crosstool-0.30/build/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/linux-2.6.11.3/scripts/mkversion > .tmp_version; mv -f .tmp_version .version; make -f scripts/Makefile.build obj=init
+  CHK     include/linux/compile.h
+  UPD     include/linux/compile.h
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,init/.version.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fno-omit-frame-pointer -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110  -msoft-float -Uarm -Wdeclaration-after-statement -Wno-pointer-sign    -DKBUILD_BASENAME=version -DKBUILD_MODNAME=version -c -o init/version.o init/version.c
+In file included from include/asm/proc-fns.h:154,
+                 from include/asm/system.h:94,
+                 from include/asm/bitops.h:22,
+                 from include/linux/bitops.h:77,
+                 from include/linux/thread_info.h:20,
+                 from include/linux/spinlock.h:12,
+                 from include/linux/capability.h:45,
+                 from include/linux/sched.h:7,
+                 from include/linux/module.h:10,
+                 from init/version.c:10:
+include/asm/cpu-single.h:44: warning: type qualifiers ignored on function return type
+In file included from include/linux/kernel.h:17,
+                 from include/linux/spinlock.h:13,
+                 from include/linux/capability.h:45,
+                 from include/linux/sched.h:7,
+                 from include/linux/module.h:10,
+                 from init/version.c:10:
+include/asm/bug.h:7: warning: type qualifiers ignored on function return type
+   /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-ld -EL   -r -o init/built-in.o init/main.o init/version.o init/mounts.o init/initramfs.o init/calibrate.o
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-ld -EL  -p --no-undefined -X -o .tmp_vmlinux1 -T arch/arm/kernel/vmlinux.lds arch/arm/kernel/head.o arch/arm/kernel/init_task.o  init/built-in.o --start-group  usr/built-in.o  arch/arm/kernel/built-in.o  arch/arm/mm/built-in.o  arch/arm/common/built-in.o  arch/arm/mach-footbridge/built-in.o  arch/arm/nwfpe/built-in.o  kernel/built-in.o  mm/built-in.o  fs/built-in.o  ipc/built-in.o  security/built-in.o  crypto/built-in.o  lib/lib.a  arch/arm/lib/lib.a  lib/built-in.o  arch/arm/lib/built-in.o  drivers/built-in.o  sound/built-in.o  net/built-in.o --end-group 
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-nm -n .tmp_vmlinux1 | scripts/kallsyms  > .tmp_kallsyms1.S
+set -e; echo '  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,./..tmp_kallsyms1.o.d -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float  -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude     -c -o .tmp_kallsyms1.o .tmp_kallsyms1.S'; /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,./..tmp_kallsyms1.o.d -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float  -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude     -c -o .tmp_kallsyms1.o .tmp_kallsyms1.S; scripts/basic/fixdep ./..tmp_kallsyms1.o.d .tmp_kallsyms1.o '/home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,./..tmp_kallsyms1.o.d -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float  -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude     -c -o .tmp_kallsyms1.o .tmp_kallsyms1.S' > ./..tmp_kallsyms1.o.tmp; rm -f ./..tmp_kallsyms1.o.d; mv -f ./..tmp_kallsyms1.o.tmp ./..tmp_kallsyms1.o.cmd
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,./..tmp_kallsyms1.o.d -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float  -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude     -c -o .tmp_kallsyms1.o .tmp_kallsyms1.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-ld -EL  -p --no-undefined -X -o .tmp_vmlinux2 -T arch/arm/kernel/vmlinux.lds arch/arm/kernel/head.o arch/arm/kernel/init_task.o  init/built-in.o --start-group  usr/built-in.o  arch/arm/kernel/built-in.o  arch/arm/mm/built-in.o  arch/arm/common/built-in.o  arch/arm/mach-footbridge/built-in.o  arch/arm/nwfpe/built-in.o  kernel/built-in.o  mm/built-in.o  fs/built-in.o  ipc/built-in.o  security/built-in.o  crypto/built-in.o  lib/lib.a  arch/arm/lib/lib.a  lib/built-in.o  arch/arm/lib/built-in.o  drivers/built-in.o  sound/built-in.o  net/built-in.o --end-group .tmp_kallsyms1.o
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-nm -n .tmp_vmlinux2 | scripts/kallsyms  > .tmp_kallsyms2.S
+set -e; echo '  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,./..tmp_kallsyms2.o.d -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float  -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude     -c -o .tmp_kallsyms2.o .tmp_kallsyms2.S'; /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,./..tmp_kallsyms2.o.d -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float  -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude     -c -o .tmp_kallsyms2.o .tmp_kallsyms2.S; scripts/basic/fixdep ./..tmp_kallsyms2.o.d .tmp_kallsyms2.o '/home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,./..tmp_kallsyms2.o.d -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float  -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude     -c -o .tmp_kallsyms2.o .tmp_kallsyms2.S' > ./..tmp_kallsyms2.o.tmp; rm -f ./..tmp_kallsyms2.o.d; mv -f ./..tmp_kallsyms2.o.tmp ./..tmp_kallsyms2.o.cmd
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,./..tmp_kallsyms2.o.d -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float  -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude     -c -o .tmp_kallsyms2.o .tmp_kallsyms2.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-ld -EL  -p --no-undefined -X -o vmlinux -T arch/arm/kernel/vmlinux.lds arch/arm/kernel/head.o arch/arm/kernel/init_task.o  init/built-in.o --start-group  usr/built-in.o  arch/arm/kernel/built-in.o  arch/arm/mm/built-in.o  arch/arm/common/built-in.o  arch/arm/mach-footbridge/built-in.o  arch/arm/nwfpe/built-in.o  kernel/built-in.o  mm/built-in.o  fs/built-in.o  ipc/built-in.o  security/built-in.o  crypto/built-in.o  lib/lib.a  arch/arm/lib/lib.a  lib/built-in.o  arch/arm/lib/built-in.o  drivers/built-in.o  sound/built-in.o  net/built-in.o --end-group .tmp_kallsyms2.o
+  /bin/sh /home/dank/queue/jobdir.fast/crosstool-0.30/build/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/linux-2.6.11.3/scripts/mksysmap System.map
+  /bin/sh /home/dank/queue/jobdir.fast/crosstool-0.30/build/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/linux-2.6.11.3/scripts/mksysmap .tmp_System.map
+make -f scripts/Makefile.build obj=arch/arm/boot MACHINE=arch/arm/mach-footbridge/ arch/arm/boot/zImage
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-objcopy -O binary -R .note -R .comment -S  vmlinux arch/arm/boot/Image
+  Kernel: arch/arm/boot/Image is ready
+make -f scripts/Makefile.build obj=arch/arm/boot/compressed arch/arm/boot/compressed/vmlinux
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/boot/compressed/.head.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/boot/compressed/head.o arch/arm/boot/compressed/head.S
+  gzip -f -9 < arch/arm/boot/compressed/../Image > arch/arm/boot/compressed/piggy.gz
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/boot/compressed/.piggy.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -D__ASSEMBLY__ -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110 -msoft-float    -c -o arch/arm/boot/compressed/piggy.o arch/arm/boot/compressed/piggy.S
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-gcc -Wp,-MD,arch/arm/boot/compressed/.misc.o.d -nostdinc -isystem /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/include -D__KERNEL__ -Iinclude  -Wall -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -ffreestanding -Os     -fno-omit-frame-pointer -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mlittle-endian -mabi=apcs-gnu -D__LINUX_ARM_ARCH__=4 -march=armv4 -mtune=strongarm110  -msoft-float -Uarm -Wdeclaration-after-statement -Wno-pointer-sign -fpic -Dstatic=  -DKBUILD_BASENAME=misc -DKBUILD_MODNAME=misc -c -o arch/arm/boot/compressed/misc.o arch/arm/boot/compressed/misc.c
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-ld -EL   --defsym zreladdr=0x00008000 --defsym initrd_phys=0x00800000 --defsym params_phys=0x00000100 -p --no-undefined -X /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/lib/gcc/arm-unknown-linux-gnu/4.0.0/libgcc.a -T arch/arm/boot/compressed/vmlinux.lds arch/arm/boot/compressed/head.o arch/arm/boot/compressed/piggy.o arch/arm/boot/compressed/misc.o -o arch/arm/boot/compressed/vmlinux 
+  /home/dank/crosstooltest/arm-unknown-linux-gnu/gcc-4.0-20050305-glibc-2.3-20050307/bin/arm-unknown-linux-gnu-objcopy -O binary -R .note -R .comment -S  arch/arm/boot/compressed/vmlinux arch/arm/boot/zImage
+  Kernel: arch/arm/boot/zImage is ready
+Linux kernel build done.
++ echo 'Linux kernel build done.'
++ test '' = 1
++ test 1 = ''
++ test '' = 1
+
+real	59m32.744s
+user	44m59.510s
+sys	7m22.400s
++ df
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/hda2              8064304   2416824   5237824  32% /
+/dev/hda1                62193      9361     49621  16% /boot
+/dev/hda5             29308456  18086552   9733084  66% /home
+none                    127624         0    127624   0% /dev/shm
+Finished job arm-gcc-4.0-20050305-glibc-2.3-20050307.sh on node fast
