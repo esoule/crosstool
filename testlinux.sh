@@ -7,7 +7,7 @@
 
 set -ex
 
-env | sort
+#env | sort
 
 abort() {
     echo $@
@@ -18,6 +18,7 @@ test -z "${PREFIX}"           && abort "Please set PREFIX to where you want the 
 test -z "${LINUX_DIR}"        && abort "Please set LINUX_DIR to the bare filename of the kernel tarball or directory"
 test -z "${BUILD_DIR}"        && abort "Please set BUILD_DIR to the directory where the tools are to be built"
 test -z "${TARGET}"           && abort "Please set TARGET to the Gnu target identifier (e.g. pentium-linux)"
+test -z "${KERNELCONFIG}" || test -r "${KERNELCONFIG}"  || abort  "Can't read file KERNELCONFIG = $KERNELCONFIG, please fix."
 
 # check for canadian cross
 if test x"$GCC_HOST" != x; then
@@ -56,6 +57,10 @@ KERNEL_PATCHLEVEL=`awk '/^PATCHLEVEL =/ { print $3 }' $LINUX_DIR/Makefile`
 
 # Test the C compiler by building the Linux kernel
 cd $LINUX_DIR
+
+if test -f "$KERNELCONFIG" ; then
+    cp $KERNELCONFIG .config
+fi
 
 ARCH=$ARCH CROSS_COMPILE=$PREFIX/bin/$TARGET-
 

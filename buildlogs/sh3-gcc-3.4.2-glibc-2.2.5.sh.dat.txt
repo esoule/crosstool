@@ -1,7 +1,0 @@
-TARGET=sh3-unknown-linux-gnu
-BINUTILS_DIR=binutils-2.15
-GCC_DIR=gcc-3.4.2
-GLIBC_DIR=glibc-2.2.5
-LINUX_DIR=linux-2.6.8
-toolchain=FAIL
-kernel=FAIL

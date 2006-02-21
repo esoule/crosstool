@@ -1,7 +1,355 @@
 Note: a description of why each patch is needed is embedded
 *inside* the patch file at the top, so read the patch file
 for more info.
- 
+
+0.40:
+    crosstool.sh:
+    * check for flex and bison (some distros don't install them by default)
+    * undo bits/syscall.h gcj-4.0.0 change from Tim Hayman since 
+      it breaks arm, see http://sourceware.org/ml/crossgcc/2006-01/msg00091.html
+    * Obey GLIBCTHREADS_FILENAME if set (from martinwguy@yahoo.it)
+
+
+    all.sh:
+    * If build dir exists, remove it in the background not foreground
+
+    getandpatch.sh:
+    * handle gcc-3.3.6, gcc-4.1-2006* snapshots
+    * Recognise glibc-200* snapshots and get them from the snapshots 
+      directory first before falling back to cvs. (from martinwguy@yahoo.it)
+    * Add mirror site for sanitised linux-libc-headers (from martinwguy@yahoo.it)
+
+    gcc-2.95.3:
+    * added patches/gcc-2.95.3/deque-leak-fix.patch to fix leak in deque::erase
+
+    gcc-3.3.x:
+    * carried patches/gcc-3.3.[56]/gcc-3.3.4-arm-bigendian.patch forward
+
+    gcc-3.4.5:
+    * carried patches/gcc-3.4.4/* forward
+
+    gcc-4.0.2:
+    * added patches/gcc-4.0.2/pr21623-workaround.patch
+    * carried fix-fixincl.patch and pr20815-fix.patch forward
+
+    gcc-4.1:
+    * added 4.1.0-20060219
+
+    glibc-2.3.5:
+    * added patches/glibc-2.3.5/glibc-2.3.5-sh-memset.patch
+
+    glibc-2.3.6:
+    * use patches updated by RPJ Day 
+      but left out two powerpc ones for moment, attrib probs?
+
+0.39 (not officially released):
+    glibc:
+    * added patches/glibc-2.2.2/glibc-2.2.2-syslog-bugfix.patch to fix a problem with syslog
+
+    crosstool.sh:
+    * handle pentium3 target (that's what comes after i386...i686)
+    * libc.so fixup now unconditional; see http://sources.redhat.com/ml/crossgcc/2005-08/msg00149.html
+
+    arm:
+    * added gcc-3.3.[456]/gcc-3.3.4-arm-pr22528.patch (thanks to Lennert
+      and Richard Earnshaw)
+
+0.38:
+    crosstool.sh:
+    * crosstool.sh now removes symlink before creating it
+      to avoid problem on 2nd run (as suggested by Khem Raj)
+
+    buildsrpms.sh:
+    * now correctly aborts if no CPUs supported
+
+    testhello.sh:
+    * now checks to make sure PATH_MAX is defined (see PR22541)
+
+    fix-embedded-paths.c:
+    * now lets you lengthen embedded paths, to handle the odd case where 
+      the paths were long but you shortened them already once.
+
+    regtest-report.sh:
+    * all-dats.txt now has build results in it again, d'oh
+
+    gcc:
+    * added patches/gcc-4.0.1/fix-fixincl.patch,
+            patches/gcc-gcc-4.1-200507{02,09,16}/fix-fixincl.patch
+      to fix PATH_MAX problem.  See http://gcc.gnu.org/PR22541
+    * gcc-4.0.1/pr21951-fix2.patch is nicer fix for problem with -fno-exceptions 
+
+    binutils:
+    * updated gcc-4.*.dat to binutils-2.16.1, carried forward the three
+      patches from patches/binutils-2.15 that still apply
+
+    contrib:
+    * Added contrib/crosstool-0.37-nptl.patch update from Khem Raj
+      and crosstool-0.37-001-silent.patch from Yann E. MORIN
+
+0.37:
+    License:
+    * formally relicensing patches/glibc* under LGPL for obvious reasons;
+      they were always under LGPL, since otherwise they couldn't have
+      been submitted upstream.  Added COPYING.LIB to reflect this.
+    * Updated address in COPYING per FSF request
+
+    crosstool.sh:
+    * Now always install bootstrap gcc in its own temporary prefix
+      to keep it from installing files that conflict with the final gcc.
+    * fixed bug in GCC_CORE_DIR; it was using local ar, as, and ld :-(
+    * make bits/syscall.h available earlier; fixes building gcj-4.0.0
+      (thanks Tim Hayman)
+    * output $PRFIX/$TARGET-crosstoolconfig.txt listing all
+      environment variables we care about, as documentation
+      for how toolchain was produced
+
+    all.sh:
+    * add --gdb option to build gdb and gdbserver
+
+    crosstool.spec.in:
+    * don't strip executables; let fedora's buildrpm do that 
+      (it splits the debug info off into separate debug info rpms)
+    * fix install scriptlet bug for ppc and x86_64 (thanks Akio Idehara)
+
+    buildsrpms.sh:
+    * fix buglet for ppc
+
+    gcc:
+    * note: gcc-4.0.[01]/pr20815-fix.patch is possible fix for annoying
+      problem when using profile-driven optimization; 
+      see http://gcc.gnu.org/PR20815
+    * added dat files for gcc-4.0.1, gcc-4.1-2005070[29]
+    * gcc-4.0.0/pr21951.patch fixes problem with -fno-exceptions 
+    * copied applicable patches from patches/gcc-3.4.3 to patches/gcc-3.4.4
+      (tested by Alice Corbin on Arm)
+
+    glibc:
+    * added {i686,x86_64}-static.dat to demo --enable-static-nss
+    * added glibc-2.3.5-fix-pr631.patch to fix problem building
+      glibc-2.3.5 with --enable-static-nss
+      See http://sources.redhat.com/bugzilla/show_bug.cgi?id=631
+
+    clean.sh:
+    * config.guess was not properly marked executable, which caused
+      strange configure failures.
+    * outputs list of files containing the current version number.
+      Since clean.sh is used when preparing a release, this is a
+      cheap way to remind the maintainer to update embedded version numbers.
+
+    doc:
+    * updated crosstool-howto.html to reflect new rpm build
+      and new regression test build
+
+    Build matrix:
+    * regtest-run.sh saves all variables from $TARGET-crosstoolconfig.txt,
+      and whether gdb and gdbserver built properly, in .dat file
+    * regtest-report.sh handles gdb
+    * regtest-kill.sh faster - it scp's script instead of ssh'ing each cmd
+
+    powerpc:
+    * replaced glibc-2.3.2/glibc-2.3.2-powerpc-procfs.patch with
+      glibc-2.3.2/glibc-2.3.3-allow-gcc-4.0-powerpc-procfs.patch to fix gcc-4.0 problem
+
+    mips:
+    * added pr758.patch from http://sources.redhat.com/bugzilla/show_bug.cgi?id=758 
+      to fix problems like
+        error: `SYS_read' undeclared (first use in this function) 
+    * added glibc-mips-bootstrap-gcc-header-install.patch from Steven J. Hill
+      to fix glibc-2.3.5 install-headers for MIPS
+
+    arm:
+    * known issue: gcc-3.3.x ICEs on build; see http://gcc.gnu.org/PR15068.
+      (gcc-3.4.[134] are ok because of pr15068-fix.patch.)
+
+    cygwin:
+    * glibc-2.3.4-cygwin.patch ported by steve@digidescorp.com
+    
+0.36:
+    crosstool.sh:
+    * Now works when GCC_CORE_DIR is a gcc-3 variant.
+    gcc-4.1 support:
+    * added gcc-4.1-20050522-glibc-2.3.5-hdrs-2.6.11.2.dat
+
+0.35:
+    crosstool.sh:
+    * Added GCC_CORE_DIR environment variable; this lets you build
+      glibc with an older gcc than the final gcc you're building.
+      This required a new gcc patch, gcc-{3.4.3,4.0.0}/fix-fixincl.patch.
+    * Modified gcc-{3.4.3,4.0.0}-glibc-2.2.2.dat to use gcc-2.95.3
+      to compile glibc.  This fixes an obvious crash bug in static
+      apps built by gcc-3.4.3-glibc-2.2.2, and lets you build
+      gcc-4.0.0-glibc-2.2.2 toolchains, which didn't build at all
+      without this.  Note: the build matrix shows the improvement,
+      but doesn't give you a clue that the older gcc was used;
+      for that you have to peek at buildlogs/*.dat.txt file or all-dats.txt.
+
+    nptl support:
+    * not merged yet, but updated patches for nptl support
+      in contrib/crosstool-0.34-nptl.patch from 
+      ftp://ftp.realitydiluted.com/crosstools/crosstool-0.34/
+      thanks to Steven Hill.
+
+0.34:
+    all.sh:
+    * Reverse directory order so all outputs of one toolcombo are under
+      same directory, e.g.
+      /usr/crosstool/gcc-4.0.0-glibc-2.3.5/arm-unknown-linux-gnu
+      instead of
+      /usr/crosstool/arm-unknown-linux-gnu/gcc-4.0.0-glibc-2.3.5
+
+    RPM support:
+    * no need to have build machine type in path,
+      since nobody mounts same /usr on multiple arches
+      so remove it
+    * likewise, remove crosstool-common.noarch.rpm, which was
+      just there so user scripts could use config.guess to find right bin
+    * postinstall scripts no longer use temp files in /
+      nor do they modify /etc/ld.so.conf if not needed
+
+    Build matrix:
+    * regtest-report.sh faster, less verbose, supports sanitized headers
+
+    Sanitized headers:
+    * new .dat files added to demonstrate use of sanitized headers,
+      e.g. gcc-2.95.3-glibc-2.2.2-hdrs-2.6.11.2.dat
+    * testlinux.sh no longer assumes config file was copied by crosstool.sh
+
+    New or revised patches:
+    * patches/glibc-2.3.[45]/glibc-fp-byteorder.patch copied from glibc-2.3.3
+    * patches/glibc-2.2.2/glibc-2.2.2-printf-not-macro.patch fixes buglet
+      building c++ apps that have methods named printf
+    * patches/gcc-*/gcc-*-trap-posix.patch fixes build problem under bash-3.0
+      (Thanks to Daniel Goertzen and Marc Kleine-Budde)
+    * patches/gcc-3.4.3/pr18508-fix.patch fixes Cygwin build problem
+    * patches/glibc-{,linuxthreads-}2.3.5/glibc-{,linuxthreads-}2.3.5-cygwin.patch 
+      fixes more Cygwin/MacOSX build problems (forward ported by Petr Cvachoucek)
+
+    crosstest.sh:
+    * now sets "lappend boards_dir /usr/share/dejagnu" to avoid error
+      'ERROR: (DejaGnu) proc "gcc_load ... {} {}" does not exist.'
+     (Thanks to Khem Raj.)
+
+    gdb support:
+    * added two of the three patches I've received for gdb support:
+      contrib/crosstool-0.28-pre15_gdb.patch
+      contrib/crosstool-0.28-rc37-gdb.patch
+      I'll get this integrated for the next release.
+
+    Known issues:
+    * ICE building gcc-4.0.0/glibc-2.3.5 for sh4; this is http://gcc.gnu.org/PR21623
+
+0.33:
+    gcc-4.0.0:
+    * Added patches/gcc-4.0.0/pr20973-fix.patch
+
+    Minor fix to getandpatch.sh so TARBALLS_CACHE_DIR and NO_DOWNLOAD
+    together mean something
+
+    distcc rpm scripts removed, distcc is available separately
+
+    buildsrpms.sh now also builds crosstool-common.src.rpm, a little
+    rpm that just installs a copy of config.guess as a convenience
+    for scripts trying to figure out which subdirectory of
+    /usr/crosstool to use (FIXME: there ought to be a better way)
+
+    crosstool.sh:
+    * runs masq.sh to set up a distcc masquerade directory for the generated toolchain
+    * no longer runs mkoverride.sh, since the runtime library 
+      RPMs are nicer than the scripts generated by mkoverride.sh
+
+    Contributed fixes (thanks, everyone):
+    * getandpatch.sh knows how to get gcc-4.1 and 2005 binutils snapshots
+    * glibc-2.3.[45] now apply glibc-configure-apple-as.patch
+    * linux-libc-headers-2.6.11.2/no-include-asm-ubc.patch fixes an SH bug
+
+0.32:
+    New features:
+    * sanitized kernel header support (from Arno Schuring)
+    * gcc-4.0.0 support, including patches/gcc-4.0.0/pr21173-fix.patch
+
+    regtest-{run,report}.sh:
+    * generates much more complete build matrix in buildlogs/
+    * generates simple text summary of buildlogs, all.dats.txt
+    * build matrix html report now has labels on right and bottom, too
+    * no more silly .sh suffix in middle of filenames in buildlogs/
+    * regtest-run.sh now digests log files, so regtest-report.sh
+      doesn't have to
+    * now smarter about recovering from failures on remote system
+
+    crosstool.sh bugfixes:
+    * The change in 0.29 to build the apps that come with glibc with
+      the real compiler should have only done it if really needed.
+      Doing it when it's not needed causes problems like
+      build-glibc/libc.so.6: undefined reference to `__deregister_frame_info'
+      when building the apps that come with glibc.
+      I now avoid rebuilding the glibc apps if they were already built
+      earlier, which should fix this.
+    * That change also caused some files like bits/syscalls.h and bin/iconv
+      to not be installed.  Thanks to Peter Barada for catching this.
+    * fixed minor test -z ${LINUX_DIR}/.config bug
+
+    Improved rpm support:
+    * crosstool.sh now builds fix-embedded-paths, a little app you can
+      use to fix embedded paths in gcc and binutils binaries.  Useful
+      especially for gcc-2.95.3 and binutils < 2.14.  It lets you build
+      crosstool in one place, then later move it somewhere else.
+    * no longer assumes you have fedora-rpmdevtools installed
+    * now tested even with old redhat 7.1's version of rpm and buildrpm
+    * The generated spec files now only build combinations known to work.
+      They look at buildresults/*.dat.txt to tell what works.
+    * rpms no longer have directory permissions problems if installed
+      with funny umask, and no longer leave directories behind after
+      uninstallation
+    * You can now build from sprms as a normal user without making
+      /opt/crosstool or /usr/crosstool writable first
+    * host c++ no longer stripped with target 'strip' when building rpm
+    * now generates RPMs for gcc's shared libraries in case you want
+      to run newer gcc's than your development system has installed
+    * buildcommonrpm.sh - first cut at silly little package to hold config.guess
+      (useful mainly for my $prefix/`config.guess`/$target build layout)
+
+    getandpatch.sh:
+    * Now looks in new environment variable $TARBALLS_CACHE_DIR before
+      downloading to $TARBALLS_DIR.  This was added to make life easier
+      when generating .src.rpm's.
+    * Now knows about a second download site for gcc and glibc
+      (useful if ftp.gnu.org is down)
+
+    glibc:
+    * added patches to let glibc-2.2.2 be compiled with gcc-3.4
+    * added x86 sysv abi compliance patch glibc-2.2.2-export_fp_hw.patch
+      to both glibc-2.1.3 and glibc-2.2.2
+
+    cygwin target:
+    * updated to current cygwin (old one isn't online anymore -- they move fast?)
+
+    doc/crosstool-howto.html:
+    * added links to
+      http://ftp.jg555.com/patches/raq2   - Jim Gifford's MIPS / Raq2 patches
+      http://www.andric.com/cross/patches - Dmitry Andric's ARM / vfp patches
+
+    Known issues:
+    * several architectures that have trouble now (e.g. sh4) will probably
+      be happier with sanitized kernel headers; I haven't tried them.
+    * The demo-$CPU.sh scripts are way out of date, and should be
+      auto-generated from the build matrix
+    * The build matrix was computed by building on redhat 7.1, 
+      so the failure of x86_64 with gcc-3.4.3-glibc-2.3.2 is
+      expected.  It works on newer build machines.  See http://gcc.gnu.org/PR9552
+
+0.31:
+    Preview of improved rpm support:
+    * added buildsrpms.sh to generate .srpm files, one per each tool combination.
+    * added buildrpms.sh to demo full pathway from tarballs to .srpm to .rpm
+      I don't expect many people to run these two scripts; most rpm users will
+      just download .srpms and .rpms instead of crosstool-0.xx.tar.gz
+    * goal is to make .rpm/.srpms buildable by normal users, but I'm not 
+      quite there yet, as buildrpms.sh requires /usr/crosstool to be writable
+    * getandpatch.sh now accepts two new environment variables:
+      JUST_DOWNLOAD and NO_DOWNLOAD.  They're kind of kludgy but I was too
+      lazy to do anything elegant.
+    * removed obsolete --buildrpm option from all.sh
+
 0.30:
     crosstool.sh:
     * kludge from Cort Dougan to deal with fact gcc-3.3.[34] don't know about lib64.

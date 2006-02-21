@@ -5,6 +5,7 @@ abort() {
 }
 # Script to download sources for, build, and test a gnu/linux toolchain
 # Copyright (c) 2003 by Dan Kegel, Ixia Communications.
+# Copyright (c) 2003-2005 by Dan Kegel, Google
 # All rights reserved.  This script is provided under the terms of the GPL.
 # For questions, comments or improvements see the crossgcc mailing
 # list at http://sources.redhat.com/ml/crossgcc, but do your homework first.
@@ -19,11 +20,15 @@ test -z "${GCC_DIR}"          && abort "Please set GCC_DIR to the bare filename 
 
 # When building a cygwin target LINUX_DIR and GLIBC_DIR are not needed.
 if test "${CYGWIN_DIR}" = ""; then
-  test -z "${LINUX_DIR}"        && abort "Please set LINUX_DIR to the bare filename of the kernel tarball or directory"
+  if test -z "${LINUX_SANITIZED_HEADER_DIR}" ; then
+	test -z "${LINUX_DIR}"        && abort "Please set either LINUX_DIR or LINUX_SANITIZED_HEADER_DIR to the bare filename of the tarball or directory containing the kernel headers"
+  else
+	test -n "${LINUX_DIR}"        && echo "You set both LINUX_DIR and LINUX_SANITIZED_HEADER_DIR - ignoring LINUX_DIR for the build"
+  fi
   test -z "${GLIBC_DIR}"        && abort "Please set GLIBC_DIR to the bare filename of the glibc tarball or directory"
 fi
 
-# Four environment variables are optional, namely:
+# Five environment variables are optional, namely:
 test -z "${DEJAGNU}"          && echo  "DEJAGNU not set, so not running any regression tests"
 test -z "${GCC_EXTRA_CONFIG}" && echo  "GCC_EXTRA_CONFIG not set, so not passing any extra options to gcc's configure script"
 test -z "${GLIBC_ADDON_OPTIONS}" && echo "GLIBC_ADDON_OPTIONS not set, so building all glibc add-on's"
@@ -62,7 +67,7 @@ test -w /tmp || abort "Cannot write to /tmp.  This makes patch and configure scr
 # Change or override these to your taste.
 TARBALLS_DIR=${TARBALLS_DIR-$TOP_DIR/tarballs}
 RESULT_TOP=${RESULT_TOP-$TOP_DIR/result}
-PREFIX=${PREFIX-$RESULT_TOP/$TARGET/$TOOLCOMBO}
+PREFIX=${PREFIX-$RESULT_TOP/$TOOLCOMBO/$TARGET}
 
 export TOOLCOMBO
 export PREFIX
@@ -86,17 +91,21 @@ while [ $# -gt 0 ]; do
 	--notest|-notest) 
 	   opt_no_test=1
 	   ;;
+	--gdb|-gdb) 
+	   opt_gdb=1
+	   ;;
 	--testlinux|-testlinux) 
 	   opt_testlinux=1
 	   ;;
-	--buildrpm|-buildrpm)
-	   opt_buildrpm=1
-	   ;;
 	*)
-	    abort "Usage: all.sh [--nounpack|--nobuild|--testlinux|--builduserland|--notest|--buildrpm]"
+	    abort "Usage: all.sh [--nounpack|--nobuild|--testlinux|--gdb|--builduserland|--notest]"
     esac
     shift
 done
+
+if test "$opt_gdb" = "1"; then
+    test -z "${GDB_DIR}"          && echo "Defaulting to GDB_DIR=gdb-6.3" && GDB_DIR=gdb-6.3 && export GDB_DIR
+fi
 
 if test "$opt_no_unpack" = ""; then
    if test "$opt_builduserland" = "1"; then
@@ -105,7 +114,12 @@ if test "$opt_no_unpack" = ""; then
       export PTXDIST_DIR
    fi
    # Download and patch
-   rm -rf $BUILD_DIR; mkdir -p $BUILD_DIR
+   if test -d "$BUILD_DIR"; then
+	# Remove in background
+   	mv $BUILD_DIR $BUILD_DIR.$$
+   	rm -rf $BUILD_DIR.$$ &
+   fi
+   mkdir -p $BUILD_DIR
    sh getandpatch.sh
 fi
 
@@ -124,6 +138,12 @@ if test "$opt_no_build" = ""; then
 
     sh testhello.sh
 fi
+if test "$opt_gdb" = "1"; then
+    # Build a debugger
+    # kludge: don't abort if it doesn't build; we want to know if the kernel builds, too
+    sh gdb.sh || test "$opt_testlinux" = "1"
+fi
+
 if test "$opt_testlinux" = "1"; then
     # Build a Linux kernel to see if we can
     sh testlinux.sh
@@ -140,9 +160,4 @@ if test "$opt_no_test" = ""; then
     # Beefy test that lasts for hours
     cd $BUILD_DIR
     sh $TOP_DIR/crosstest.sh 
-fi
-
-if test "$opt_buildrpm" = "1"; then
-    # Generate a .spec file in case the user wants to build an RPM
-    sh $TOP_DIR/buildrpm.sh
 fi

@@ -19,7 +19,9 @@ mkdir -p $RESULT_TOP
 #eval `cat sh4.dat gcc-3.3.2-glibc-2.3.2.dat`  sh all.sh --notest 
 #eval `cat sh4.dat gcc-3.3.3-glibc-2.3.2.dat`  sh all.sh --notest 
 #eval `cat sh4.dat gcc-3.4.0-glibc-2.3.2.dat`  sh all.sh --notest 
- eval `cat sh4.dat gcc-3.4.1-glibc-2.3.3.dat`  sh all.sh --notest 
+#eval `cat sh4.dat gcc-3.4.1-glibc-2.3.3.dat`  sh all.sh --notest 
 #eval `cat sh4.dat gcc-3.4.1-glibc-20040827.dat`  sh all.sh --notest 
+#eval `cat sh4.dat gcc-4.0.0-glibc-2.3.5-hdrs-2.6.11.2.dat`  sh all.sh --notest 
+ eval `cat sh4.dat gcc-4.1-20050716-glibc-2.3.2-hdrs-2.6.11.2.dat` sh all.sh --notest --testlinux
 
 echo Done.

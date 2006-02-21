@@ -11,6 +11,7 @@ export GCC_LANGUAGES
 mkdir -p $RESULT_TOP
 
 # Build the toolchain.
-eval `cat i686-cygwin.dat gcc-3.3.2-cygwin-1.5.10-3.dat`  sh all.sh --notest
+# eval `cat i686-cygwin.dat gcc-3.3.2-cygwin-1.5.10-3.dat`  sh all.sh --notest
+eval `cat i686-cygwin.dat gcc-3.3.2-cygwin-1.5.15-1.dat`  sh all.sh --notest
 
 echo Done.

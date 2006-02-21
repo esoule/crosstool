@@ -11,6 +11,8 @@ and
 http://sources.redhat.com/ml/libc-hacker/2005-03/msg00008.html
 which seem to propose less radical fixes?
 
+Aha.  See also http://sources.redhat.com/bugzilla/show_bug.cgi?id=721
+
 --- glibc-2.3-20050307/elf/dynamic-link.h.old	2005-03-12 18:12:37.000000000 -0800
 +++ glibc-2.3-20050307/elf/dynamic-link.h	2005-03-12 18:12:59.777820848 -0800
 @@ -19,43 +19,6 @@

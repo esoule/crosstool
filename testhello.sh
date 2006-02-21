@@ -20,7 +20,9 @@ fi
 
 cat > hello.c <<_eof_
 #include <stdio.h>
-int main() { printf("Hello, world!\n"); return 0; }
+#include <limits.h>
+static long x = LONG_MIN;
+int main() { printf("Hello, world!  LONG_MIN is %ld, PATH_MAX is %d\n", x, PATH_MAX); return 0; }
 _eof_
 
 $PREFIX/bin/$TARGET-gcc -static hello.c -o $TARGET-hello-static

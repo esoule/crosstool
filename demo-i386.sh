@@ -19,7 +19,7 @@ mkdir -p $RESULT_TOP
 #eval `cat i386.dat gcc-3.3.3-glibc-2.1.3.dat`  sh all.sh --notest 
 #eval `cat i386.dat gcc-3.3.3-glibc-2.2.5.dat`  sh all.sh --notest 
 #eval `cat i386.dat gcc-3.3.3-glibc-2.3.2.dat`  sh all.sh --notest 
-#eval `cat i386.dat gcc-3.3.4-glibc-2.1.3.dat`  sh all.sh --notest --buildrpm
+#eval `cat i386.dat gcc-3.3.4-glibc-2.1.3.dat`  sh all.sh --notest
 #eval `cat i386.dat gcc-3.3.4-glibc-2.2.5.dat`  sh all.sh --notest 
 #eval `cat i386.dat gcc-3.3.4-glibc-2.3.2.dat`  sh all.sh --notest 
 #eval `cat i386.dat gcc-3.3.4-glibc-2.3.3.dat`  sh all.sh --notest

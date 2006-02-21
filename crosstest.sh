@@ -59,6 +59,7 @@ test -f /proc/sys/net/ipv4/tcp_tw_recycle && test `cat /proc/sys/net/ipv4/tcp_tw
 mkdir -p $TOP_DIR/boards
 cat > $TOP_DIR/boards/master.exp <<_EOF_
 lappend boards_dir $TOP_DIR/boards
+lappend boards_dir /usr/share/dejagnu
 set myboard \$target_triplet
 set target_list [list \$target_triplet]
 _EOF_

@@ -1,8 +1,17 @@
 #!/bin/sh
 
 abort() {
-    echo $@
+    echo crosstool: $@
     exec false
+}
+
+# Used to log success or failure of each stage
+logresult() {
+    if test -x $2; then
+        echo crosstool: $1 built ok
+    else
+        abort Build failed during $1
+    fi
 }
 
 #
@@ -10,8 +19,8 @@ abort() {
 # Build a GNU/Linux toolchain
 #
 # Copyright (c) 2001 by Bill Gatliff, bgat@billgatliff.com 
-# Copyright (c) 2003 by Dan Kegel, dkegel@ixiacom.com, Ixia Communications, 
-# Copyright (c) 2004 by Dan Kegel, Google, Inc.
+# Copyright (c) 2003 by Dan Kegel, Ixia Communications, 
+# Copyright (c) 2004,2005 by Dan Kegel, Google, Inc.
 # All rights reserved.  This script is provided under the terms of the GPL.
 # For questions, comments or improvements see the crossgcc mailing
 # list at http://sources.redhat.com/ml/crossgcc, or contact the
@@ -25,11 +34,22 @@ test -z "${SRC_DIR}"          && abort "Please set SRC_DIR to the directory wher
 test -z "${BINUTILS_DIR}"     && abort "Please set BINUTILS_DIR to the bare filename of the binutils tarball or directory"
 test -z "${GCC_DIR}"          && abort "Please set GCC_DIR to the bare filename of the gcc tarball or directory"
 test -z "${GLIBC_DIR}"        && abort "Please set GLIBC_DIR to the bare filename of the glibc tarball or directory"
-test -z "${LINUX_DIR}"        && abort "Please set LINUX_DIR to the bare filename of the kernel tarball or directory"
 test -z "${TARGET}"           && abort "Please set TARGET to the Gnu target identifier (e.g. pentium-linux)"
 test -z "${TARGET_CFLAGS}"    && abort "Please set TARGET_CFLAGS to any compiler flags needed when building glibc (-O recommended)"
+if test -z "${LINUX_SANITIZED_HEADER_DIR}" ; then
+    test -z "${LINUX_DIR}"        && abort "Please set either LINUX_DIR or LINUX_SANITIZED_HEADER_DIR to the bare filename of the tarball or directory containing the kernel headers"
+    LINUX_HEADER_DIR="${LINUX_DIR}"
+else
+    test -n "${LINUX_DIR}"        && echo "You set both LINUX_DIR and LINUX_SANITIZED_HEADER_DIR - ignoring LINUX_DIR"
+    LINUX_HEADER_DIR="${LINUX_SANITIZED_HEADER_DIR}"
+fi
+
 
 # Seventeen or so are optional
+if test -z "${GCC_CORE_DIR}"; then
+    echo "GCC_CORE_DIR not set, so using $GCC_DIR for bootstrap compiler"
+    GCC_CORE_DIR="${GCC_DIR}"
+fi
 test -z "${BINUTILS_EXTRA_CONFIG}" && echo "BINUTILS_EXTRA_CONFIG not set, so not passing any extra options to binutils' configure script"
 test -z "${GCC_EXTRA_CONFIG}"      && echo "GCC_EXTRA_CONFIG not set, so not passing any extra options to gcc's configure script"
 test -z "${GLIBC_EXTRA_CONFIG}"    && echo "GLIBC_EXTRA_CONFIG not set, so not passing any extra options to glibc's configure script"
@@ -39,13 +59,15 @@ test -z "${EXTRA_TARGET_CFLAGS}"   && echo "EXTRA_TARGET_CFLAGS not set, so not 
 test -z "${USE_SYSROOT}"           && echo "USE_SYSROOT not set, so not configuring with --with-sysroot"
 test -z "${GCC_BUILD}"             && echo "GCC_BUILD not set, assuming BUILD=output of config.guess"
 test -z "${GCC_HOST}"              && echo "GCC_HOST not set, assuming HOST=BUILD"
-test -z "${KERNELCONFIG}" && test -z ${LINUX_DIR}/.config  && echo  "KERNELCONFIG not set, and no .config file found, so not configuring linux kernel"
+test -z "${KERNELCONFIG}" && test ! -f ${LINUX_DIR}/.config  && echo  "KERNELCONFIG not set, and no .config file found, so not configuring linux kernel"
 test -z "${KERNELCONFIG}" || test -r "${KERNELCONFIG}"  || abort  "Can't read file KERNELCONFIG = $KERNELCONFIG, please fix."
 test -z "${SHARED_MODE}" && SHARED_MODE="--enable-shared" && echo "SHARED_MODE not set, so defaulting to --enable-shared"
 test -z "${GCC_LANGUAGES}"         && echo "GCC_LANGUAGES not set, assuming c,c++"
 GCC_LANGUAGES=${GCC_LANGUAGES-"c,c++"}
 TOP_DIR=${TOP_DIR-`pwd`}
+chmod 755 $TOP_DIR/config.guess
 BUILD=${GCC_BUILD-`$TOP_DIR/config.guess`}
+test -z "$BUILD" && abort "bug: BUILD not set?!"
 
 if test -z "${GLIBC_ADDON_OPTIONS}"; then
    echo "GLIBC_ADDON_OPTIONS not set, so guessing addons from GLIBCTHREADS_FILENAME and GLIBCCRYPT_FILENAME"
@@ -62,13 +84,78 @@ fi
 # One is forbidden
 test -z "${LD_LIBRARY_PATH}" || abort  "glibc refuses to build if LD_LIBRARY_PATH is set.  Please unset it before running this script."
 
-# And one is derived.
+# And one is derived if unset.
+test -z "${GLIBCTHREADS_FILENAME}" &&
 GLIBCTHREADS_FILENAME=`echo $GLIBC_DIR | sed 's/glibc-/glibc-linuxthreads-/'`
 
 # Check for a few prerequisites that have tripped people up.
 awk '/x/' < /dev/null  || abort "You need awk to build a toolchain."
 test -z "${CFLAGS}"    || abort "Don't set CFLAGS, it screws up the build"
 test -z "${CXXFLAGS}"  || abort "Don't set CXXFLAGS, it screws up the build"
+bison --version > /dev/null || abort "You don't have bison installed"
+flex --version > /dev/null || abort "You don't have flex installed"
+
+#---------------------------------------------------------
+
+# Save configuration; output every envrionment variable these
+# scripts reference to a text file for future reference.  Name the
+# text file after the target so in a future version of crosstool,
+# when we start installing toolchains for several targets into
+# the same PREFIX, we don't overwrite.
+# FIXME: this is a bit fragile; when adding variables elsewhere,
+# it's easy to forget to add them here.
+# FIXME: this documents some variables obeyed only by e.g.
+# getandpatch.sh and all.sh, so if you invoked crosstool.sh
+# by hand, some of these might be misleading.
+# NOTE: surround with "Begin/end" and echo to stdout so we can grep out of the log later.
+
+echo "Begin saving environment"
+> $PREFIX/$TARGET.crosstoolconfig.txt
+
+set -x
+for var in \
+AR \
+BINUTILS_DIR \
+BINUTILS_EXTRA_CONFIG \
+BUILD \
+BUILD_DIR \
+CC \
+DEJAGNU \
+EXTRA_TARGET_CFLAGS \
+GCC_BUILD \
+GCC_CORE_DIR \
+GCC_DIR \
+GCC_EXTRA_CONFIG \
+GCC_HOST \
+GCC_LANGUAGES \
+GDB_DIR \
+GLIBC_ADDON_OPTIONS \
+GLIBC_DIR \
+GLIBC_EXTRA_CC_ARGS \
+GLIBC_EXTRA_CONFIG \
+GLIBC_EXTRA_ENV \
+JUST_DOWNLOAD \
+KERNELCONFIG \
+LINUX_DIR \
+LINUX_SANITIZED_HEADER_DIR \
+NO_DOWNLOAD  \
+PREFIX \
+PTXDIST_DIR \
+SHARED_MODE \
+SRC_DIR \
+TARBALLS_DIR \
+TARGET \
+TARGET_CFLAGS \
+TOP_DIR \
+USE_SYSROOT \
+; do 
+  eval echo $var=\$$var
+  eval echo $var=\$$var >> $PREFIX/$TARGET.crosstoolconfig.txt
+done
+set +x
+echo "End saving environment"
+
+#---------------------------------------------------------
 
 if test "$GCC_HOST" != ""; then
         # Modify $BUILD so gcc never, ever thinks $build = $host
@@ -84,6 +171,7 @@ else
         GCC_HOST=$BUILD
         CANADIAN_BUILD=""
 fi
+
 
 # Modify GCC_HOST to never be equal to $BUILD or $TARGET
 # This strange operation causes gcc to always generate a cross-compiler
@@ -118,7 +206,7 @@ case $TARGET in
     arm*)     ARCH=arm ;;
     cris*)    ARCH=cris ;;
     hppa*)    ARCH=parisc ;;
-    i*86*)    ARCH=i386 ;;
+    i*86*|pentium*)    ARCH=i386 ;;
     i4004)    abort "ENOMEM" ;;
     ia64*)    ARCH=ia64 ;;
     mips*)    ARCH=mips ;;
@@ -142,13 +230,18 @@ BUILD_DIR=`cd $BUILD_DIR; pwd`
 SRC_DIR=`cd $SRC_DIR; pwd`
 BINUTILS_DIR=`cd ${SRC_DIR}/${BINUTILS_DIR}; pwd`
 GCC_DIR=`cd ${SRC_DIR}/${GCC_DIR}; pwd`
-LINUX_DIR=`cd ${SRC_DIR}/${LINUX_DIR}; pwd`
+GCC_CORE_DIR=`cd ${SRC_DIR}/${GCC_CORE_DIR}; pwd`
+LINUX_HEADER_DIR=`cd ${SRC_DIR}/${LINUX_HEADER_DIR}; pwd`
 GLIBC_DIR=`cd ${SRC_DIR}/${GLIBC_DIR}; pwd`
+
+# Always install the bootstrap gcc (used to build glibc)
+# somewhere it can't interfere with the final gcc.
+CORE_PREFIX=$BUILD_DIR/gcc-core-prefix
 
 # If user isn't doing a canadian cross, add the target compiler's bin to
 # the path, so we can use the compiler we build to build glibc etc.
 if test "$CANADIAN_BUILD" = ""; then
-        PATH="${PREFIX}/bin:${PATH}"
+        PATH="${PREFIX}/bin:$CORE_PREFIX/bin:${PATH}"
         export PATH
 fi
 
@@ -194,9 +287,18 @@ echo
 echo "Building for --target=$TARGET, --prefix=$PREFIX"
 
 #---------------------------------------------------------
-echo Prepare kernel headers
+# Use sanitized headers, if available
+if test -z "$LINUX_SANITIZED_HEADER_DIR" ; then
+    echo Prepare kernel headers
+else
+    echo Copy sanitized headers
+fi
 
-cd $LINUX_DIR
+cd $LINUX_HEADER_DIR
+mkdir -p $HEADERDIR
+
+# no indentation for now because indentation levels are rising too high
+if test -z "$LINUX_SANITIZED_HEADER_DIR" ; then
 
 if test -f "$KERNELCONFIG" ; then
     cp $KERNELCONFIG .config
@@ -206,8 +308,8 @@ if test -f .config; then
 fi
 
 # autodetect kernel version from contents of Makefile
-KERNEL_VERSION=`awk '/^VERSION =/ { print $3 }' $LINUX_DIR/Makefile`
-KERNEL_PATCHLEVEL=`awk '/^PATCHLEVEL =/ { print $3 }' $LINUX_DIR/Makefile`
+KERNEL_VERSION=`awk '/^VERSION =/ { print $3 }' $LINUX_HEADER_DIR/Makefile`
+KERNEL_PATCHLEVEL=`awk '/^PATCHLEVEL =/ { print $3 }' $LINUX_HEADER_DIR/Makefile`
 
 case "$KERNEL_VERSION.$KERNEL_PATCHLEVEL.x" in
 2.2.x|2.4.x) make ARCH=$ARCH symlinks    include/linux/version.h
@@ -225,7 +327,7 @@ case "$KERNEL_VERSION.$KERNEL_PATCHLEVEL.x" in
                          # Note that glibc ignores all -I flags passed in CFLAGS,
                          # so you have to use -isystem.
                          make ARCH=$ARCH include/asm include/linux/version.h
-                         TARGET_CFLAGS="$TARGET_CFLAGS -isystem $LINUX_DIR/include/asm-mips/mach-generic"
+                         TARGET_CFLAGS="$TARGET_CFLAGS -isystem $LINUX_HEADER_DIR/include/asm-mips/mach-generic"
                          ;;
              *)          make ARCH=$ARCH include/asm include/linux/version.h
                          ;;
@@ -233,11 +335,12 @@ case "$KERNEL_VERSION.$KERNEL_PATCHLEVEL.x" in
              ;;
 *)           abort "Unsupported kernel version $KERNEL_VERSION.$KERNEL_PATCHLEVEL"
 esac
+cp -r include/asm-generic $HEADERDIR/asm-generic
 
-mkdir -p $HEADERDIR
+fi # test -z "$LINUX_SANITIZED_HEADER_DIR"
+
 cp -r include/linux $HEADERDIR
 cp -r include/asm-${ARCH} $HEADERDIR/asm
-cp -r include/asm-generic $HEADERDIR/asm-generic
 
 cd $BUILD_DIR
 
@@ -253,19 +356,33 @@ fi
 make $PARALLELMFLAGS all 
 make install 
 
+if test x"$CORE_PREFIX" != x"$PREFIX"; then
+    # if we're using a different core compiler, make binutils available to it
+    # gcc searches in $CORE_PREFIX/$TARGET/bin for tools like 'ar', 'as', and 'ld'
+    # instead of the location its configure script claims it searches (gcc_cv_as), grr
+    mkdir -p $CORE_PREFIX/$TARGET/bin
+    for tool in ar as ld strip; do
+       # Remove old symlink to avoid clash on rerun
+       # ln -snf is safe, but not portable.  
+       # Can't test for existence of symlinks reliably
+       # rm -f returns nonzero status on Solaris if it fails, so || true to keep script from aborting
+       rm -f $CORE_PREFIX/$TARGET/bin/$tool || true
+       ln -s $PREFIX/bin/$TARGET-$tool $CORE_PREFIX/$TARGET/bin/$tool
+    done
+fi
+
 cd ..
 
 # test to see if this step passed
-test -x ${PREFIX}/bin/${TARGET}-ld${EXEEXT} || abort Build failed during binutils 
+logresult binutils ${PREFIX}/bin/${TARGET}-ld${EXEEXT}
 
 #---------------------------------------------------------
 echo "Install glibc headers needed to build bootstrap compiler -- but only if gcc-3.x"
 
 # Only need to install bootstrap glibc headers for gcc-3.0 and above?  Or maybe just gcc-3.3 and above?
-# This will change for gcc-3.5, I think.
 # See also http://gcc.gnu.org/PR8180, which complains about the need for this step.
 # Don't install them if they're already there (it's really slow)
-if grep -q gcc-3 ${GCC_DIR}/ChangeLog && test '!' -f $HEADERDIR/features.h; then
+if grep -q 'gcc-[34]' ${GCC_CORE_DIR}/ChangeLog && test '!' -f $HEADERDIR/features.h; then
     mkdir -p build-glibc-headers; cd build-glibc-headers
 
     if test '!' -f Makefile; then
@@ -298,16 +415,18 @@ if grep -q gcc-3 ${GCC_DIR}/ChangeLog && test '!' -f $HEADERDIR/features.h; then
         # so work around this by creating a fake errlist-compat.c and satisfying its dependencies.
         # Another workaround might be to tell configure to not use any cross options to $(CC).
         # The real fix would be to get install-headers to not generate errlist-compat.c.
+        # Note: BOOTSTRAP_GCC is used by patches/glibc-2.3.5/glibc-mips-bootstrap-gcc-header-install.patch
         libc_cv_ppc_machine=yes \
-                make sysdeps/gnu/errlist.c
+                make CFLAGS=-DBOOTSTRAP_GCC sysdeps/gnu/errlist.c
         mkdir -p stdio-common
         # sleep for 2 seconds for benefit of filesystems with lousy time resolution, like FAT,
         # so make knows for sure errlist-compat.c doesn't need generating
         sleep 2
         touch stdio-common/errlist-compat.c
     fi
+    # Note: BOOTSTRAP_GCC is used by patches/glibc-2.3.5/glibc-mips-bootstrap-gcc-header-install.patch
     libc_cv_ppc_machine=yes \
-    make cross-compiling=yes install_root=${SYSROOT} $GLIBC_SYSROOT_ARG install-headers
+    make cross-compiling=yes install_root=${SYSROOT} CFLAGS=-DBOOTSTRAP_GCC $GLIBC_SYSROOT_ARG install-headers
 
     # Two headers -- stubs.h and features.h -- aren't installed by install-headers,
     # so do them by hand.  We can tolerate an empty stubs.h for the moment.
@@ -321,6 +440,14 @@ if grep -q gcc-3 ${GCC_DIR}/ChangeLog && test '!' -f $HEADERDIR/features.h; then
     # http://sources.redhat.com/ml/libc-alpha/2003-11/msg00045.html
     cp bits/stdio_lim.h $HEADERDIR/bits/stdio_lim.h
 
+    # Following error building gcc-4.0.0's gcj:
+    #  error: bits/syscall.h: No such file or directory
+    # solved by following copy; see
+    # http://sourceware.org/ml/crossgcc/2005-05/msg00168.html
+    # but it breaks arm, see http://sourceware.org/ml/crossgcc/2006-01/msg00091.html
+    # so uncomment this if you need it
+    #cp misc/syscall-list.h $HEADERDIR/bits/syscall.h
+
     cd ..
 fi
 
@@ -329,10 +456,15 @@ echo "Build gcc-core (just enough to build glibc)"
 
 mkdir -p build-gcc-core; cd build-gcc-core
 
+echo Copy headers to install area of bootstrap gcc, so it can build libgcc2
+mkdir -p $CORE_PREFIX/$TARGET/include
+cp -r $HEADERDIR/* $CORE_PREFIX/$TARGET/include
+
 # Use --with-local-prefix so older gccs don't look in /usr/local (http://gcc.gnu.org/PR10532)
+# Use funky prefix so it doesn't contaminate real prefix, in case GCC_DIR != GCC_CORE_DIR
 
 if test '!' -f Makefile; then
-    ${GCC_DIR}/configure $CANADIAN_BUILD --target=$TARGET --host=$GCC_HOST --prefix=$PREFIX \
+    ${GCC_CORE_DIR}/configure $CANADIAN_BUILD --target=$TARGET --host=$GCC_HOST --prefix=$CORE_PREFIX \
         --with-local-prefix=${SYSROOT} \
         --disable-multilib \
         --with-newlib \
@@ -352,7 +484,7 @@ make install-gcc
 
 cd ..
 
-test -x ${PREFIX}/bin/${TARGET}-gcc${EXEEXT} || abort Build failed during gcc-core 
+logresult gcc-core $CORE_PREFIX/bin/${TARGET}-gcc${EXEEXT}
 
 #---------------------------------------------------------
 echo Build glibc and linuxthreads
@@ -395,11 +527,13 @@ if grep -l '^install-lib-all:' ${GLIBC_DIR}/Makerules > /dev/null; then
     # as they require libeh, which won't be installed until full build of gcc
     GLIBC_INITIAL_BUILD_RULE=lib
     GLIBC_INITIAL_INSTALL_RULE="install-lib-all install-headers"
+    GLIBC_INSTALL_APPS_LATER=yes
 else
     # classic glibc.  
     # We can build and install everything with the bootstrap compiler.
     GLIBC_INITIAL_BUILD_RULE=all
     GLIBC_INITIAL_INSTALL_RULE=install
+    GLIBC_INSTALL_APPS_LATER=no
 fi
 # If this fails with an error like this:
 # ...  linux/autoconf.h: No such file or directory 
@@ -421,22 +555,17 @@ make install_root=${SYSROOT} $GLIBC_SYSROOT_ARG $GLIBC_INITIAL_INSTALL_RULE
 # FIXME: test -h is not portable
 # FIXME: probably need to check more files than just these three...
 # Need to use sed instead of just assuming we know what's in libc.so because otherwise alpha breaks
-# But won't need to do this at all once we use --with-sysroot (available in gcc-3.3.3 and up)
 #
 # 2. Remove lines containing BUG per http://sources.redhat.com/ml/bug-glibc/2003-05/msg00055.html,
 # needed to fix gcc-3.2.3/glibc-2.3.2 targeting arm
 #
 # To make "strip *.so.*" not fail (ptxdist does this), rename to .so_orig rather than .so.orig
 for file in libc.so libpthread.so libgcc_s.so; do
-  for lib in lib lib64 usr/lib usr/lib64; do
-        if test -f ${SYSROOT}/$lib/$file && test ! -h ${SYSROOT}/$lib/$file; then
-                mv ${SYSROOT}/$lib/$file ${SYSROOT}/$lib/${file}_orig
-                if test -z "$USE_SYSROOT"; then
-                  sed 's,/usr/lib/,,g;s,/usr/lib64/,,g;s,/lib/,,g;s,/lib64/,,g;/BUG in libc.scripts.output-format.sed/d' < ${SYSROOT}/$lib/${file}_orig > ${SYSROOT}/$lib/$file
-                else
-                  sed '/BUG in libc.scripts.output-format.sed/d' < ${SYSROOT}/$lib/${file}_orig > ${SYSROOT}/$lib/$file
-                fi
-        fi
+    for lib in lib lib64 usr/lib usr/lib64; do
+      if test -f ${SYSROOT}/$lib/$file && test ! -h ${SYSROOT}/$lib/$file; then
+        mv ${SYSROOT}/$lib/$file ${SYSROOT}/$lib/${file}_orig
+        sed 's,/usr/lib/,,g;s,/usr/lib64/,,g;s,/lib/,,g;s,/lib64/,,g;/BUG in libc.scripts.output-format.sed/d' < ${SYSROOT}/$lib/${file}_orig > ${SYSROOT}/$lib/$file
+      fi
     done
 done
 cd ..
@@ -473,6 +602,7 @@ test "$CANADIAN_BUILD" = "" || make $PARALLELMFLAGS all-build-libiberty || true
 # Fix lib/lib64 confusion for GCC 3.3.3 on PowerPC64 and x86_64.
 # GCC 3.4.0 and up don't suffer from this confusion, and don't need this kludge.
 # FIXME: we should patch gcc's source rather than uglify crosstool.sh.
+# FIXME: is this needed for gcc-3.3.[56]?
 
 case `basename ${GCC_DIR}` in
   gcc-3.3.[34])
@@ -498,6 +628,7 @@ make $PARALLELMFLAGS all
 make install 
 
 # FIXME: shouldn't people who want this just --disable-multilib in final gcc and be done with it?
+# This code should probably be deleted, it was written long ago and hasn't been tested in ages.
 echo "kludge: If the chip does not have a floating point unit "
 echo "(i.e. if GLIBC_EXTRA_CONFIG contains --without-fp),"
 echo "and there are shared libraries in /lib/nof, copy them to /lib"
@@ -514,17 +645,32 @@ esac
 
 cd ..
 
-test -x ${PREFIX}/bin/${TARGET}-gcc${EXEEXT} || Build failed during final gcc 
+logresult "final gcc" ${PREFIX}/bin/${TARGET}-gcc${EXEEXT}
 
 # Finally, build and install glibc programs, now that libeh (if any) is installed
-cd build-glibc
-make LD=${TARGET}-ld RANLIB=${TARGET}-ranlib
-# note: should do full install and then fix linker scripts, but this is faster
-make install_root=${SYSROOT} $GLIBC_SYSROOT_ARG install-bin install-rootsbin install-sbin install-data
+# Don't do this unless needed, 'cause it causes glibc-2.{1.3,2.2} to fail here with
+# .../gcc-3.4.1-glibc-2.1.3/build-glibc/libc.so.6: undefined reference to `__deregister_frame_info'
+# .../gcc-3.4.1-glibc-2.1.3/build-glibc/libc.so.6: undefined reference to `__register_frame_info'
+if test x$GLIBC_INSTALL_APPS_LATER = xyes;
+then
+  cd build-glibc
+  make LD=${TARGET}-ld RANLIB=${TARGET}-ranlib
+  # note: should do full install and then fix linker scripts, but this is faster
+  make install_root=${SYSROOT} $GLIBC_SYSROOT_ARG install-bin install-rootsbin install-sbin install-data install-others
+fi
 
-# Set up to let user install individual shared libraries in /etc/ld.so.conf easily
+#---------------------------------------------------------
+
+# Create masquerade directory $PREFIX/distributed/bin for distcc
+# Relies on $EXEEXT being set to .exe if the compilers run on cygwin
+export EXEEXT
+cd $PREFIX
+sh $TOP_DIR/masq.sh
+
+# Build little program that lets user move resulting toolchain to different prefix
 cd $TOP_DIR
-sh mkoverride.sh
+gcc fix-embedded-paths.c -o $PREFIX/bin/fix-embedded-paths
+
 
 #---------------------------------------------------------
 echo Cross-toolchain build complete.  Result in ${PREFIX}.

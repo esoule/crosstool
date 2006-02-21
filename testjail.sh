@@ -1,7 +1,7 @@
 #!/bin/sh
 # Demo of how to rebuild a jail remotely, then test it
 # Example use:
-#  TARGET=sh4-unknown-linux-gnu PREFIX=result/sh4-unknown-linux-gnu/gcc-3.3-glibc-2.2.5 sh testjail.sh
+#  TARGET=sh4-unknown-linux-gnu PREFIX=result/gcc-3.3-glibc-2.2.5/sh4-unknown-linux-gnu sh testjail.sh
 
 set -x -e
 
