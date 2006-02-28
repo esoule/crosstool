@@ -237,10 +237,12 @@ for gcc in $GCC_DIR $GCC_CORE_DIR; do
       getUnpackAndPatch ftp://gcc.gnu.org/pub/gcc/releases/$gcc/$gcc.tar.bz2 ;;
    gcc-4.[01234].[012345]-200*)
       dir=`echo $gcc | sed s/gcc-/prerelease-/`
-      getUnpackAndPatch ftp://gcc.gnu.org/pub/gcc/$dir/$gcc.tar.bz2 ftp://gcc.gnu.org/pub/gcc/$dir/$gcc.tar.gz ;;
+      getUnpackAndPatch	ftp://gcc.gnu.org/pub/gcc/$dir/$gcc.tar.bz2 \
+			ftp://gcc.gnu.org/pub/gcc/$dir/$gcc.tar.gz ;;
    gcc-3.[3456]-200*|gcc-4.0-200*|gcc-4.1-200*)
       dir=`echo $gcc | sed 's/gcc-//'`
-      getUnpackAndPatch ftp://gcc.gnu.org/pub/gcc/snapshots/$dir/$gcc.tar.bz2 ;;
+      getUnpackAndPatch ftp://gcc.gnu.org/pub/gcc/snapshots/$dir/$gcc.tar.bz2 \
+			ftp://gcc.gnu.org/pub/gcc/snapshots/$dir/$gcc.tar.gz ;;
    *)
       getUnpackAndPatch ftp://ftp.gnu.org/pub/gnu/gcc/$gcc/$gcc.tar.bz2 \
 			ftp://ftp.gnu.org/pub/gnu/gcc/$gcc/$gcc.tar.gz \

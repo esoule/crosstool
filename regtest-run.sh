@@ -13,14 +13,14 @@
 
 set -x
 
-# Run this command as 'nohup ssh-agent sh crosstool-0.40/regtest-run.sh'
+# Run this command as 'nohup ssh-agent sh crosstool-0.41/regtest-run.sh'
 #ssh-add
 
 #rm -rf jobdir
 mkdir -p jobdir
 
 # Which version of crosstool to test
-CROSSTOOL=crosstool-0.40
+CROSSTOOL=crosstool-0.41
 
 # Edit this line to specify the hosts to run the script on
 #ALLNODES="k8 fast fast2"
@@ -49,37 +49,44 @@ gcc-4.0.0-glibc-2.3.4 \
 # Choice is somewhat arbitrary, especially as to which kernel headers to use
 TOOLS="\
 gcc-2.95.3-glibc-2.1.3 \
-gcc-2.95.3-glibc-2.2.2-hdrs-2.6.11.2 \
+gcc-2.95.3-glibc-2.2.2 \
 gcc-2.95.3-glibc-2.2.5 \
 gcc-3.2.3-glibc-2.2.5 \
 gcc-3.2.3-glibc-2.3.2 \
+gcc-3.2.3-glibc-2.3.2-tls \
 gcc-3.3.6-glibc-2.1.3 \
-gcc-3.3.6-glibc-2.2.2-hdrs-2.6.11.2 \
+gcc-3.3.6-glibc-2.2.2 \
 gcc-3.3.6-glibc-2.2.5 \
-gcc-3.3.6-glibc-2.3.2-hdrs-2.6.11.2 \
+gcc-3.3.6-glibc-2.3.2 \
+gcc-3.3.6-glibc-2.3.2-tls \
 gcc-3.3.6-glibc-2.3.5 \
-gcc-3.4.5-glibc-2.2.2-hdrs-2.6.11.2 \
+gcc-3.3.6-glibc-2.3.5-tls \
+gcc-3.3.6-glibc-2.3.6 \
+gcc-3.3.6-glibc-2.3.6-tls \
+gcc-3.4.5-glibc-2.2.2 \
 gcc-3.4.5-glibc-2.2.5 \
-gcc-3.4.5-glibc-2.3.2-hdrs-2.6.11.2 \
-gcc-3.4.5-glibc-2.3.5-hdrs-2.6.11.2 \
-gcc-3.4.5-glibc-2.3.6-hdrs-2.6.11.2 \
-gcc-4.0.2-glibc-2.2.2-hdrs-2.6.11.2 \
-gcc-4.0.2-glibc-2.3.2-hdrs-2.6.11.2 \
-gcc-4.0.2-glibc-2.3.5-hdrs-2.6.11.2 \
-gcc-4.1.0-20060219-glibc-2.2.2-hdrs-2.6.11.2 \
-gcc-4.1.0-20060219-glibc-2.3.2-hdrs-2.6.11.2 \
+gcc-3.4.5-glibc-2.3.2 \
+gcc-3.4.5-glibc-2.3.2-tls \
+gcc-3.4.5-glibc-2.3.5 \
+gcc-3.4.5-glibc-2.3.5-tls \
+gcc-3.4.5-glibc-2.3.6 \
+gcc-3.4.5-glibc-2.3.6-tls \
+gcc-4.0.2-glibc-2.2.2 \
+gcc-4.0.2-glibc-2.3.2 \
+gcc-4.0.2-glibc-2.3.2-tls \
+gcc-4.0.2-glibc-2.3.5 \
+gcc-4.0.2-glibc-2.3.5-tls \
+gcc-4.0.2-glibc-2.3.6 \
+gcc-4.0.2-glibc-2.3.6-tls \
+gcc-4.1.0-20060223-glibc-2.2.2 \
+gcc-4.1.0-20060223-glibc-2.3.2 \
+gcc-4.1.0-20060223-glibc-2.3.2-tls \
+gcc-4.1.0-20060223-glibc-2.3.5 \
+gcc-4.1.0-20060223-glibc-2.3.5-tls \
+gcc-4.1.0-20060223-glibc-2.3.6 \
+gcc-4.1.0-20060223-glibc-2.3.6-tls \
 "
 
-# Edit this line to specify which toolchain combos to build
-#TOOLS="\
-#gcc-2.95.3-glibc-2.2.2-hdrs-2.6.11.2 \
-#gcc-3.4.4-glibc-2.2.2-hdrs-2.6.11.2 \
-#gcc-3.4.4-glibc-2.3.2-hdrs-2.6.11.2 \
-#gcc-4.0.1-glibc-2.2.2-hdrs-2.6.11.2 \
-#gcc-4.0.1-glibc-2.3.2-hdrs-2.6.11.2 \
-#gcc-4.1-20050716-glibc-2.2.2-hdrs-2.6.11.2 \
-#gcc-4.1-20050716-glibc-2.3.2-hdrs-2.6.11.2 \
-#"
 
 # Edit this line to specify which CPUs to build for
 CPUS="\
@@ -98,6 +105,7 @@ m68k \
 mips \
 mipsel \
 powerpc-405 \
+powerpc-603 \
 powerpc-750 \
 powerpc-860 \
 powerpc-970 \

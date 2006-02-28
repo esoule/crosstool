@@ -116,8 +116,8 @@ if test "$opt_no_unpack" = ""; then
    # Download and patch
    if test -d "$BUILD_DIR"; then
 	# Remove in background
-   	mv $BUILD_DIR $BUILD_DIR.$$
-   	rm -rf $BUILD_DIR.$$ &
+   	mv $BUILD_DIR $BUILD_DIR.del.$$
+   	rm -rf $BUILD_DIR.del.$$ &
    fi
    mkdir -p $BUILD_DIR
    sh getandpatch.sh
@@ -125,7 +125,11 @@ fi
 
 if test "$opt_no_build" = ""; then
     # Build
-    rm  -rf  $PREFIX
+    if [ -d "$PREFIX" ]; then
+	# Remove in background for speed
+	mv "$PREFIX" "$PREFIX.del.$$"
+	rm  -rf  "$PREFIX.del.$$" &
+    fi
     mkdir -p $PREFIX
     mkdir -p $BUILD_DIR
     cd $BUILD_DIR

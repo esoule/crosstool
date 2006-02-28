@@ -2,13 +2,55 @@ Note: a description of why each patch is needed is embedded
 *inside* the patch file at the top, so read the patch file
 for more info.
 
+0.41:
+    crosstool.sh:
+    * brought back mkoverride.sh, so installed toolchain has easy
+      place to get just libgcc_s.so and libstdc++.so for use with
+      ldconfig or -Wl,-rpath.
+
+    getandpatch.sh:
+    * Added missing .gz filename after .bz2 for getting gcc-?.?-200* (Martin Guy)
+
+    all.sh:
+    * Remove old PREFIX dir in background for speed (Martin Guy)
+
+    general:
+    * updated from linux-2.6.11.3 to linux-2.6.15.4
+    * removed -hdrs-2.6.11.2 suffix from .dat file names
+    * updated from linux-libc-headers-2.6.11.2 to linux-libc-headers-2.6.12.0
+    * updated from gdb-6.3 to gdb-6.4
+    * added ppc603 and tls to build matrix
+
+    glibc:
+    * removed glibc-20040822
+    * in glibc-2.3.[456], replaced glibc-20040822-s390-sysdep_inc.patch with fix-pr398.patch
+    * users can now change the --enable-kernel, --with[out]-tls, --with[out]-__thread
+      config options by putting them in GLIBC_EXTRA_CONFIG; default is same as before,
+       --enable-kernel=2.4.3 --without-tls --without-__thread
+    * added *-tls.dat files showing how to turn on tls support 
+      (but you might need to use --without-__thread on i686 with glibc-2.3.2, see
+       http://sources.redhat.com/bugzilla/show_bug.cgi?id=236 and
+       http://sources.redhat.com/bugzilla/show_bug.cgi?id=317)
+
+    gcc:
+    * added gcc-4.1.0-20060223 aka rc2
+
+    binutils:
+    * Added Nick Clifton's link time performance patch, backported to 2.15 and 2.16.1
+      binutils-2.15/ld-2.15-stabs-tweak.patch
+      binutils-2.16.1/stabs-tweak.patch
+      See http://sourceware.org/ml/binutils/2005-12/msg00270.html
+    * Added Robert O'Callahan's link time performance patch, backported to 2.15 and 2.16.1
+      binutils-2.15/ld-2.15-callahan.patch
+      binutils-2.16.1/callahan.patch
+      See http://weblogs.mozillazine.org/roc/archives/2005/02/optimizing_gnu.html
+
 0.40:
     crosstool.sh:
     * check for flex and bison (some distros don't install them by default)
     * undo bits/syscall.h gcj-4.0.0 change from Tim Hayman since 
       it breaks arm, see http://sourceware.org/ml/crossgcc/2006-01/msg00091.html
     * Obey GLIBCTHREADS_FILENAME if set (from martinwguy@yahoo.it)
-
 
     all.sh:
     * If build dir exists, remove it in the background not foreground

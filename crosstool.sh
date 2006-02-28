@@ -81,6 +81,21 @@ if test -z "${GLIBC_ADDON_OPTIONS}"; then
    test -z "${GLIBCCRYPT_FILENAME}"   || GLIBC_ADDON_OPTIONS="${GLIBC_ADDON_OPTIONS}crypt,"
 fi
 
+# Add some default glibc config options if not given by user.  These used to be hardcoded.
+DEFAULT_GLIBC_EXTRA_CONFIG=""
+case "${GLIBC_EXTRA_CONFIG}" in
+*enable-kernel*) ;;
+*) DEFAULT_GLIBC_EXTRA_CONFIG="${DEFAULT_GLIBC_EXTRA_CONFIG} --enable-kernel=2.4.3"
+esac
+case "${GLIBC_EXTRA_CONFIG}" in
+*-tls*) ;;
+*) DEFAULT_GLIBC_EXTRA_CONFIG="${DEFAULT_GLIBC_EXTRA_CONFIG} --without-tls"
+esac
+case "${GLIBC_EXTRA_CONFIG}" in
+*-__thread*) ;;
+*) DEFAULT_GLIBC_EXTRA_CONFIG="${DEFAULT_GLIBC_EXTRA_CONFIG} --without-__thread"
+esac
+
 # One is forbidden
 test -z "${LD_LIBRARY_PATH}" || abort  "glibc refuses to build if LD_LIBRARY_PATH is set.  Please unset it before running this script."
 
@@ -498,10 +513,7 @@ echo ${GLIBC_CONFIGPARMS} > configparms
 if test '!' -f Makefile; then
     # Configure with --prefix the way we want it on the target...
     # There are a whole lot of settings here.  You'll probably want
-    # to read up on what they all mean, and customize a bit.
-    # e.g. I picked --enable-kernel=2.4.3 here just because it's the kernel Bill 
-    # used in his example gcc2.95.3 script.  That means some backwards compatibility 
-    # stuff is turned on in glibc that you may not need if you're using a newer kernel.
+    # to read up on what they all mean, and customize a bit, possibly by setting GLIBC_EXTRA_CONFIG
     # Compare these options with the ones used when installing the glibc headers above - they're different.
     # Adding "--without-gd" option to avoid error "memusagestat.c:36:16: gd.h: No such file or directory" 
     # See also http://sources.redhat.com/ml/libc-alpha/2000-07/msg00024.html. 
@@ -512,10 +524,8 @@ if test '!' -f Makefile; then
     AR=${TARGET}-ar RANLIB=${TARGET}-ranlib \
         ${GLIBC_DIR}/configure --prefix=/usr \
         --build=$BUILD --host=$TARGET \
-        ${GLIBC_EXTRA_CONFIG} \
-        --enable-kernel=2.4.3 \
+        ${GLIBC_EXTRA_CONFIG} ${DEFAULT_GLIBC_EXTRA_CONFIG} \
         --without-cvs --disable-profile --disable-debug --without-gd \
-        --without-tls --without-__thread \
         $SHARED_MODE \
         --enable-add-ons${GLIBC_ADDON_OPTIONS} --with-headers=$HEADERDIR
 fi
@@ -666,6 +676,12 @@ fi
 export EXEEXT
 cd $PREFIX
 sh $TOP_DIR/masq.sh
+
+# Make it easier to run apps built with new gcc on systems that don't
+# have the libgcc_s.so or libstdc++.so installed, by creating 
+# directories containing a copy of libgcc_s.so and libstdc++.so alone.
+cd $TOP_DIR
+sh mkoverride.sh
 
 # Build little program that lets user move resulting toolchain to different prefix
 cd $TOP_DIR

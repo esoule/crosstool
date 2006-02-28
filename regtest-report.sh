@@ -2,6 +2,7 @@
 # Generate report showing matrix of build results for a run of regtest-run.sh
 # Copyright (C) 2005, Dan Kegel, Google
 # License: GPL
+# This badly needs rewriting in perl.
 
 set -e
 
@@ -21,7 +22,8 @@ done | sed 's/\.dat\.txt//' > all.dats.txt
 # Generate fancy index.html report
 
 # Figure out which tool combinations were used
-sed 's/NAME=[-_a-zA-Z0-9\.]*//;s/TARGET=[_a-z0-9\-]*//;s/toolchain=[A-Z]*//;s/kernel=[A-Z]*//;s/gdb=[A-Z]*//;s/gdbserver=[A-Z]*//' < all.dats.txt | sort -u | tr '\011' ':' | grep ':.*:.*:' | sed 's/::*/:/g' | sort -u | grep GCC | grep GLIBC > all-tools.tmp
+# Extract TLS from NAME and move it to end, so it's the most minor sort key
+sed 's/NAME=[-_a-zA-Z0-9\.]*tls\(.*\)/\1	TLS=tls/;s/NAME=[-_a-zA-Z0-9\.]*//;s/TARGET=[_a-z0-9\-]*//;s/toolchain=[A-Z]*//;s/kernel=[A-Z]*//;s/gdb=[A-Z]*//;s/gdbserver=[A-Z]*//' < all.dats.txt | sort -u | tr '\011' ':' | grep ':.*:.*:' | sed 's/::*/:/g' | sort -u | grep GCC | grep GLIBC > all-tools.tmp
 ALL_CPUS=`cat all.dats.txt | tr '\011' '\012' | grep TARGET= | sed 's/TARGET=//;s/-unknown//;s/-linux-gnu//' | sort -u`
 
 OUT=index.html
@@ -54,6 +56,7 @@ echo "<table>" >> $OUT
 echo "<tr><th>" >> $OUT
 for tools in `cat all-tools.tmp`; do
 	echo $tools | tr ':' '\012' > tools.tmp
+	TLS=; grep tls tools.tmp > /dev/null && TLS=tls
 	BINUTILS_DIR=`awk -F= '/BINUTILS_DIR/ {print $2}' tools.tmp`
 	GCC_CORE_DIR=`awk -F= '/GCC_CORE_DIR/ {print $2}' tools.tmp`
 	GCC_DIR=`awk -F= '/GCC_DIR/ {print $2}' tools.tmp`
@@ -63,7 +66,7 @@ for tools in `cat all-tools.tmp`; do
 	if test -n "$LINUX_SANITIZED_HEADER_DIR"; then
 	    LINUX_SANITIZED_HEADER_DIR=hdrs-`echo $LINUX_SANITIZED_HEADER_DIR | sed 's/.*-//'`
 	fi
-	echo "<th>$GCC_DIR<br>c$GCC_CORE_DIR<br>$GLIBC_DIR<br>$BINUTILS_DIR<br>$LINUX_DIR<br>$LINUX_SANITIZED_HEADER_DIR<br></th>" >> $OUT
+	echo "<th>$GCC_DIR<br>c$GCC_CORE_DIR<br>$GLIBC_DIR<br>$BINUTILS_DIR<br>$LINUX_DIR<br>$LINUX_SANITIZED_HEADER_DIR<br>$TLS<br></th>" >> $OUT
 done
 echo '</tr>' >> $OUT
 
@@ -78,6 +81,7 @@ for cpu in $ALL_CPUS; do
    echo '<tr><th>'$cpu'</th>'
    for tools in `cat all-tools.tmp`; do
 	echo $tools | tr ':' '\012' > tools.tmp
+	TLS=; grep tls tools.tmp > /dev/null && TLS=tls
 	BINUTILS_DIR=`awk -F= '/BINUTILS_DIR/ {print $2}' tools.tmp`
 	GCC_DIR=`awk -F= '/GCC_DIR/ {print $2}' tools.tmp`
 	GCC_CORE_DIR=`awk -F= '/GCC_CORE_DIR/ {print $2}' tools.tmp`
@@ -87,8 +91,13 @@ for cpu in $ALL_CPUS; do
 	toolcombo=$GCC_DIR-$GLIBC_DIR
 	if test -n "$LINUX_SANITIZED_HEADER_DIR"; then
 	    LINUX_SANITIZED_HEADER_DIR=hdrs-`echo $LINUX_SANITIZED_HEADER_DIR | sed 's/.*-//'`
-	    toolcombo=$toolcombo-$LINUX_SANITIZED_HEADER_DIR
+	    #toolcombo=$toolcombo-$LINUX_SANITIZED_HEADER_DIR
 	fi
+        case $TLS in
+        *tls*) toolcombo=$toolcombo-tls ;;
+        *) ;;
+        esac
+	
       echo '<td ' 
       if test -f $cpu-$toolcombo.dat.txt; then
         status=`cat $cpu-$toolcombo.dat.txt`
@@ -118,6 +127,7 @@ done >> $OUT
 echo "<tr><th>" >> $OUT
 for tools in `cat all-tools.tmp`; do
 	echo $tools | tr ':' '\012' > tools.tmp
+	TLS=; grep tls tools.tmp > /dev/null && TLS=tls
 	BINUTILS_DIR=`awk -F= '/BINUTILS_DIR/ {print $2}' tools.tmp`
 	GCC_DIR=`awk -F= '/GCC_DIR/ {print $2}' tools.tmp`
 	GCC_CORE_DIR=`awk -F= '/GCC_CORE_DIR/ {print $2}' tools.tmp`
@@ -127,7 +137,7 @@ for tools in `cat all-tools.tmp`; do
 	if test -n "$LINUX_SANITIZED_HEADER_DIR"; then
 	    LINUX_SANITIZED_HEADER_DIR=hdrs-`echo $LINUX_SANITIZED_HEADER_DIR | sed 's/.*-//'`
 	fi
-	echo "<th>$GCC_DIR<br>c$GCC_CORE_DIR<br>$GLIBC_DIR<br>$BINUTILS_DIR<br>$LINUX_DIR<br>$LINUX_SANITIZED_HEADER_DIR<br></th>" >> $OUT
+	echo "<th>$GCC_DIR<br>c$GCC_CORE_DIR<br>$GLIBC_DIR<br>$BINUTILS_DIR<br>$LINUX_DIR<br>$LINUX_SANITIZED_HEADER_DIR<br>$TLS<br></th>" >> $OUT
 done
 echo '</tr>' >> $OUT
 

@@ -22,6 +22,6 @@ mkdir -p $RESULT_TOP
 #eval `cat powerpc-750.dat gcc-3.4.1-glibc-2.3.2.dat`  sh all.sh --notest
 #eval `cat powerpc-750.dat gcc-3.4.1-glibc-2.3.3.dat`  sh all.sh --notest
 #eval `cat powerpc-750.dat gcc-3.4.1-glibc-20040822.dat`  sh all.sh --notest
- eval `cat powerpc-750.dat gcc-4.1-20050702-glibc-2.3.5-hdrs-2.6.11.2.dat`  sh all.sh --notest --testlinux
+ eval `cat powerpc-750.dat gcc-4.1-20050702-glibc-2.3.5.dat`  sh all.sh --notest --testlinux
 
 echo Done.

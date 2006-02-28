@@ -4,8 +4,8 @@
 # then build SRPMS containing the specfiles and all neccessary
 # source tarballs.
 # Usage:
-# tar -xzvf crosstool-0.40.tar.gz
-# sh crosstool-0.40/buildsrpms.sh
+# tar -xzvf crosstool-0.41.tar.gz
+# sh crosstool-0.41/buildsrpms.sh
 
 abort() {
     echo $@
@@ -19,7 +19,7 @@ set -ex
 # This script assumes that rpmbuild is in the current directory, and can be wiped out.
 
 #FIXME: CROSSTOOLVERSION needs to be updated every time crosstool's version changes, ewww
-CROSSTOOLVERSION=0.40
+CROSSTOOLVERSION=0.41
 
 # Edit this line to specify which toolchain combos to build specfiles for
 # Or override the environment variable (see rerpm.sh for example)
