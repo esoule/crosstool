@@ -20,7 +20,7 @@ set -x
 mkdir -p jobdir
 
 # Which version of crosstool to test
-CROSSTOOL=crosstool-0.41
+CROSSTOOL=crosstool-0.42
 
 # Edit this line to specify the hosts to run the script on
 #ALLNODES="k8 fast fast2"
@@ -78,13 +78,13 @@ gcc-4.0.2-glibc-2.3.5 \
 gcc-4.0.2-glibc-2.3.5-tls \
 gcc-4.0.2-glibc-2.3.6 \
 gcc-4.0.2-glibc-2.3.6-tls \
-gcc-4.1.0-20060223-glibc-2.2.2 \
-gcc-4.1.0-20060223-glibc-2.3.2 \
-gcc-4.1.0-20060223-glibc-2.3.2-tls \
-gcc-4.1.0-20060223-glibc-2.3.5 \
-gcc-4.1.0-20060223-glibc-2.3.5-tls \
-gcc-4.1.0-20060223-glibc-2.3.6 \
-gcc-4.1.0-20060223-glibc-2.3.6-tls \
+gcc-4.1.0-glibc-2.2.2 \
+gcc-4.1.0-glibc-2.3.2 \
+gcc-4.1.0-glibc-2.3.2-tls \
+gcc-4.1.0-glibc-2.3.5 \
+gcc-4.1.0-glibc-2.3.5-tls \
+gcc-4.1.0-glibc-2.3.6 \
+gcc-4.1.0-glibc-2.3.6-tls \
 "
 
 
@@ -174,8 +174,8 @@ runjobs() {
     NODEDIR=`echo $WORKDIR/jobdir.$node | sed 's/@/_/g'`
 
     ssh -n -x -T $ROLE@$node "rm -rf $NODEDIR; mkdir -p $NODEDIR"
-    scp $tarball $ROLE@${node}:$NODEDIR
-    ssh -n -x -T $ROLE@$node "cd $NODEDIR; tar -xzvf $tarball"
+    nice scp $tarball $ROLE@${node}:$NODEDIR
+    nice ssh -n -x -T $ROLE@$node "cd $NODEDIR; tar -xzvf $tarball"
     cd jobdir
     # can't do ls *.sh; that fails if too many processes do it at same time
     # because a file might be moved away between wildcard expansion and stat
@@ -194,7 +194,7 @@ runjobs() {
 	    echo Starting job $job on node $node
 	    echo Starting job $job on node $node > $base.log
 	    scp $job.$node.running $ROLE@${node}:$NODEDIR
-	    ssh -n -x -T $ROLE@$node "cd $NODEDIR; sh $job.$node.running" >> $base.log 2>&1 || true
+	    nice ssh -n -x -T $ROLE@$node "cd $NODEDIR; sh $job.$node.running" >> $base.log 2>&1 || true
 
 	    # Extract last few lines of log for posterity
             tail -150 $base.log > $log

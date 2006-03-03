@@ -4,8 +4,8 @@
 # then build SRPMS containing the specfiles and all neccessary
 # source tarballs.
 # Usage:
-# tar -xzvf crosstool-0.41.tar.gz
-# sh crosstool-0.41/buildsrpms.sh
+# tar -xzvf crosstool-0.42.tar.gz
+# sh crosstool-0.42/buildsrpms.sh
 
 abort() {
     echo $@
@@ -19,7 +19,7 @@ set -ex
 # This script assumes that rpmbuild is in the current directory, and can be wiped out.
 
 #FIXME: CROSSTOOLVERSION needs to be updated every time crosstool's version changes, ewww
-CROSSTOOLVERSION=0.41
+CROSSTOOLVERSION=0.42
 
 # Edit this line to specify which toolchain combos to build specfiles for
 # Or override the environment variable (see rerpm.sh for example)
@@ -29,11 +29,11 @@ gcc-2.95.3-glibc-2.2.5 \
 gcc-3.3.6-glibc-2.2.5 \
 gcc-3.3.6-glibc-2.3.2 \
 gcc-3.3.6-glibc-2.3.5 \
-gcc-3.4.4-glibc-2.2.5 \
-gcc-3.4.4-glibc-2.3.2 \
-gcc-3.4.4-glibc-2.3.5 \
-gcc-4.0.1-glibc-2.3.2 \
-gcc-4.0.1-glibc-2.3.5 \
+gcc-3.4.5-glibc-2.2.5 \
+gcc-3.4.5-glibc-2.3.2 \
+gcc-3.4.5-glibc-2.3.5 \
+gcc-4.0.2-glibc-2.3.2 \
+gcc-4.0.2-glibc-2.3.5 \
 "}
 
 # I prefer /opt/crosstool, but rpmlint objects less to /usr/crosstool

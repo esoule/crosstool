@@ -376,6 +376,9 @@ __ENDFOR
 
 %changelog
 
+* Wed Mar 01 2006 Dan Kegel <dank at kegel.com> - 0:0.42-0.1
+- update to crosstool-0.42
+
 * Sat Feb 26 2006 Dan Kegel <dank at kegel.com> - 0:0.41-0.1
 - update to crosstool-0.41
 

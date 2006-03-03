@@ -2,6 +2,25 @@ Note: a description of why each patch is needed is embedded
 *inside* the patch file at the top, so read the patch file
 for more info.
 
+0.42:
+    gcc:
+    * add gcc-4.1.0 final, remove snapshots
+
+    glibc:
+    * Remove old snapshots
+
+    binutils:
+    * tweak default size of hash tables upwards; helps a few large apps.
+      binutils-2.15/bfd-hash-tweak.patch
+      binutils-2.16.1/bfd-hash-tweak.patch
+
+    regtest-run.sh:
+    * lower priority of ssh with 'nice'.  This really reduces the CPU load.
+
+    doc:
+    * updated mac os x section of crosstool-howto.html to include tips
+      on wrapping ld and as
+
 0.41:
     crosstool.sh:
     * brought back mkoverride.sh, so installed toolchain has easy

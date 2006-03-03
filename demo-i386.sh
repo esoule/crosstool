@@ -41,9 +41,6 @@ mkdir -p $RESULT_TOP
 #eval `cat i386.dat gcc-3.4.3-glibc-2.3.2.dat` sh all.sh --notest
 #eval `cat i386.dat gcc-3.4.3-glibc-2.3.3.dat` sh all.sh --notest
  eval `cat i386.dat gcc-3.4.3-glibc-2.3.4.dat` sh all.sh --notest
-#eval `cat i386.dat gcc-4.0-20050305-glibc-2.2.5.dat` sh all.sh --notest
-#eval `cat i386.dat gcc-4.0-20050305-glibc-2.3.3.dat` sh all.sh --notest
-#eval `cat i386.dat gcc-4.0-20050305-glibc-2.3.4.dat` sh all.sh --notest
-#eval `cat i386.dat gcc-4.0-20050305-glibc-2.3-20050307.dat` sh all.sh --notest
+# and newer compilers...
 
 echo Done.

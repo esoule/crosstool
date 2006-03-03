@@ -15,9 +15,6 @@ mkdir -p $RESULT_TOP
 #eval `cat i686.dat gcc-2.95.3-glibc-2.1.3.dat` sh all.sh --notest
 #eval `cat i686.dat gcc-2.95.3-glibc-2.2.2.dat` sh all.sh --notest --gdb
 #eval `cat i686.dat gcc-3.2.3-glibc-2.2.5.dat`  sh all.sh --notest --nounpack
-#eval `cat i686.dat gcc-3.3-20040630-glibc-2.1.3.dat`  sh all.sh --notest 
-#eval `cat i686.dat gcc-3.3-20040630-glibc-2.2.5.dat`  sh all.sh --notest 
-#eval `cat i686.dat gcc-3.3-20040630-glibc-2.3.2.dat`  sh all.sh --notest 
 #eval `cat i686.dat gcc-3.3.3-glibc-2.1.3.dat`  sh all.sh --notest 
 #eval `cat i686.dat gcc-3.3.3-glibc-2.2.5.dat`  sh all.sh --notest 
 #eval `cat i686.dat gcc-3.3.3-glibc-2.3.2.dat`  sh all.sh --notest 
@@ -34,7 +31,6 @@ mkdir -p $RESULT_TOP
 #eval `cat i686.dat gcc-3.4.1-glibc-2.3.2.dat` sh all.sh --notest
 #eval `cat i686.dat gcc-3.4.1-glibc-2.3.3.dat` sh all.sh --notest
 #eval `cat i686.dat gcc-3.4.1-glibc-20040827.dat` sh all.sh --notest
-#eval `cat i686.dat gcc-3.4.2-20040829-glibc-2.3.3.dat` sh all.sh --notest
 #eval `cat i686.dat gcc-3.4.2-glibc-2.3.3.dat` sh all.sh --notest
 #eval `cat i686.dat gcc-3.4.3-glibc-2.2.2.dat` sh all.sh --notest
 #eval `cat i686.dat gcc-3.4.3-glibc-2.2.5.dat` sh all.sh --notest
@@ -53,7 +49,5 @@ mkdir -p $RESULT_TOP
 #eval `cat i686.dat gcc-4.0.1-glibc-2.2.2.dat` sh all.sh --notest
 #eval `cat i686.dat gcc-4.0.1-glibc-2.3.2.dat` sh all.sh --notest
 #eval `cat i686.dat gcc-4.0.2-glibc-2.3.2.dat` sh all.sh --notest
-#eval `cat i686.dat gcc-4.1-20050716-glibc-2.3.2.dat` sh all.sh --notest --testlinux
-#eval `cat i686.dat gcc-4.1-20060210-glibc-2.2.2.dat` sh all.sh --notest --testlinux
 
 echo Done.

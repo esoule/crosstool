@@ -11,7 +11,7 @@
 # and use fedora-buildrpmtree to set up your ~/.rpmrc and rpmbuild directory
 
 set -ex
-#tar -xzvf crosstool-0.41.tar.gz
+#tar -xzvf crosstool-0.42.tar.gz
 TOOLCOMBOS="gcc-3.4.3-glibc-2.2.2" 
 export TOOLCOMBOS
 sh crosstool-0.41/buildsrpms.sh 

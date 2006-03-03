@@ -59,9 +59,9 @@ system or CPU type, to speed up your Linux compiles.
 <h2><a name="quick">Quick Start</a></h2>
 Download and unpack.  For instance:
 <pre>
-wget http://kegel.com/crosstool/crosstool-0.41.tar.gz
-tar -xzvf crosstool-0.41.tar.gz
-cd crosstool-0.41
+wget http://kegel.com/crosstool/crosstool-0.42.tar.gz
+tar -xzvf crosstool-0.42.tar.gz
+cd crosstool-0.42
 </pre>
 Then look at the demo scripts; there's one for each supported CPU type.
 For instance, demo-i686.sh is an example of how to build a toolchain that targets
@@ -323,18 +323,38 @@ You'll need to install GNU Diffutils or GNU Patch, since BSD's patch utility
 doesn't accept the --fuzz parameter.
 
 <h3><a name=mac>Mac OS X</a></h3>
-You need to install gawk, gnu sed, gnu install, and wget, such that they are used instead of the native versions, before you can build crosstool on Mac OS X.  
+To build gcc and glibc on Mac OS X, you'll need to install a few gnu utilities:
+<ul>
+<li>gnu wget
+<li>gnu awk
+<li>gnu sed
+<li>gnu install (part of gnu coreutils)
+</ul>
+such that they are used instead of the native versions.  (This may involve 
+setting PATH and/or making symbolic links.)
+<p>
 The way I installed them was using <a href="http://fink.sourceforge.net/">fink</a>,
-but <a href="http://darwinports.opendarwin.org/">DarwinPorts</a> would probably do as well.
+but <a href="http://darwinports.opendarwin.org/">DarwinPorts</a> 
+or installing from tarballs would probably do as well.
+<p>
+One recurring problem is that various Gnu configure scripts assume that
+'as' and 'ld' are the Gnu versions, run them with -v to get the
+version number, and compare it with some gnu version.
+That doesn't work well on the Mac.  You can either hack the
+configure scripts to not do that, or write wrapper scripts for
+as and ld.  For instance, here's a wrapper script for as that
+blatantly lies about what version it is, just to make crosstool happy:
+<pre>
+  test "$1" = -v && echo GNU assembler 2.13 || /usr/bin/as "$@"
+</pre>
+Nikolaus Schaller tied all the above into a tidy script; see his
+<a href="http://sourceware.org/ml/crossgcc/2006-02/msg00272/build.sh">build.sh</a>
+which both downloads the needed tools and creates the wrappers for as and ld.
+
 <p>
 On some (older?) versions of Mac OS X, you'll need to raise the stack size with the command
 <pre>ulimit -s 8192</pre>
 else make may segfault.
-<p>
-If wget or any other fink program segfaults,
-try 'sudo /sw/var/lib/fink/prebound/update-package-prebinding.pl -f'
-once to get around a hiccup in fink's incremental prelinking of apps.
-See the <a href="http://fink.sourceforge.net/faq/faq.en.html#usage-fink.seg-fault">fink FAQ</a>.
 
 <p>
 When using 2.6 kernel headers on systems (like Mac OS X) where gcc doesn't support the
@@ -541,6 +561,6 @@ Related Mailing lists (corrections welcome):
 Portions copyright 2003, <a href="http://ixiacom.com">Ixia Communications</a><br>
 Portions copyright 2003, 2004, 2005 <a href="http://google.com">Google</a><br>
 Released under the GPL.<br>
-Last revision 21 July 2005 by dank@kegel.com
+Last revision 2 Mar 2006 by dank@kegel.com
 </body>
 </html>
