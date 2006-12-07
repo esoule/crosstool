@@ -207,8 +207,6 @@ replaceOneString(char *path,
                  unsigned int newroot_len,
                  unsigned int oldroot_len)
 {
-    unsigned int i;
-
     assert(oldroot_len <= path_len);
     assert(NULL != path);
     assert(NULL != newroot);
@@ -216,29 +214,22 @@ replaceOneString(char *path,
     if (newroot_len < oldroot_len) {
         unsigned int delta = oldroot_len - newroot_len;
 
-	/* Overwrite the beginning of the path with the new root */
-	for (i=0; i < newroot_len; i++)
-	    path[i] = newroot[i];
-
-	/* Scoot rest of path (and its terminator!) down to fit */
-	for (; i < path_len - delta; i++)
-	    path[i] = path[i + delta];
-
-	/* Pad with spaces */
-	for (; i < path_len; i++)
-	    path[i] = 0x20;  /* ascii space */
+        /* Overwrite the beginning of the path with the new root, padded with
+         * leading slashes.
+         */
+        memset(path, '/', delta);
+        memcpy(path + delta, newroot, newroot_len);
 
         return path_len;
     } else {
         unsigned int delta = newroot_len - oldroot_len;
 
-	/* Scoot rest of path (and its terminator!) up to fit */
-	for (i = path_len + delta; i > delta; i--)
-	    path[i - 1] = path[i - delta - 1];
+        /* Scoot path (and its terminator!) up to fit */
+        memmove(path + delta, path, path_len + 1); 
 
-	/* Overwrite the beginning of the path with the new root */
-	for (i=0; i < newroot_len; i++)
-	    path[i] = newroot[i];
+        /* Overwrite the beginning of the path with the new root */
+        memcpy(path, newroot, newroot_len);
+
         return path_len + delta;
     }
 }
@@ -370,12 +361,12 @@ void testit()
     };
     static struct mytest all_tests[] = {
         /* normal runs */
-	{"/oldpath", "/boo",     "/oldpath/bletch'asdf", "/boo/bletch'    asdf", 0},
-	{"/oldpath", "/boo",     "/oldpath/bletch_asdf", "/boo/bletch_    asdf", 0},
+	{"/oldpath", "/boo",     "/oldpath/bletch'asdf", "/////boo/bletch'asdf", 0},
+	{"/oldpath", "/boo",     "/oldpath/bletch_asdf", "/////boo/bletch_asdf", 0},
 
         /* make sure we can use the old_oldpath_len argument to map to a *longer* path */
 	{"/boo",     "/oldpath", "/boo/bletch_    asdf", "/oldpath/bletch_asdf", strlen("/oldpath")},
-	{NULL, NULL, NULL, NULL}
+	{NULL, NULL, NULL, NULL, 0}
     };
 
     int i;

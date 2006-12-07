@@ -8,4 +8,4 @@ find . -name '*.sh' | xargs chmod 755
 chmod 755 config.guess
 
 # And, what the heck, list all files containing the current version number
-find . -name buildlogs -prune -o -type f -print | xargs grep -l '[^0-9]0\.42' 
+find . -name buildlogs -prune -o -type f -print | xargs grep -l '[^0-9]0\.43' 

@@ -51,6 +51,7 @@ for lib in \
  ld libBrokenLocale libSegFault libanl libc libcrypt libdl libgcc_s libgcc_s_nof libm \
  libmemusage libnsl libnss_compat libnss_dns libnss_files libnss_hesiod libnss_nis \
  libnss_nisplus libpcprofile libpthread libresolv librt libthread_db libutil \
+ libssp libmudflap \
  $STD_JAVA_LIBS $STD_FORTRAN_LIBS $STD_CXX_LIBS; do
 	ls     lib/$lib[-.]*so* || true
 	ls usr/lib/$lib[-.]*so* || true

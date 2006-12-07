@@ -17,45 +17,23 @@ test -z "${PREFIX}" && abort "Please set PREFIX to where you want the toolchain 
 
 set -ex
 
-installOneLib() {
-  # Make a unique directory for each shared library named after the file,
-  # but with .dir appended.
-  FILE=$1
-  NEWDIR=$FILE.dir
-  rm -rf $NEWDIR
-  mkdir -p $NEWDIR
-
-  # Install the shared library in its private little directory
-  # Use *hard* link to save space, since some shared libraries are quite large,
-  # and since ldconfig ignores symbolic links.
-  ln $FILE $NEWDIR
-
-  # Create little scripts in that directory to install and uninstall
-  # the directory in /etc/ld.so.conf
-  cat >$NEWDIR/install.sh <<_EOF_
-#!/bin/sh
-sh $PREFIX/libexec/install-shared-lib.sh $NEWDIR
-_EOF_
-  cat >$NEWDIR/uninstall.sh <<_EOF_
-#!/bin/sh
-sh $PREFIX/libexec/install-shared-lib.sh --uninstall $NEWDIR
-_EOF_
-}
-
 # These should match the lib* subpackages in the crosstool-gcc specfile
 # FIXME: Include more shared libraries, like java and fortran
-LIBS="libgcc_s.so libstdc++.so"
 
-for LIB in $LIBS; do
-  # We don't know where the library is, so search.
-  # Filter out links installed by this script using grep...
-  FILES=`find $PREFIX/$TARGET/lib* -name "$LIB*" -type f | grep -v '\.dir$' || true `
-  # We expect only one match, but what the heck, if both /lib and /lib64 exist, do 'em both?
-  for FILE in $FILES; do
-     installOneLib $FILE
-  done
+for LIB in libgcc_s libstdc++ libssp libmudflap
+do
+    for DIR in $PREFIX/$TARGET/lib $PREFIX/$TARGET/lib64
+    do
+        # FIXME: what's right way to test whether a wildcard matches?
+        if test -f $DIR/$LIB.so || test -f $DIR/$LIB.so.?; then
+            rm -rf $DIR/$LIB.dir
+            mkdir $DIR/$LIB.dir
+            cd $DIR/$LIB.dir
+            for a in ../$LIB.so*
+            do
+                ln -s $a 
+            done
+            cd ../../../..
+        fi
+    done
 done
-
-# Oh, what the heck, also install the script :-)
-install -D -m755 install-shared-lib.sh $PREFIX/libexec/install-shared-lib.sh
-

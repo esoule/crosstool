@@ -196,7 +196,8 @@ fi
 if test -n "$GDB_DIR"; then
     getUnpackAndPatch ftp://ftp.gnu.org/pub/gnu/gdb/$GDB_DIR.tar.bz2 \
                       ftp://sources.redhat.com/pub/gdb/releases/$GDB_DIR.tar.bz2 \
-                      ftp://sources.redhat.com/pub/gdb/old-releases/$GDB_DIR.tar.bz2
+                      ftp://sources.redhat.com/pub/gdb/old-releases/$GDB_DIR.tar.bz2 \
+                      ftp://sources.redhat.com/pub/gdb/snapshots/current/$GDB_DIR.tar.bz2
 fi
 
 # No glibc for cygwin.
@@ -239,6 +240,11 @@ for gcc in $GCC_DIR $GCC_CORE_DIR; do
       dir=`echo $gcc | sed s/gcc-/prerelease-/`
       getUnpackAndPatch	ftp://gcc.gnu.org/pub/gcc/$dir/$gcc.tar.bz2 \
 			ftp://gcc.gnu.org/pub/gcc/$dir/$gcc.tar.gz ;;
+   gcc-4.[01234]-200*)
+      snapshotdir=`echo $gcc | sed s/gcc-//`
+      getUnpackAndPatch	ftp://gcc.gnu.org/pub/gcc/$dir/$gcc.tar.bz2 \
+			ftp://gcc.gnu.org/pub/gcc/$dir/$gcc.tar.gz \
+			ftp://gcc.gnu.org/pub/gcc/snapshots/$snapshotdir/$gcc.tar.bz2 ;;
    gcc-3.[3456]-200*|gcc-4.0-200*|gcc-4.1-200*)
       dir=`echo $gcc | sed 's/gcc-//'`
       getUnpackAndPatch ftp://gcc.gnu.org/pub/gcc/snapshots/$dir/$gcc.tar.bz2 \

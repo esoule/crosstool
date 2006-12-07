@@ -20,7 +20,7 @@ set -x
 mkdir -p jobdir
 
 # Which version of crosstool to test
-CROSSTOOL=crosstool-0.42
+CROSSTOOL=crosstool-0.43
 
 # Edit this line to specify the hosts to run the script on
 #ALLNODES="k8 fast fast2"
@@ -85,6 +85,18 @@ gcc-4.1.0-glibc-2.3.5 \
 gcc-4.1.0-glibc-2.3.5-tls \
 gcc-4.1.0-glibc-2.3.6 \
 gcc-4.1.0-glibc-2.3.6-tls \
+gcc-4.1.1-glibc-2.2.2 \
+gcc-4.1.1-glibc-2.3.2 \
+gcc-4.1.1-glibc-2.3.5 \
+gcc-4.1.1-glibc-2.3.5-tls \
+gcc-4.1.1-glibc-2.3.6 \
+gcc-4.1.1-glibc-2.3.6-tls \
+gcc-4.2-glibc-2.2.2 \
+gcc-4.2-glibc-2.3.2 \
+gcc-4.2-glibc-2.3.5 \
+gcc-4.2-glibc-2.3.5-tls \
+gcc-4.2-glibc-2.3.6 \
+gcc-4.2-glibc-2.3.6-tls \
 "
 
 

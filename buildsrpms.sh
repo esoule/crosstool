@@ -4,8 +4,8 @@
 # then build SRPMS containing the specfiles and all neccessary
 # source tarballs.
 # Usage:
-# tar -xzvf crosstool-0.42.tar.gz
-# sh crosstool-0.42/buildsrpms.sh
+# tar -xzvf crosstool-0.43.tar.gz
+# sh crosstool-0.43/buildsrpms.sh
 
 abort() {
     echo $@
@@ -19,7 +19,8 @@ set -ex
 # This script assumes that rpmbuild is in the current directory, and can be wiped out.
 
 #FIXME: CROSSTOOLVERSION needs to be updated every time crosstool's version changes, ewww
-CROSSTOOLVERSION=0.42
+CROSSTOOLVERSION=0.43
+PKGPREFIX=${PKGPREFIX:-"crosstool"}
 
 # Edit this line to specify which toolchain combos to build specfiles for
 # Or override the environment variable (see rerpm.sh for example)
@@ -37,7 +38,7 @@ gcc-4.0.2-glibc-2.3.5 \
 "}
 
 # I prefer /opt/crosstool, but rpmlint objects less to /usr/crosstool
-RESULT_TOP=/usr/crosstool
+RESULT_TOP=${RESULT_TOP-/usr/crosstool}
 test -f crosstool.sh && abort "Don't run this inside the crosstool directory!"
 test -f crosstool-$CROSSTOOLVERSION.tar.gz || abort "Can't find crosstool-$CROSSTOOLVERSION.tar.gz"
 test -f crosstool-$CROSSTOOLVERSION/crosstool.sh || abort "Can't find crosstool-$CROSSTOOLVERSION/crosstool.sh; please unpack crosstool-$CROSSTOOLVERSION.tar.gz"
@@ -94,7 +95,7 @@ for TOOLCOMBO in $TOOLCOMBOS; do
     abort "No CPUs supported for this toolcombo?"
   fi
   cat crosstool-$CROSSTOOLVERSION/crosstool.spec.in |
-   sed "s,__TOOLCOMBO__,$TOOLCOMBO,g;s,__RESULT_TOP__,$RESULT_TOP,g;s,__CPUS__,$CPUS,g;s,__CROSSTOOLVERSION__,$CROSSTOOLVERSION,g"  |
+   sed "s,__PKGPREFIX__,$PKGPREFIX,g;s,__TOOLCOMBO__,$TOOLCOMBO,g;s,__RESULT_TOP__,$RESULT_TOP,g;s,__CPUS__,$CPUS,g;s,__CROSSTOOLVERSION__,$CROSSTOOLVERSION,g"  |
    sed "$HAVE_SHAREDLIBS" |
    sed "/__SOURCES__/c\\
 $SOURCES

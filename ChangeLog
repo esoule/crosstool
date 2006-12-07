@@ -2,6 +2,46 @@ Note: a description of why each patch is needed is embedded
 *inside* the patch file at the top, so read the patch file
 for more info.
 
+0.43:
+    gcc:
+    * add gcc-4.1.1 final
+    * add gcc-4.1-20060811, snapshot on 20060811
+    * add gcc-4.2-20061024, snapshot on 20061024
+    * add libmudflap to runtimes rpms so users can do things like
+      "-fmudflap".
+    * add libssp to runtimes rpms so users can do things like
+      "-fstack-protector" and "-lssp"
+    * enabled tls for 2.4.18 and up, since somebody may need tls support
+      from such kernel.
+    * fixed a bug in toolchain.dat and cpu.dat, append to GLIBC_EXTRA_CONFIG
+      rather than overwrite it. It might be defined both in toolchain.dat
+      and cpu.dat, or it might be defined by a crosstool user, who added
+      a definition to GLIBC_EXTRA_CONFIG. Before this buf fix, whichever came
+      first would have been overwritten.
+    * add gcc-4.1.1-glibc-2.3.5-nptl.dat as Ian's first cut at simple
+      way of enabling NPTL.
+
+    gdb:
+    * add gdb-6.5 final
+
+    fix-embedded-paths.c:
+    * fixed a bug in fix-embedded-paths.c. Simon Baldwin tracked a gdb crash
+      down to a bug in the crosstool build scripts (they ran fix-embedded-paths.c
+      on libstdc++.so, which wasn't strictly neccessary).  His proposed workaround
+      is to modify fix-embedded-paths.c to use slash padding rather than space or
+      null padding, and run it again on the affected libraries.
+
+    crosstool.spec.in:
+    buildsrpms.sh:
+    * add __PKGPREFIX__ to allow users to specify the name prefix of the rpms.
+    * change the version number to 0.43
+
+    buildlogs:
+    * add gcc-4.1.1 build results and update build matrix.
+
+    regtest-report.sh:
+    * add nptl to build matrix
+
 0.42:
     gcc:
     * add gcc-4.1.0 final, remove snapshots
@@ -17,9 +57,14 @@ for more info.
     regtest-run.sh:
     * lower priority of ssh with 'nice'.  This really reduces the CPU load.
 
+    demo-CPU.sh:
+    * add generate-demo.pl to generate demo-CPU.sh from buildlogs/all.dats.txt.
+
     doc:
     * updated mac os x section of crosstool-howto.html to include tips
       on wrapping ld and as
+    * add "Target Platform Notes" to crosstool-howto.html to include the target
+      platform specific notes for building crosstool using demo-CPU.sh.
 
 0.41:
     crosstool.sh:

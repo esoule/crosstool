@@ -18,13 +18,13 @@ i686 \
 export WANT_CPUS
 
 set -ex
-tar -czvf crosstool-0.42.tar.gz crosstool-0.42
+tar -czvf crosstool-0.43.tar.gz crosstool-0.43
 
-sh crosstool-0.42/buildsrpms.sh 
+sh crosstool-0.43/buildsrpms.sh 
 
 for TOOLCOMBO in $TOOLCOMBOS; do
-  cp rpmbuild/SRPMS/crosstool-$TOOLCOMBO-0.42-1.src.rpm .
-  rpm -i crosstool-$TOOLCOMBO-0.42-1.src.rpm 
+  cp rpmbuild/SRPMS/crosstool-$TOOLCOMBO-0.43-1.src.rpm .
+  rpm -i crosstool-$TOOLCOMBO-0.43-1.src.rpm 
 
   rpmbuild -bb rpmbuild/SPECS/crosstool-$TOOLCOMBO.spec
 done

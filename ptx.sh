@@ -49,7 +49,7 @@ cd $PREFIX/$TARGET
 for lib in \
  ld libBrokenLocale libSegFault libanl libc libcrypt libdl libgcc_s libgcc_s_nof libm \
  libmemusage libnsl libnss_compat libnss_dns libnss_files libnss_hesiod libnss_nis \
- libnss_nisplus libpcprofile libpthread libresolv librt libstdc++ libthread_db libutil; do
+ libnss_nisplus libpcprofile libpthread libresolv librt libmudflap libssp libstdc++ libthread_db libutil; do
 	ls     lib/$lib[-.]*so* || true
 	ls usr/lib/$lib[-.]*so* || true
 done 2> /dev/null | cpio -pvm $PREFIX/target

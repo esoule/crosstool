@@ -520,6 +520,15 @@ if test '!' -f Makefile; then
     # Set BUILD_CC, or you won't be able to build datafiles
     # Set --build, else glibc-2.3.2 will think you're not cross-compiling, and try to run the test programs
 
+    # For glibc 2.3.4 and later we need to set some autoconf cache
+    # variables, because nptl/sysdeps/pthread/configure.in does not
+    # work when cross-compiling.
+    if test -d ${GLIBC_DIR}/nptl; then
+	libc_cv_forced_unwind=yes
+	libc_cv_c_cleanup=yes
+	export libc_cv_forced_unwind libc_cv_c_cleanup
+    fi
+
     BUILD_CC=gcc CFLAGS="$TARGET_CFLAGS $EXTRA_TARGET_CFLAGS" CC="${TARGET}-gcc $GLIBC_EXTRA_CC_ARGS" \
     AR=${TARGET}-ar RANLIB=${TARGET}-ranlib \
         ${GLIBC_DIR}/configure --prefix=/usr \
@@ -678,8 +687,8 @@ cd $PREFIX
 sh $TOP_DIR/masq.sh
 
 # Make it easier to run apps built with new gcc on systems that don't
-# have the libgcc_s.so or libstdc++.so installed, by creating 
-# directories containing a copy of libgcc_s.so and libstdc++.so alone.
+# have the libgcc_s.so or libstdc++.so, libssp.so, or libmudflap.so installed, by creating 
+# directories containing a copy of libgcc_s.so, libstdc++.so, libssp.so and libmudflap.so alone.
 cd $TOP_DIR
 sh mkoverride.sh
 

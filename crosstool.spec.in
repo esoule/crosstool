@@ -1,5 +1,6 @@
 # This specfile expanded by crosstool's buildsrpms.sh.
-# This should have had the following five keywords expanded,
+# This should have had the following six keywords expanded,
+# __PKGPREFIX__
 # __CROSSTOOLVERSION__
 # __RESULT_TOP__
 # __CPUS__
@@ -10,6 +11,7 @@
 #%trace
 
 # parameters
+%define PKGPREFIX           __PKGPREFIX__
 %define TOOLCOMBO           __TOOLCOMBO__
 %define RESULT_TOP          __RESULT_TOP__
 
@@ -31,7 +33,7 @@ __FOR __CPU__ __CPUS__
 %{expand:%%define CPUS %{CPUS} %{?_with___CPU__: __CPU__}}
 __ENDFOR
 
-%define Name                crosstool-%{TOOLCOMBO}
+%define Name                %{PKGPREFIX}-%{TOOLCOMBO}
 %define Version             __CROSSTOOLVERSION__
 %define Release             1
 %define crosstool_pkg       crosstool-__CROSSTOOLVERSION__.tar.gz
@@ -179,7 +181,7 @@ for CPU in %{CPUS}; do
   done
 
 __IF %have_sharedlibs
-  # Install libgcc.so in /lib/$TARGET and /usr/lib/$TARGET in buildroot
+  # Install libgcc.so in /lib/$TARGET in buildroot
   mkdir -p %{buildroot}/lib/$TARGET
   # Different toolchains hide the libraries in various places; try them all
   for dir in . sys-root; do
@@ -193,8 +195,8 @@ __IF %have_sharedlibs
   done
   # Generate list of files
   find  %{buildroot}/lib/$TARGET -type f | sed 's,%{buildroot},,' > %{Name}-%{Version}-$CPU-libgcc-files.dat
-
-  # Install libstdc++.so in /lib/$TARGET and /usr/lib/$TARGET in buildroot
+  
+  # Install libstdc++.so, libssp.so, and libmudflap.so in /usr/lib/$TARGET in buildroot
   mkdir -p %{buildroot}/usr/lib/$TARGET
   # Different toolchains hide the libraries in various places; try them all
   for dir in . sys-root; do
@@ -204,11 +206,17 @@ __IF %have_sharedlibs
         # only grab modern libstdc++, not backwards-compatibility one
         # Use grep to filter out the silly lib.dir directories created by crosstool
         (cd $foo; find . -type f -name 'libstdc++.so.[567]*' | grep -v '\.dir/lib' | cpio -pd %{buildroot}/usr/lib/$TARGET)
+        # only grab libssp 
+        (cd $foo; find . -type f -name 'libssp.so*' | grep -v '\.dir/lib' | cpio -pd %{buildroot}/usr/lib/$TARGET)
+        # only grab libmudflap
+        (cd $foo; find . -type f -name 'libmudflap.so*' | grep -v '\.dir/lib' | cpio -pd %{buildroot}/usr/lib/$TARGET)
       fi
     done
   done
   # Generate list of files
-  find  %{buildroot}/usr/lib/$TARGET -type f | sed 's,%{buildroot},,' > %{Name}-%{Version}-$CPU-libstdcxx-files.dat
+  find  %{buildroot}/usr/lib/$TARGET -type f -name 'libstdc*'    | sed 's,%{buildroot},,' > %{Name}-%{Version}-$CPU-libstdcxx-files.dat
+  find  %{buildroot}/usr/lib/$TARGET -type f -name 'libssp*'     | sed 's,%{buildroot},,' > %{Name}-%{Version}-$CPU-libssp-files.dat
+  find  %{buildroot}/usr/lib/$TARGET -type f -name 'libmudflap*' | sed 's,%{buildroot},,' > %{Name}-%{Version}-$CPU-libmudflap-files.dat
 __ENDIF
 
   # For gcc-2.95.3, actively nuke libstdc++.so, forcing apps to link the .a instead.
@@ -272,6 +280,98 @@ The crossgcc mailing list is a good place to discuss any problems.
 %{RESULT_TOP}/%{TOOLCOMBO}/%{TARGET}
 
 __IF %have_sharedlibs
+# Only needed for gcc-3.3 and higher 
+# Should only be installed if your system lacks of libmudflap.so and
+# you want to test apps built with this toolchain.
+
+%package %{CPU}-libmudflap
+Autoreqprov     : no
+Summary         : libmudflap.so for %{CPU} target systems which don't have one natively
+Group           : Development/Languages
+
+%description %{CPU}-libmudflap
+Should only be installed if your target lacks libmudflap.so and
+you want to run apps built with this toolchain.
+Built using %{Name}-%{Version}, targeting %{CPU} aka %{TARGET}
+For more information on crosstool, see http://www.kegel.com/crosstool
+
+%Files %{CPU}-libmudflap -f  %{Name}-%{Version}-%{CPU}-libmudflap-files.dat
+%defattr(-,root,root)
+%dir /usr/lib/%{TARGET}
+
+# Use umask 007 in case umask is 007 and the target system is using glibc-2.1.3 and lacks 
+# http://sourceware.org/cgi-bin/cvsweb.cgi/libc/elf/cache.c.diff?r1=1.2&r2=1.3&cvsroot=glibc
+# which would cause ld.so.cache to be unreadable (hey, there might be a few RH6.2 systems out there still!)
+%post %{CPU}-libmudflap
+umask 007
+if test -d /etc/ld.so.conf.d; then
+  CONFFILE=/etc/ld.so.conf.d/crosstool-%{TARGET}.conf
+  if test ! -f $CONFFILE; then
+    # create
+    echo /lib/%{TARGET}     > $CONFFILE
+    echo /usr/lib/%{TARGET} >> $CONFFILE
+  fi
+else
+  CONFFILE=/etc/ld.so.conf
+  if ! grep -q /lib/%{TARGET} $CONFFILE; then
+    # append
+    echo /lib/%{TARGET}     >> $CONFFILE
+    echo /usr/lib/%{TARGET} >> $CONFFILE
+  fi
+fi
+/sbin/ldconfig > /dev/null 2>&1
+
+# Can't use -p /sbin/ldconfig, that gives '/sbin/ldconfig: relative path `0' used to build cache' error
+%postun %{CPU}-libmudflap
+umask 007
+/sbin/ldconfig > /dev/null 2>&1
+
+# Only needed for gcc-3.3 and higher 
+# Should only be installed if your system lacks of libssp.so and
+# you want to test apps built with this toolchain.
+
+%package %{CPU}-libssp
+Autoreqprov     : no
+Summary         : libssp.so for %{CPU} target systems which don't have one natively
+Group           : Development/Languages
+
+%description %{CPU}-libssp
+Should only be installed if your target lacks libssp.so and
+you want to run apps built with this toolchain.
+Built using %{Name}-%{Version}, targeting %{CPU} aka %{TARGET}
+For more information on crosstool, see http://www.kegel.com/crosstool
+
+%Files %{CPU}-libssp -f  %{Name}-%{Version}-%{CPU}-libssp-files.dat
+%defattr(-,root,root)
+%dir /usr/lib/%{TARGET}
+
+# Use umask 007 in case umask is 007 and the target system is using glibc-2.1.3 and lacks 
+# http://sourceware.org/cgi-bin/cvsweb.cgi/libc/elf/cache.c.diff?r1=1.2&r2=1.3&cvsroot=glibc
+# which would cause ld.so.cache to be unreadable (hey, there might be a few RH6.2 systems out there still!)
+%post %{CPU}-libssp
+umask 007
+if test -d /etc/ld.so.conf.d; then
+  CONFFILE=/etc/ld.so.conf.d/crosstool-%{TARGET}.conf
+  if test ! -f $CONFFILE; then
+    # create
+    echo /lib/%{TARGET}     > $CONFFILE
+    echo /usr/lib/%{TARGET} >> $CONFFILE
+  fi
+else
+  CONFFILE=/etc/ld.so.conf
+  if ! grep -q /lib/%{TARGET} $CONFFILE; then
+    # append
+    echo /lib/%{TARGET}     >> $CONFFILE
+    echo /usr/lib/%{TARGET} >> $CONFFILE
+  fi
+fi
+/sbin/ldconfig > /dev/null 2>&1
+
+# Can't use -p /sbin/ldconfig, that gives '/sbin/ldconfig: relative path `0' used to build cache' error
+%postun %{CPU}-libssp
+umask 007
+/sbin/ldconfig > /dev/null 2>&1
+
 # Only needed for gcc-3.3 and higher 
 # Should only be installed if your system lacks of libgcc_s.so and
 # you want to test apps built with this toolchain.
@@ -375,6 +475,9 @@ __ENDIF
 __ENDFOR
 
 %changelog
+
+* Wed Nov 15 2006 Dan Kegel <dank at kegel.com> - 0:0.43-0.1
+- update to crosstool-0.43
 
 * Wed Mar 01 2006 Dan Kegel <dank at kegel.com> - 0:0.42-0.1
 - update to crosstool-0.42

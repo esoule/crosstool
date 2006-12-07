@@ -23,7 +23,7 @@ done | sed 's/\.dat\.txt//' > all.dats.txt
 
 # Figure out which tool combinations were used
 # Extract TLS from NAME and move it to end, so it's the most minor sort key
-sed 's/NAME=[-_a-zA-Z0-9\.]*tls\(.*\)/\1	TLS=tls/;s/NAME=[-_a-zA-Z0-9\.]*//;s/TARGET=[_a-z0-9\-]*//;s/toolchain=[A-Z]*//;s/kernel=[A-Z]*//;s/gdb=[A-Z]*//;s/gdbserver=[A-Z]*//' < all.dats.txt | sort -u | tr '\011' ':' | grep ':.*:.*:' | sed 's/::*/:/g' | sort -u | grep GCC | grep GLIBC > all-tools.tmp
+sed 's/NAME=[-_a-zA-Z0-9\.]*tls\(.*\)/\1	TLS=tls/;s/NAME=[-_a-zA-Z0-9\.]*nptl\(.*\)/\1	TLS=nptl/;s/NAME=[-_a-zA-Z0-9\.]*//;s/TARGET=[_a-z0-9\-]*//;s/toolchain=[A-Z]*//;s/kernel=[A-Z]*//;s/gdb=[A-Z]*//;s/gdbserver=[A-Z]*//' < all.dats.txt | sort -u | tr '\011' ':' | grep ':.*:.*:' | sed 's/::*/:/g' | sort -u | grep GCC | grep GLIBC > all-tools.tmp
 ALL_CPUS=`cat all.dats.txt | tr '\011' '\012' | grep TARGET= | sed 's/TARGET=//;s/-unknown//;s/-linux-gnu//' | sort -u`
 
 OUT=index.html
@@ -56,7 +56,7 @@ echo "<table>" >> $OUT
 echo "<tr><th>" >> $OUT
 for tools in `cat all-tools.tmp`; do
 	echo $tools | tr ':' '\012' > tools.tmp
-	TLS=; grep tls tools.tmp > /dev/null && TLS=tls
+	TLS=; grep tls tools.tmp > /dev/null && TLS=tls; grep nptl tools.tmp > /dev/null && TLS=nptl
 	BINUTILS_DIR=`awk -F= '/BINUTILS_DIR/ {print $2}' tools.tmp`
 	GCC_CORE_DIR=`awk -F= '/GCC_CORE_DIR/ {print $2}' tools.tmp`
 	GCC_DIR=`awk -F= '/GCC_DIR/ {print $2}' tools.tmp`
@@ -81,7 +81,7 @@ for cpu in $ALL_CPUS; do
    echo '<tr><th>'$cpu'</th>'
    for tools in `cat all-tools.tmp`; do
 	echo $tools | tr ':' '\012' > tools.tmp
-	TLS=; grep tls tools.tmp > /dev/null && TLS=tls
+	TLS=; grep tls tools.tmp > /dev/null && TLS=tls; grep nptl tools.tmp > /dev/null && TLS=nptl
 	BINUTILS_DIR=`awk -F= '/BINUTILS_DIR/ {print $2}' tools.tmp`
 	GCC_DIR=`awk -F= '/GCC_DIR/ {print $2}' tools.tmp`
 	GCC_CORE_DIR=`awk -F= '/GCC_CORE_DIR/ {print $2}' tools.tmp`
@@ -95,6 +95,7 @@ for cpu in $ALL_CPUS; do
 	fi
         case $TLS in
         *tls*) toolcombo=$toolcombo-tls ;;
+        *nptl*) toolcombo=$toolcombo-nptl ;;
         *) ;;
         esac
 	
@@ -127,7 +128,7 @@ done >> $OUT
 echo "<tr><th>" >> $OUT
 for tools in `cat all-tools.tmp`; do
 	echo $tools | tr ':' '\012' > tools.tmp
-	TLS=; grep tls tools.tmp > /dev/null && TLS=tls
+	TLS=; grep tls tools.tmp > /dev/null && TLS=tls; grep nptl tools.tmp > /dev/null && TLS=nptl
 	BINUTILS_DIR=`awk -F= '/BINUTILS_DIR/ {print $2}' tools.tmp`
 	GCC_DIR=`awk -F= '/GCC_DIR/ {print $2}' tools.tmp`
 	GCC_CORE_DIR=`awk -F= '/GCC_CORE_DIR/ {print $2}' tools.tmp`
