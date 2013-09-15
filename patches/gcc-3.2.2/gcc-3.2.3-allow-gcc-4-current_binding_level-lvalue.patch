@@ -1,0 +1,24 @@
+2004-03-01  Gabriel Dos Reis  <gdr@integrable-solutions.net>
+
+* decl.c (current_binding_level): Define as an lvalue.
+
+diff -U5 -rNp a/gcc/cp/decl.c b/gcc/cp/decl.c
+--- a/gcc/cp/decl.c	2003-03-17 18:16:55.000000000 -0500
++++ b/gcc/cp/decl.c	2013-09-14 11:08:20.000000000 -0400
+@@ -452,13 +452,13 @@ struct binding_level
+ #define NULL_BINDING_LEVEL ((struct binding_level *) NULL)
+ 
+ /* The binding level currently in effect.  */
+ 
+ #define current_binding_level			\
+-  (cfun && cp_function_chain->bindings		\
+-   ? cp_function_chain->bindings		\
+-   : scope_chain->bindings)
++  (*(cfun && cp_function_chain->bindings	\
++   ? &cp_function_chain->bindings		\
++   : &scope_chain->bindings))
+ 
+ /* The binding level of the current class, if any.  */
+ 
+ #define class_binding_level scope_chain->class_bindings
+ 
