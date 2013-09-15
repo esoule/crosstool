@@ -1,14 +1,16 @@
 #!/bin/sh
 
+SCRIPT_NAME=crosstool
+
 abort() {
-    echo crosstool: $@
+    echo ${SCRIPT_NAME}: $@
     exec false
 }
 
 # Used to log success or failure of each stage
 logresult() {
     if test -x $2; then
-        echo crosstool: $1 built ok
+        echo ${SCRIPT_NAME}: $1 built ok
     else
         abort Build failed during $1
     fi
@@ -40,29 +42,29 @@ if test -z "${LINUX_SANITIZED_HEADER_DIR}" ; then
     test -z "${LINUX_DIR}"        && abort "Please set either LINUX_DIR or LINUX_SANITIZED_HEADER_DIR to the bare filename of the tarball or directory containing the kernel headers"
     LINUX_HEADER_DIR="${LINUX_DIR}"
 else
-    test -n "${LINUX_DIR}"        && echo "You set both LINUX_DIR and LINUX_SANITIZED_HEADER_DIR - ignoring LINUX_DIR"
+    test -n "${LINUX_DIR}"        && echo "${SCRIPT_NAME}: You set both LINUX_DIR and LINUX_SANITIZED_HEADER_DIR - ignoring LINUX_DIR"
     LINUX_HEADER_DIR="${LINUX_SANITIZED_HEADER_DIR}"
 fi
 
 
 # Seventeen or so are optional
 if test -z "${GCC_CORE_DIR}"; then
-    echo "GCC_CORE_DIR not set, so using $GCC_DIR for bootstrap compiler"
+    echo "${SCRIPT_NAME}: GCC_CORE_DIR not set, so using $GCC_DIR for bootstrap compiler"
     GCC_CORE_DIR="${GCC_DIR}"
 fi
-test -z "${BINUTILS_EXTRA_CONFIG}" && echo "BINUTILS_EXTRA_CONFIG not set, so not passing any extra options to binutils' configure script"
-test -z "${GCC_EXTRA_CONFIG}"      && echo "GCC_EXTRA_CONFIG not set, so not passing any extra options to gcc's configure script"
-test -z "${GLIBC_EXTRA_CONFIG}"    && echo "GLIBC_EXTRA_CONFIG not set, so not passing any extra options to glibc's configure script"
-test -z "${GLIBC_EXTRA_ENV}"       && echo "GLIBC_EXTRA_ENV not set, so not passing any extra environment variables to glibc's configure script"
-test -z "${GLIBC_EXTRA_CC_ARGS}"   && echo "GLIBC_EXTRA_CC_ARGS not set, so not passing any extra options to gcc when building glibc"
-test -z "${EXTRA_TARGET_CFLAGS}"   && echo "EXTRA_TARGET_CFLAGS not set, so not passing any extra cflags to gcc when building glibc"
-test -z "${USE_SYSROOT}"           && echo "USE_SYSROOT not set, so not configuring with --with-sysroot"
-test -z "${GCC_BUILD}"             && echo "GCC_BUILD not set, assuming BUILD=output of config.guess"
-test -z "${GCC_HOST}"              && echo "GCC_HOST not set, assuming HOST=BUILD"
-test -z "${KERNELCONFIG}" && test ! -f ${LINUX_DIR}/.config  && echo  "KERNELCONFIG not set, and no .config file found, so not configuring linux kernel"
+test -z "${BINUTILS_EXTRA_CONFIG}" && echo "${SCRIPT_NAME}: BINUTILS_EXTRA_CONFIG not set, so not passing any extra options to binutils' configure script"
+test -z "${GCC_EXTRA_CONFIG}"      && echo "${SCRIPT_NAME}: GCC_EXTRA_CONFIG not set, so not passing any extra options to gcc's configure script"
+test -z "${GLIBC_EXTRA_CONFIG}"    && echo "${SCRIPT_NAME}: GLIBC_EXTRA_CONFIG not set, so not passing any extra options to glibc's configure script"
+test -z "${GLIBC_EXTRA_ENV}"       && echo "${SCRIPT_NAME}: GLIBC_EXTRA_ENV not set, so not passing any extra environment variables to glibc's configure script"
+test -z "${GLIBC_EXTRA_CC_ARGS}"   && echo "${SCRIPT_NAME}: GLIBC_EXTRA_CC_ARGS not set, so not passing any extra options to gcc when building glibc"
+test -z "${EXTRA_TARGET_CFLAGS}"   && echo "${SCRIPT_NAME}: EXTRA_TARGET_CFLAGS not set, so not passing any extra cflags to gcc when building glibc"
+test -z "${USE_SYSROOT}"           && echo "${SCRIPT_NAME}: USE_SYSROOT not set, so not configuring with --with-sysroot"
+test -z "${GCC_BUILD}"             && echo "${SCRIPT_NAME}: GCC_BUILD not set, assuming BUILD=output of config.guess"
+test -z "${GCC_HOST}"              && echo "${SCRIPT_NAME}: GCC_HOST not set, assuming HOST=BUILD"
+test -z "${KERNELCONFIG}" && test ! -f ${LINUX_DIR}/.config  && echo  "${SCRIPT_NAME}: KERNELCONFIG not set, and no .config file found, so not configuring linux kernel"
 test -z "${KERNELCONFIG}" || test -r "${KERNELCONFIG}"  || abort  "Can't read file KERNELCONFIG = $KERNELCONFIG, please fix."
-test -z "${SHARED_MODE}" && SHARED_MODE="--enable-shared" && echo "SHARED_MODE not set, so defaulting to --enable-shared"
-test -z "${GCC_LANGUAGES}"         && echo "GCC_LANGUAGES not set, assuming c,c++"
+test -z "${SHARED_MODE}" && SHARED_MODE="--enable-shared" && echo "${SCRIPT_NAME}: SHARED_MODE not set, so defaulting to --enable-shared"
+test -z "${GCC_LANGUAGES}"         && echo "${SCRIPT_NAME}: GCC_LANGUAGES not set, assuming c,c++"
 GCC_LANGUAGES=${GCC_LANGUAGES-"c,c++"}
 TOP_DIR=${TOP_DIR-`pwd`}
 chmod 755 $TOP_DIR/config.guess
@@ -70,7 +72,7 @@ BUILD=${GCC_BUILD-`$TOP_DIR/config.guess`}
 test -z "$BUILD" && abort "bug: BUILD not set?!"
 
 if test -z "${GLIBC_ADDON_OPTIONS}"; then
-   echo "GLIBC_ADDON_OPTIONS not set, so guessing addons from GLIBCTHREADS_FILENAME and GLIBCCRYPT_FILENAME"
+   echo "${SCRIPT_NAME}: GLIBC_ADDON_OPTIONS not set, so guessing addons from GLIBCTHREADS_FILENAME and GLIBCCRYPT_FILENAME"
    # this is lame, need to fix this for nptl later?
    # (nptl is an addon, but it's shipped in the main tarball)
    GLIBC_ADDON_OPTIONS="="
@@ -124,7 +126,7 @@ flex --version > /dev/null || abort "You don't have flex installed"
 # by hand, some of these might be misleading.
 # NOTE: surround with "Begin/end" and echo to stdout so we can grep out of the log later.
 
-echo "Begin saving environment"
+echo "${SCRIPT_NAME}: Begin saving environment"
 > $PREFIX/$TARGET.crosstoolconfig.txt
 
 set -x
@@ -168,7 +170,7 @@ USE_SYSROOT \
   eval echo $var=\$$var >> $PREFIX/$TARGET.crosstoolconfig.txt
 done
 set +x
-echo "End saving environment"
+echo "${SCRIPT_NAME}: End saving environment"
 
 #---------------------------------------------------------
 
@@ -176,7 +178,7 @@ if test "$GCC_HOST" != ""; then
         # Modify $BUILD so gcc never, ever thinks $build = $host
         UNIQUE_BUILD=`echo $BUILD | sed s/-/-build_/`
         CANADIAN_BUILD="--build=$UNIQUE_BUILD"
-        echo "canadian cross, configuring gcc & binutils with $CANADIAN_BUILD"
+        echo "${SCRIPT_NAME}: canadian cross, configuring gcc & binutils with $CANADIAN_BUILD"
         # make sure we have a host compiler (since $GCC_HOST-gcc won't work)
         "$CC" --version || abort "Must set CC to a compiler targeting $GCC_HOST.  PATH is $PATH"
         "$AR" --version || abort "Must set AR to a version of 'ar' targeting $GCC_HOST.  PATH is $PATH"
@@ -299,14 +301,14 @@ mkdir -p $SYSROOT/lib
 mkdir -p $SYSROOT/usr/lib
 
 echo
-echo "Building for --target=$TARGET, --prefix=$PREFIX"
+echo "${SCRIPT_NAME}: Building for --target=$TARGET, --prefix=$PREFIX"
 
 #---------------------------------------------------------
 # Use sanitized headers, if available
 if test -z "$LINUX_SANITIZED_HEADER_DIR" ; then
-    echo Prepare kernel headers
+    echo ${SCRIPT_NAME}: Prepare kernel headers
 else
-    echo Copy sanitized headers
+    echo ${SCRIPT_NAME}: Copy sanitized headers
 fi
 
 cd $LINUX_HEADER_DIR
@@ -360,7 +362,7 @@ cp -r include/asm-${ARCH} $HEADERDIR/asm
 cd $BUILD_DIR
 
 #---------------------------------------------------------
-echo Build binutils
+echo ${SCRIPT_NAME}: Build binutils
 
 mkdir -p build-binutils; cd build-binutils
 
@@ -392,7 +394,7 @@ cd ..
 logresult binutils ${PREFIX}/bin/${TARGET}-ld${EXEEXT}
 
 #---------------------------------------------------------
-echo "Install glibc headers needed to build bootstrap compiler -- but only if gcc-3.x"
+echo "${SCRIPT_NAME}: Install glibc headers needed to build bootstrap compiler -- but only if gcc-3.x"
 
 # Only need to install bootstrap glibc headers for gcc-3.0 and above?  Or maybe just gcc-3.3 and above?
 # See also http://gcc.gnu.org/PR8180, which complains about the need for this step.
@@ -467,11 +469,11 @@ if grep -q 'gcc-[34]' ${GCC_CORE_DIR}/ChangeLog && test '!' -f $HEADERDIR/featur
 fi
 
 #---------------------------------------------------------
-echo "Build gcc-core (just enough to build glibc)"
+echo "${SCRIPT_NAME}: Build gcc-core (just enough to build glibc)"
 
 mkdir -p build-gcc-core; cd build-gcc-core
 
-echo Copy headers to install area of bootstrap gcc, so it can build libgcc2
+echo ${SCRIPT_NAME}: Copy headers to install area of bootstrap gcc, so it can build libgcc2
 mkdir -p $CORE_PREFIX/$TARGET/include
 cp -r $HEADERDIR/* $CORE_PREFIX/$TARGET/include
 
@@ -502,7 +504,7 @@ cd ..
 logresult gcc-core $CORE_PREFIX/bin/${TARGET}-gcc${EXEEXT}
 
 #---------------------------------------------------------
-echo Build glibc and linuxthreads
+echo ${SCRIPT_NAME}: Build glibc and linuxthreads
 
 mkdir -p build-glibc; cd build-glibc
 
@@ -592,7 +594,7 @@ cd ..
 test -f ${SYSROOT}/lib/libc.a || test -f ${SYSROOT}/lib64/libc.a || test -f ${SYSROOT}/usr/lib/libc.a || test -f ${SYSROOT}/usr/lib64/libc.a || abort Building libc failed
 
 #---------------------------------------------------------
-echo Build final gcc
+echo ${SCRIPT_NAME}: Build final gcc
 
 mkdir -p build-gcc; cd build-gcc
 
@@ -648,16 +650,16 @@ make install
 
 # FIXME: shouldn't people who want this just --disable-multilib in final gcc and be done with it?
 # This code should probably be deleted, it was written long ago and hasn't been tested in ages.
-echo "kludge: If the chip does not have a floating point unit "
-echo "(i.e. if GLIBC_EXTRA_CONFIG contains --without-fp),"
-echo "and there are shared libraries in /lib/nof, copy them to /lib"
-echo "so they get used by default."
-echo "FIXME: only rs6000/powerpc seem to use nof.  See MULTILIB_DIRNAMES"
-echo "in $GCC_DIR/gcc/config/$TARGET/* to see what your arch calls it."
+echo "${SCRIPT_NAME}: kludge: If the chip does not have a floating point unit "
+echo "${SCRIPT_NAME}: (i.e. if GLIBC_EXTRA_CONFIG contains --without-fp),"
+echo "${SCRIPT_NAME}: and there are shared libraries in /lib/nof, copy them to /lib"
+echo "${SCRIPT_NAME}: so they get used by default."
+echo "${SCRIPT_NAME}: FIXME: only rs6000/powerpc seem to use nof.  See MULTILIB_DIRNAMES"
+echo "${SCRIPT_NAME}: in $GCC_DIR/gcc/config/$TARGET/* to see what your arch calls it."
 case "$GLIBC_EXTRA_CONFIG" in
    *--without-fp*)
       if test -d ${SYSROOT}/lib/nof; then
-          cp -af ${SYSROOT}/lib/nof/*.so* ${SYSROOT}/lib || echo "Warning: lib/nof not found.  Ignoring."
+          cp -af ${SYSROOT}/lib/nof/*.so* ${SYSROOT}/lib || echo "${SCRIPT_NAME}: Warning: lib/nof not found.  Ignoring."
       fi
       ;;
 esac
@@ -698,6 +700,6 @@ gcc fix-embedded-paths.c -o $PREFIX/bin/fix-embedded-paths
 
 
 #---------------------------------------------------------
-echo Cross-toolchain build complete.  Result in ${PREFIX}.
+echo ${SCRIPT_NAME}: Cross-toolchain build complete.  Result in ${PREFIX}.
 exit 0
 
