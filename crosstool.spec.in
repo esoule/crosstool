@@ -114,6 +114,8 @@ for CPU in %{CPUS}; do
   # Set env variables required by crosstool.sh
   PREFIX=%{buildroot}%{RESULT_TOP}/%{TOOLCOMBO}/$TARGET
   export PREFIX
+  BUILD_STASH_PREFIX_TOOLCOMBO=%{_builddir}%{RESULT_TOP}/%{TOOLCOMBO}
+  mkdir -v -p ${BUILD_STASH_PREFIX_TOOLCOMBO}
   # Remove destination first to prevent pollution from previous builds (shouldn't crosstool do this?)
   test -d ${PREFIX} && rm -rf ${PREFIX}
   mkdir -p ${PREFIX}
@@ -158,6 +160,11 @@ for CPU in %{CPUS}; do
       find $PREFIX/$foo -type f -not -name '*.o' -print
     done | xargs file | grep 'ELF.*, dynamically linked.*not stripped' | sed 's/: .*//' | xargs --no-run-if-empty $PREFIX/bin/$TARGET-strip 
   fi
+
+  # Stash files in the BUILD directory, because BUILDROOT
+  # directory is removed before install stage starts
+  mv -v ${PREFIX} ${BUILD_STASH_PREFIX_TOOLCOMBO}/$TARGET
+
 done
 
 #------------ install ---------------------------------
@@ -169,6 +176,12 @@ for CPU in %{CPUS}; do
   CPU=`echo $CPU | sed 's/_/-/;s/x86-64/x86_64/'`
   TARGET=`cat $CPU.dat | grep TARGET= | sed 's/.*=//'`
   REALPREFIX=%{RESULT_TOP}/%{TOOLCOMBO}/$TARGET
+
+  BUILD_STASH_PREFIX_TOOLCOMBO=%{_builddir}%{RESULT_TOP}/%{TOOLCOMBO}
+
+  # Restore files from BUILD directory
+  mkdir -v -p %{buildroot}%{RESULT_TOP}/%{TOOLCOMBO}
+  mv -v ${BUILD_STASH_PREFIX_TOOLCOMBO}/$TARGET %{buildroot}%{RESULT_TOP}/%{TOOLCOMBO}/$TARGET
 
   # Generate list of parent directories for rpm to chmod and create/remove on install/uninstall
   # (else they get created with the default umask, which can be bad)
