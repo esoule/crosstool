@@ -443,7 +443,7 @@ if grep -q 'gcc-[34]' ${GCC_CORE_DIR}/ChangeLog && test '!' -f $HEADERDIR/featur
     fi
     # Note: BOOTSTRAP_GCC is used by patches/glibc-2.3.5/glibc-mips-bootstrap-gcc-header-install.patch
     libc_cv_ppc_machine=yes \
-    make cross-compiling=yes install_root=${SYSROOT} CFLAGS=-DBOOTSTRAP_GCC $GLIBC_SYSROOT_ARG install-headers
+    make cross-compiling=yes install_root=${SYSROOT} CFLAGS="-O -DBOOTSTRAP_GCC" $GLIBC_SYSROOT_ARG install-headers
 
     # Two headers -- stubs.h and features.h -- aren't installed by install-headers,
     # so do them by hand.  We can tolerate an empty stubs.h for the moment.
