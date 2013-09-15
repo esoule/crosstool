@@ -5,6 +5,8 @@
 # Licensed under the GPL
 set -xe
 
+SCRIPT_NAME=getandpatch.sh
+
 abort() {
 	echo $@
 	exec false
@@ -17,27 +19,27 @@ abort() {
 # To just download tarballs and not unpack or patch,
 # set JUST_DOWNLOAD to a nonempty string.
 
-test -z "$NO_DOWNLOAD" || echo "NO_DOWNLOAD set, not downloading"
-test -z "$JUST_DOWNLOAD" || echo "JUST_DOWNLOAD set, not unpacking"
+test -z "$NO_DOWNLOAD" || echo "${SCRIPT_NAME}: NO_DOWNLOAD set, not downloading"
+test -z "$JUST_DOWNLOAD" || echo "${SCRIPT_NAME}: JUST_DOWNLOAD set, not unpacking"
 
 # Usage: set the following environment variables:
-test -z "${BINUTILS_DIR}"  && abort "Please set BINUTILS_DIR to the bare filename of the binutils tarball or directory"
-test -z "${JUST_DOWNLOAD}" && test -z "${SRC_DIR}"  && abort "Please set SRC_DIR to the directory where the source tarballs are to be unpacked"
-test -z "${GCC_DIR}"       && abort "Please set GCC_DIR to the bare filename of the gcc tarball or directory"
-test -z "${GCC_CORE_DIR}"  && echo "GCC_CORE_DIR not set, so using $GCC_DIR for bootstrap compiler"
-test -z "${GDB_DIR}"       && echo "GDB_DIR not set, so not downloading gdb sources"
+test -z "${BINUTILS_DIR}"  && abort "${SCRIPT_NAME}: Please set BINUTILS_DIR to the bare filename of the binutils tarball or directory"
+test -z "${JUST_DOWNLOAD}" && test -z "${SRC_DIR}"  && abort "${SCRIPT_NAME}: Please set SRC_DIR to the directory where the source tarballs are to be unpacked"
+test -z "${GCC_DIR}"       && abort "${SCRIPT_NAME}: Please set GCC_DIR to the bare filename of the gcc tarball or directory"
+test -z "${GCC_CORE_DIR}"  && echo "${SCRIPT_NAME}: GCC_CORE_DIR not set, so using $GCC_DIR for bootstrap compiler"
+test -z "${GDB_DIR}"       && echo "${SCRIPT_NAME}: GDB_DIR not set, so not downloading gdb sources"
 
 # When building a cygwin target the following are not needed.
 if test "${CYGWIN_DIR}" = ""; then
-  test -z "${GLIBC_DIR}"        && abort "Please set GLIBC_DIR to the bare filename of the glibc tarball or directory"
-  test -z "${LINUX_SANITIZED_HEADER_DIR}" && echo "Not downloading linux-libc-headers. Set LINUX_SANITIZED_HEADER_DIR to do so"
-  test -z "${LINUX_DIR}"        && echo "Not downloading kernel sources. Set LINUX_DIR if you want to do so"
+  test -z "${GLIBC_DIR}"        && abort "${SCRIPT_NAME}: Please set GLIBC_DIR to the bare filename of the glibc tarball or directory"
+  test -z "${LINUX_SANITIZED_HEADER_DIR}" && echo "${SCRIPT_NAME}: Not downloading linux-libc-headers. Set LINUX_SANITIZED_HEADER_DIR to do so"
+  test -z "${LINUX_DIR}"        && echo "${SCRIPT_NAME}: Not downloading kernel sources. Set LINUX_DIR if you want to do so"
   # And one is derived if not set explicitly.
   test -z "${GLIBCTHREADS_FILENAME}" &&
   GLIBCTHREADS_FILENAME=`echo $GLIBC_DIR | sed 's/glibc-/glibc-linuxthreads-/'`
 fi
 
-test -z "${TARBALLS_DIR}"     && abort "Please set TARBALLS_DIR to the directory to download tarballs to."
+test -z "${TARBALLS_DIR}"     && abort "${SCRIPT_NAME}: Please set TARBALLS_DIR to the directory to download tarballs to."
 
 # Make all paths absolute (it's so confusing otherwise)
 # FIXME: this doesn't work well with some automounters
@@ -95,14 +97,14 @@ getUnpackAndPatch() {
     for arg; do
         case $arg in
         *.gz|*.bz2|*.tgz) ;;
-        *) abort "unknown suffix on url $arg" ;;
+        *) abort "${SCRIPT_NAME}: unknown suffix on url $arg" ;;
         esac
 
         ARCHIVE_NAME=`echo $arg | sed 's,.*/,,;'`
         BASENAME=`echo $ARCHIVE_NAME | sed 's,\.tar\.gz$,,;s,\.tar\.bz2$,,;s,\.tgz,,;'`
 
         # Done if already unpacked
-        test -z "${JUST_DOWNLOAD}" && test -d ${SRC_DIR}/$BASENAME && { echo "directory $BASENAME already present"; return 0 ; }
+        test -z "${JUST_DOWNLOAD}" && test -d ${SRC_DIR}/$BASENAME && { echo "${SCRIPT_NAME}: directory $BASENAME already present"; return 0 ; }
 
         if test -f $TARBALLS_DIR/$ARCHIVE_NAME; then
             exists=$TARBALLS_DIR/$ARCHIVE_NAME
@@ -122,27 +124,27 @@ getUnpackAndPatch() {
         done
     fi
 
-    test -f ${TARBALLS_DIR}/$ARCHIVE_NAME || abort "file $ARCHIVE_NAME not found"
+    test -f ${TARBALLS_DIR}/$ARCHIVE_NAME || abort "${SCRIPT_NAME}: file $ARCHIVE_NAME not found"
 
     # If we're just downloading, don't unpack
     test -n "$JUST_DOWNLOAD" && return 0
 
     cd $SRC_DIR
 
-    echo hmm maybe cd
+    echo ${SCRIPT_NAME}: hmm maybe cd
     case $ARCHIVE_NAME in
-    glibc-[a-z]*-2*) echo "It's a glibc addon, so cd into glibc"; cd $GLIBC_DIR ;;
+    glibc-[a-z]*-2*) echo "${SCRIPT_NAME}: It's a glibc addon, so cd into glibc"; cd $GLIBC_DIR ;;
     *) ;;
     esac
     set +x
 
     case $ARCHIVE_NAME in
     *.gz|*.tgz)
-        tar $VERBOSE -xzf $TARBALLS_DIR/$ARCHIVE_NAME || abort cannot unpack $TARBALLS_DIR/$ARCHIVE_NAME ;;
+        tar $VERBOSE -xzf $TARBALLS_DIR/$ARCHIVE_NAME || abort ${SCRIPT_NAME}: cannot unpack $TARBALLS_DIR/$ARCHIVE_NAME ;;
     *.bz2)
-        tar $VERBOSE -xjf $TARBALLS_DIR/$ARCHIVE_NAME || abort cannot unpack $TARBALLS_DIR/$ARCHIVE_NAME ;;
+        tar $VERBOSE -xjf $TARBALLS_DIR/$ARCHIVE_NAME || abort ${SCRIPT_NAME}: cannot unpack $TARBALLS_DIR/$ARCHIVE_NAME ;;
     *) 
-        abort "Unrecognized suffix for tarball $ARCHIVE_NAME" ;;
+        abort "${SCRIPT_NAME}: Unrecognized suffix for tarball $ARCHIVE_NAME" ;;
     esac
 
     # Fix path of old linux source trees
@@ -170,10 +172,10 @@ getUnpackAndPatch() {
         for p in $TOP_DIR/patches/$BASENAME/*patch* \
              $TOP_DIR/patches/$BASENAME/*.diff; do
         if test -f $p; then
-            echo "applying patch $p"
-            patch -g0 --fuzz=1 -p1 -f < $p > patch$$.log 2>&1 || { cat patch$$.log ; abort "patch $p failed" ; }
+            echo "${SCRIPT_NAME}: applying patch $p"
+            patch -g0 --fuzz=1 -p1 -f < $p > patch$$.log 2>&1 || { cat patch$$.log ; abort "${SCRIPT_NAME}: patch $p failed" ; }
             cat patch$$.log
-            egrep -q "$PATCHFAILMSGS" patch$$.log && abort "patch $p failed"
+            egrep -q "$PATCHFAILMSGS" patch$$.log && abort "${SCRIPT_NAME}: patch $p failed"
             rm -f patch$$.log
         fi
         done
@@ -263,7 +265,7 @@ if test "${CYGWIN_DIR}" = ""; then
     *2.4*) getUnpackAndPatch http://www.kernel.org/pub/linux/kernel/v2.4/$LINUX_DIR.tar.bz2 http://www.kernel.org/pub/linux/kernel/v2.4/$LINUX_DIR.tar.gz ;;
     *2.6*) getUnpackAndPatch http://www.kernel.org/pub/linux/kernel/v2.6/$LINUX_DIR.tar.bz2 http://www.kernel.org/pub/linux/kernel/v2.6/$LINUX_DIR.tar.gz ;;
     "") ;;
-    *) abort "unknown version $LINUX_DIR of linux, expected 2.4 or 2.6 in name?" ;;
+    *) abort "${SCRIPT_NAME}: unknown version $LINUX_DIR of linux, expected 2.4 or 2.6 in name?" ;;
   esac
   # Fetch linux-libc-headers, if requested
   test -n "${LINUX_SANITIZED_HEADER_DIR}" && getUnpackAndPatch \
