@@ -242,6 +242,13 @@ __ENDIF
   done
 
   %{buildroot}$REALPREFIX/bin/fix-embedded-paths %{buildroot}$REALPREFIX $REALPREFIX %{buildroot}$REALPREFIX
+  for lib in lib lib64 usr/lib usr/lib64; do
+    foo=%{buildroot}/$lib
+    if test -d $foo; then
+      %{buildroot}$REALPREFIX/bin/fix-embedded-paths %{buildroot}$REALPREFIX $REALPREFIX  %{buildroot}/$lib
+    fi
+  done
+
   # Set permissions (since the mkdirs above might 
   # have been created with a nasty umask like 0007,
   # and might not be readable by anyone but root)
