@@ -696,7 +696,7 @@ sh mkoverride.sh
 
 # Build little program that lets user move resulting toolchain to different prefix
 cd $TOP_DIR
-gcc fix-embedded-paths.c -o $PREFIX/bin/fix-embedded-paths
+# gcc fix-embedded-paths.c -o $PREFIX/bin/fix-embedded-paths
 
 
 #---------------------------------------------------------

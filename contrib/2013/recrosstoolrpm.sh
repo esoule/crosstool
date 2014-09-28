@@ -9,6 +9,7 @@ abort() {
 
 RECROSSTOOLRPM=recrosstoolrpm
 CROSSTOOLVERSION=0.43
+CROSSTOOLRPMRELEASE=1.1.2
 DDD=`date +%Y%m%d_%H%M`
 
 test ! -d crosstool-edit && abort "${RECROSSTOOLRPM}: Directory crosstool-edit not found"
@@ -23,7 +24,7 @@ test ! -d crosstool-edit/crosstool-${CROSSTOOLVERSION} && abort "${RECROSSTOOLRP
   find crosstool-${CROSSTOOLVERSION} -type f -name '*.orig' -print -delete
   tar --exclude ./crosstool-${CROSSTOOLVERSION}/.git  -zcf crosstool-${CROSSTOOLVERSION}-${DDD}.tar.gz ./crosstool-${CROSSTOOLVERSION}
 
-  rm -v ../crosstool-${CROSSTOOLVERSION}.tar.gz
+  rm -v -f ../crosstool-${CROSSTOOLVERSION}.tar.gz
   cp crosstool-${CROSSTOOLVERSION}-${DDD}.tar.gz ../crosstool-${CROSSTOOLVERSION}.tar.gz
 )
 
@@ -47,6 +48,8 @@ rm -rf rpmbuild
 mkdir rpmbuild
 mv rpmbuild-INCOMING rpmbuild/INCOMING
 
-rpmbuild --without all --with powerpc_405 --rebuild rpmbuild/INCOMING/crosstool-${TOOLCOMBOS}-${CROSSTOOLVERSION}-1.src.rpm
+echo RPM is placed into rpmbuild/INCOMING/*.src.rpm
+echo Rebuild it as follows:
+echo rpmbuild --without all --with powerpc_405 --rebuild rpmbuild/INCOMING/crosstool-${TOOLCOMBOS}-${CROSSTOOLVERSION}-${CROSSTOOLRPMRELEASE}.src.rpm
 
 ) 2>&1 | tee ${RECROSSTOOLRPM}-log-${DDD}.txt

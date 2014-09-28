@@ -111,7 +111,7 @@ $SOURCES
   # Specify --without all so none of the subpackages are built
   cp build/tarballs-$TOOLCOMBO/* rpmbuild/SOURCES
   #rpmbuild -ba rpmbuild/SPECS/crosstool-$TOOLCOMBO.spec --without all
-  rpmbuild -ba rpmbuild/SPECS/crosstool-$TOOLCOMBO.spec --define "_without_all --without-all"
+  rpmbuild -bs rpmbuild/SPECS/crosstool-$TOOLCOMBO.spec --define "_without_all --without-all"
 done
 
 echo SRPMS are in rpmbuild/SRPMS:

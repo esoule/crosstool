@@ -35,7 +35,7 @@ __ENDFOR
 
 %define Name                %{PKGPREFIX}-%{TOOLCOMBO}
 %define Version             __CROSSTOOLVERSION__
-%define Release             1
+%define Release             1.1.2
 %define crosstool_pkg       crosstool-__CROSSTOOLVERSION__.tar.gz
 %define summary             %{TOOLCOMBO} cross compiler
 %define __os_install_post %{nil} 
@@ -56,6 +56,7 @@ Autoreqprov     : no
 # minus version numbers, minus dejagnu
 BuildRequires: binutils, glibc-devel
 BuildRequires: zlib-devel, gettext, bison, flex, texinfo
+BuildRequires: crosstool-build-filesystem
 Requires: binutils, glibc-devel
 
 # When we switch to building relocatable toolchains, uncomment this line
@@ -112,7 +113,7 @@ for CPU in %{CPUS}; do
   CPU=`echo $CPU | sed 's/_/-/;s/x86-64/x86_64/'`
   TARGET=`cat $CPU.dat | grep TARGET= | sed 's/.*=//'`
   # Set env variables required by crosstool.sh
-  PREFIX=%{buildroot}%{RESULT_TOP}/%{TOOLCOMBO}/$TARGET
+  PREFIX=%{RESULT_TOP}/%{TOOLCOMBO}/$TARGET
   export PREFIX
   BUILD_STASH_PREFIX_TOOLCOMBO=%{_builddir}%{RESULT_TOP}/%{TOOLCOMBO}
   mkdir -v -p ${BUILD_STASH_PREFIX_TOOLCOMBO}
@@ -143,27 +144,10 @@ for CPU in %{CPUS}; do
   # W: crosstool-gcc-3.4.3-glibc-2.3.4-i386 manpage-not-gzipped /opt/crosstool/i686-pc-linux-gnu/i386/gcc-3.4.3-glibc-2.3.4/man/man1/i386-unknown-linux-gnu-addr2line.1
   find $PREFIX/man -type f -not -name '*.gz' -print | xargs gzip -9f
 
-  if false; then
-    # Strip executables to avoid rpmlint errors like
-    # W: crosstool-gcc-3.4.3-glibc-2.3.4-i386 unstripped-binary-or-object /opt/crosstool/i686-pc-linux-gnu/i386/gcc-3.4.3-glibc-2.3.4/bin/i386-unknown-linux-gnu-ar
-    # when using old rpmbuild.  (New rpmbuild separates out the debugging info into separate package automatically.)
-    for foo in bin libexec lib/gcc-lib/$TARGET; do 
-      find $PREFIX/$foo -type f -not -name '*.o' -print
-    done | xargs file | grep 'ELF.*, dynamically linked.*not stripped' | sed 's/: .*//' | xargs --no-run-if-empty strip
-
-    EXCEPTIONS="ar as c++ gcc ld nm ranlib strip"
-    for file in $EXCEPTIONS; do
-      file $PREFIX/$TARGET/bin/$file
-    done | grep 'ELF.*, dynamically linked.*not stripped' | sed 's/: .*//' | xargs --no-run-if-empty strip
-
-    for foo in $TARGET/bin $TARGET/sbin; do 
-      find $PREFIX/$foo -type f -not -name '*.o' -print
-    done | xargs file | grep 'ELF.*, dynamically linked.*not stripped' | sed 's/: .*//' | xargs --no-run-if-empty $PREFIX/bin/$TARGET-strip 
-  fi
-
   # Stash files in the BUILD directory, because BUILDROOT
   # directory is removed before install stage starts
   mv -v ${PREFIX} ${BUILD_STASH_PREFIX_TOOLCOMBO}/$TARGET
+  rmdir -v %{RESULT_TOP}/%{TOOLCOMBO} || :
 
 done
 
@@ -239,14 +223,6 @@ __ENDIF
   # look like gcc-2's libstdc++ shared library.
   for lib in lib usr/lib; do
     rm -f %{buildroot}$REALPREFIX/$TARGET/$lib/libstdc++-*libc*.so*
-  done
-
-  %{buildroot}$REALPREFIX/bin/fix-embedded-paths %{buildroot}$REALPREFIX $REALPREFIX %{buildroot}$REALPREFIX
-  for lib in lib lib64 usr/lib usr/lib64; do
-    foo=%{buildroot}/$lib
-    if test -d $foo; then
-      %{buildroot}$REALPREFIX/bin/fix-embedded-paths %{buildroot}$REALPREFIX $REALPREFIX  %{buildroot}/$lib
-    fi
   done
 
   # Set permissions (since the mkdirs above might 
@@ -495,6 +471,10 @@ __ENDIF
 __ENDFOR
 
 %changelog
+
+* Sun Sep 28 2014 Evgueni Souleimanov <esoule@100500.ca> -  - 0:0.43-1.1.2
+- avoid using fix-embedded-paths utility, do not package it
+- use a read-write dir in /opt during build, via crosstool-build-filesystem package
 
 * Wed Nov 15 2006 Dan Kegel <dank at kegel.com> - 0:0.43-0.1
 - update to crosstool-0.43
